@@ -31,7 +31,13 @@ namespace TestGit
                 Console.WriteLine(i);
                 num += i;
             }
-            Console.WriteLine("Boo");
+            int newbie = ThisShouldBeHarmlessSantana(num, 7);
+            Console.WriteLine(newbie);
+        }
+
+        static int ThisShouldBeHarmlessSantana(int a, int b)
+        {
+            return a + b;
         }
     }
 }
