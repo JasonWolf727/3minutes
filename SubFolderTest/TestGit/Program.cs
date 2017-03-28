@@ -31,7 +31,7 @@ namespace TestGit
                 Console.WriteLine(i);
                 num += i;
             }
-            Console.WriteLine(num);
+            Console.WriteLine("Boo");
         }
     }
 }
