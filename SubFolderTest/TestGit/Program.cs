@@ -45,6 +45,7 @@ namespace TestGit
 
             close.SubscribeToReleased(_=>Exit());
 
+            //We want more Garbage
         }
 
         static void Main(string[] args)
