@@ -23,7 +23,7 @@ namespace TestGit
         static void CaseHarmfull()
         {
             //Harmfull
-            //Harmfull2You
+            //Harmfull2Me
             // This is not harmful?
         }
     }
