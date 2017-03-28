@@ -44,8 +44,8 @@ namespace TestGit
             close.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
 
             close.SubscribeToReleased(_=>Exit());
-
-            //We want more Garbage
+            
+            //Commented-out Garbage
         }
 
         static void Main(string[] args)
