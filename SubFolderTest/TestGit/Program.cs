@@ -33,15 +33,15 @@ namespace TestGit
         {
             //Harmfull
             //Harmfull2You
-            Console.WriteLine("Hello");
+            System.Console.WriteLine("Hello");
             int num = 0;
             for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine(i);
+                System.Console.WriteLine(i);
                 num += i;
             }
             int newbie = ThisShouldBeHarmlessSantana(num, 7);
-            Console.WriteLine(newbie);
+            System.Console.WriteLine(newbie);
         }
 
         static int ThisShouldBeHarmlessSantana(int a, int b)
