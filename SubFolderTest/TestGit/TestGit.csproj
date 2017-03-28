@@ -41,6 +41,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Urho">
+      <HintPath>..\..\..\..\program4\packages\UrhoSharp.1.2.21\lib\portable-net45+win8+monoandroid+monotouch+Xamarin.iOS10\Urho.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

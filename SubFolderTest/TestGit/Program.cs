@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Urho;
+using Urho.Gui;
+using Urho.Shapes;
 
 namespace TestGit
 {
@@ -10,6 +13,11 @@ namespace TestGit
     {
         static void Main(string[] args)
         {
+        }
+
+        public void MyNoReturnMethod()
+        {
+
         }
     }
 }
