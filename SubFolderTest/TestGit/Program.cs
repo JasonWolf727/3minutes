@@ -13,6 +13,13 @@ namespace TestGit
     class Program : SimpleApplication
     {
         Program(ApplicationOptions options = null) :base(options) { }
+        
+        protected override void Start()
+        {
+            //Insert Garbage here
+        }
+        
+        
         static void Main(string[] args)
         {
             var app = new Program(new ApplicationOptions("Data")
