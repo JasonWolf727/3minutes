@@ -11,12 +11,9 @@ namespace CC_X.Model
     {
         public enum SettingType { Plane, Tree, Rock, Grass, None }
         public enum EnemyType { Zombie, Car, None }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
+        public Vector3 Position { get; set; }
         public int ID { get; set; }
-        abstract public void UpdatePos(int X, int Y, int Z);        
+        abstract public void UpdatePos(Vector3 position);        
         
     }
 }
