@@ -8,5 +8,6 @@ namespace CC_X.Model
 {
     class Observer
     {
+
     }
 }
