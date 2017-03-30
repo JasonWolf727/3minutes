@@ -22,11 +22,13 @@ namespace CC_X.Model
         {
 
         }
+
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
         private void SetUpLevel2(Difficulty difficulty)
         {
 
         }
+
         //Populate WorldCollection with level 3 world objects/coordinates according to difficutly
         private void SetUpLevel3(Difficulty difficulty)
         {
@@ -51,6 +53,17 @@ namespace CC_X.Model
                         break;
                     }
             }
+        }
+
+        // Load/save mechanism
+        private void Load()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }
