@@ -9,6 +9,17 @@ namespace CC_X.Model
 {
     class HighScore
     {
+
+
+
+
+
+
+
+
+
+
+
         const string highScoreFile = "highscore.txt";
         int timesTest = 0;
         public void WriteToFile()
