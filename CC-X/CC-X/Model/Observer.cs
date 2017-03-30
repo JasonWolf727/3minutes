@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CC_X.Model;
 
-namespace CC_X
+namespace CC_X.Model
 {
-    class Program : IObserver
+    class Observer
     {
 
-        static void Main(string[] args)
-        {
-        }
     }
 }
