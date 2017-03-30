@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace CC_X.Model
 {
-    class MainCharacter
+    class MainCharacter : World
     {
+        public MainCharacter()
+        {
+
+        }
+        public override void UpdatePos(int X, int Y, int Z)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

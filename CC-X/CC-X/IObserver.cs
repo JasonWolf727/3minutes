@@ -4,13 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CC_X
+public interface IObserver
 {
-    class Program : IObserver
-    {
 
-        static void Main(string[] args)
-        {
-        }
-    }
 }
