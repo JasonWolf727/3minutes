@@ -17,12 +17,12 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
-        public void Serialize()
+        public override void Serialize()
         {
             // Take the stuff in World and put it into a single comma-delimited string.
         }
 
-        public void DeSerialize()
+        public override void DeSerialize()
         {
             // Take the stuff in a CSV file and put it into a single comma-delimited string; then distribute among all the values.
         }
