@@ -13,7 +13,7 @@ namespace CC_X.Model
         {
 
         }
-        public override void UpdatePos(int X, int Y, int Z)
+        public override void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();
         }
