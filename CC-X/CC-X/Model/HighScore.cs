@@ -9,18 +9,8 @@ namespace CC_X.Model
 {
     class HighScore
     {
-
-
-
-
-
-
-
-
-
-
-
         const string highScoreFile = "highscore.txt";
+        //static string fileLocation = @"c:\Users\Joshua\Desktop\TeamProjectShared\3minutes\CC-X\CC-X"
         int timesTest = 0;
         public void WriteToFile()
         {
