@@ -63,7 +63,7 @@ namespace CC_X.Model
 
         private void Save(string info)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
