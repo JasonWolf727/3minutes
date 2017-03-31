@@ -57,6 +57,7 @@
     <Compile Include="Model\Enemies.cs" />
     <Compile Include="Model\GameController.cs" />
     <Compile Include="Model\HighScore.cs" />
+    <Compile Include="Model\HighScoreUnitTests.cs" />
     <Compile Include="Model\MainCharacter.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Program.cs" />
