@@ -11,12 +11,22 @@ namespace CC_X.Model
     enum Level { One, Two, Three}
     class GameController
     {        
-        public Dictionary<int, World> WorldCollection { get; set; }
+        public Dictionary<int, World> SettingCollection { get; set; }
+        public Dictionary<int, World> EnemiesCollection { get; set; }
+        public World MainChar = new MainCharacter();
+        public Difficulty DifficutlySelected { get; set; }
+       
+        public Level HighestLevelReached = Level.One;
+        public HighScore highscore = new HighScore();
 
+        //View will set this to user input name
+        public string MainCharName = "";
+
+        //Receives selected difficulty from view and generates level according to difficulty
         public GameController(Difficulty difficulty)
         {
-            
-        }        
+
+        }
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
@@ -62,7 +72,7 @@ namespace CC_X.Model
 
         private void Load(string filepath)
         {
-            //string temp = File.ReadAllText(filepath);
+            //string[] temp = File.ReadAllLines(filepath);
             //var sett = new Setting(this.setting, Urho.Vector3);
             //sett.DeSerialize();
             //var chara = new MainCharacter();
@@ -75,15 +85,15 @@ namespace CC_X.Model
         private void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
             // Use a StringBuilder
-            //var csv = new StringBuilder();
-            //var setting = sett;
-            //csv.AppendLine(setting.Serialize());
-            //var chara = new MainCharacter();
-            //csv.AppendLine(chara.Serialize());
-            //var foes = new Enemies();
-            //csv.AppendLine(foes.Serialize());
-            //File.WriteAllText(filepath, csv.ToString());
-            throw new NotImplementedException();
+            var csv = new StringBuilder();
+            var setting = sett;
+            csv.AppendLine(setting.Serialize());
+            var chara = new MainCharacter();
+            csv.AppendLine(chara.Serialize());
+            var foes = new Enemies();
+            csv.AppendLine(foes.Serialize());
+            File.WriteAllText(filepath, csv.ToString());
+            //throw new NotImplementedException();
         }
     }
 }

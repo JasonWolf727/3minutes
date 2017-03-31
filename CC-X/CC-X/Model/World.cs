@@ -11,8 +11,12 @@ namespace CC_X.Model
     {
         public enum SettingType { Plane, Tree, Rock, Grass, None }
         public enum EnemyType { Zombie, Car, None }
+        public enum WorldType { MainChar, Enemy, Setting }
+        public WorldType type { get; set; }
         public Vector3 Position { get; set; }
         public int ID { get; set; }
-        abstract public void UpdatePos(Vector3 position);
+        public bool IsDead { get; set; }
+        abstract public void UpdatePos(Vector3 position);                
+
     }
 }
