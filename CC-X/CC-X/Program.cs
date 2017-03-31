@@ -91,6 +91,106 @@ namespace CC_X
         {
 
         }
+                
+        //Event handler for start button
+        void StartClick(ReleasedEventArgs args)
+        {
+
+        }
+
+        //Event handler for main menu button
+        void MenuClick(ReleasedEventArgs args)
+        {
+            
+        }
+        //Event handler for help button
+        void HelpClick(ReleasedEventArgs args)
+        {
+
+        }
+
+        //Event handler for about button
+        void AboutClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for high score/hall of fame button
+        void HallOfFameClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for for back button
+        void BackClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for character selection option 1
+        void CharOptn1Click(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for character selection option 2
+        void CharOptn2Click(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for character selection option 3
+        void CharOptn3Click(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for developer button
+        void DeveloperClick(ReleasedEventArgs args)
+        {
+           
+        }
+        //Event handler for location setter
+        void setLocClick(PressedEventArgs args)
+        {
+                        
+        }
+        //Event handler for easy difficulty button
+        void EasyClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for medium difficulty button
+        void MediumClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for hard difficulty button
+        void HardClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for submitCharName button
+        void SubmitCharNameClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Event handler for cheat mode button
+        void CheatModeClick(ReleasedEventArgs args)
+        {
+
+        }
+        //Return node that cursor is pointing at
+        protected Node GetNodeUserIsLookingAt()
+        {
+            throw new NotImplementedException();
+        }
+        
+        //Return the ray that passes through the cursor's location
+        public Ray GetMouseRay()
+        {
+            throw new NotImplementedException();
+        }
+
+        //Load and play animation from file
+        void PlayAnimation(string file)
+        {
+
+        }
 
         static void Main(string[] args)
         {
