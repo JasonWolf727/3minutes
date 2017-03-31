@@ -13,17 +13,11 @@ namespace CC_X.Model
         public enum EnemyType { Zombie, Car, None }
         public Vector3 Position { get; set; }
         public int ID { get; set; }
-        abstract public void UpdatePos(Vector3 position);                      
+        abstract public void UpdatePos(Vector3 position);
 
-        public void Serialize()
-        {
-            // Take the stuff in World and put it into a single comma-delimited string.
-        }
+        abstract public void Serialize();
 
-        public void DeSerialize()
-        {
-            // Take the stuff in a CSV file and put it into a single comma-delimited string; then distribute among all the values.
-        }
+        abstract public void DeSerialize();
 
     }
 }
