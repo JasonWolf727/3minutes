@@ -13,7 +13,7 @@ namespace CC_X.Model
         public enum EnemyType { Zombie, Car, None }
         public Vector3 Position { get; set; }
         public int ID { get; set; }
-        abstract public void UpdatePos(Vector3 position);
+        abstract public void UpdatePos(Vector3 position);        
 
         abstract public string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health);
 

@@ -9,8 +9,8 @@ namespace CC_X.Model
 {
     class Enemies : World
     {
-        public int Damage { get; set; }
-        public int Health { get; set; }
+        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage
+        public int Health { get; set; }//An integer from 1-100. If meets or exceeds 100, character dies
         public Enemies()
         {
 

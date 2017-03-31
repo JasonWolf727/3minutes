@@ -8,9 +8,9 @@ using Urho;
 namespace CC_X.Model
 {
     class MainCharacter : World
-    {
-        public int Damage { get; set; }
-        public int Health { get; set; }
+    {         
+        public int Damage { get; set; } //An integer value of damage can inflict. High number = high damage
+        public int Health { get; set; } //An integer from 1-100. If meets or exceeds 100, character dies
         public MainCharacter()
         {
 
@@ -20,6 +20,14 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
+        public bool IsCollided(Dictionary<int, World> worldObjs)
+        {
+            throw new NotImplementedException();
+        }
+        public void ReceiveDamage(int damagePow)
+        {
+
+        }
         // Store information concerning the Main Character
         public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
         {
