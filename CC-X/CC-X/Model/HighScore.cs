@@ -11,18 +11,22 @@ namespace CC_X.Model
     class HighScore
     {
         const string highScoreFile = "highScore.txt";
-        List<string> data = new List<string>();
-                       
+        public List<string> data = new List<string>();
+
         //This method will write all of the high scores to the "highScore.txt" file. 
         //It will take in a list of all the data points and overwrite the contents of the file
+        //the data will be stored on separate lines separated by a space
+        //player_name " " score
         public void WriteToFile()
         {
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
-                //the data will be stored on separate lines separated by a space
-                //player_name " " score
-                //for each in list `data`
-                //writer.Write("data");
+                string dataToWrite = "";
+                for (int i = 0; i < data.Count; i++)
+                {
+                    dataToWrite = dataToWrite + data[i] + "/n";   
+                }
+                writer.WriteLine(dataToWrite);
             }
 
         }
@@ -31,18 +35,53 @@ namespace CC_X.Model
         //Add the data to a list containing all the highscores. 
         public void ReadFromFile()
         {
-            //not implemented yet
+            using (StreamReader reader = new StreamReader(highScoreFile))
+            {
+                data.Clear();
+                string line = reader.ReadLine();
+                while (line != null)
+                {
+                    data.Add(line);
+                    line = reader.ReadLine();
+                }
+                
+            }
         }
 
         //Updates the list containing the highscores if the new score is larger than the lowest highscore. 
-        public void AddHighScore(int newScore)
+        public void AddHighScore(int newScore, string playerName)
         {
-            //not implemented yet
+            ReadFromFile();
+            string newScoreData = "";
+            newScoreData = newScoreData + newScore + playerName;
+            if (data.Count() != 0)
+            {
+                int loc = -1;
+                for (int i = 0; i < data.Count(); i++)
+                {
+                    var contents = data[i].Split(' ');
+                    if (newScore > Convert.ToInt32(contents[1]))
+                    {
+                        loc = i;
+                    }
+                }
+                if (loc != -1)
+                {
+                    data.Insert(loc, newScoreData);
+                    data.RemoveAt(data.Count() - 1);
+                }
+            }
+            else
+            {
+                data.Add(newScoreData);
+            }        
+            
         }
 
         //Returns the list of highscores
         public List<string> GetHighScores()
         {
+            ReadFromFile();
             return data;
         }
     }
