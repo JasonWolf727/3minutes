@@ -20,12 +20,14 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
+        // Store information concerning enemies
         public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
         {
             string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
             return info;
         }
 
+        // Load information concerning enemies
         public override void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');

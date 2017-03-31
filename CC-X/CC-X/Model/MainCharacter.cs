@@ -27,6 +27,7 @@ namespace CC_X.Model
             return info;
         }
 
+        // Load information concerning the Main Character
         public override void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
