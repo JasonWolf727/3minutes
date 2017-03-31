@@ -17,7 +17,7 @@ namespace CC_X.Model
 
         abstract public string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health);
 
-        abstract public void DeSerialize();
+        abstract public void DeSerialize(string fileinfo);
 
     }
 }

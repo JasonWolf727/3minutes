@@ -24,9 +24,9 @@ namespace CC_X.Model
             return info;
         }
 
-        public override void DeSerialize()
+        public override void DeSerialize(string fileinfo)
         {
-            // Take the stuff in a CSV file and put it into a single comma-delimited string; then distribute among all the values.
+            throw new NotImplementedException();
         }
     }
 }

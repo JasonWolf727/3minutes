@@ -22,13 +22,21 @@ namespace CC_X.Model
 
         public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
         {
-            string info = string.Format("{0}, {1}, {2}, {3}, {4}", enemy, pos, id, pow, health);
+            string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
             return info;
         }
 
-        public override void DeSerialize()
+        public override void DeSerialize(string fileinfo)
         {
-            // Take the stuff in a CSV file and put it into a single comma-delimited string; then distribute among all the values.
+            string[] info = fileinfo.Split(',');
+            string[] tempnums = info[0].Split(',');
+            int[] nums = new int[3];
+            for (int i = 0; i < 3; ++i)
+                nums[i] = Convert.ToInt32(tempnums[i]);
+            this.Position = new Vector3(nums[0], nums[1], nums[2]);
+            this.ID = Convert.ToInt32(info[1]);
+            this.Damage = Convert.ToInt32(info[2]);
+            this.Health = Convert.ToInt32(info[3]);
         }
     }
 }
