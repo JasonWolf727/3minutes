@@ -21,7 +21,8 @@ namespace CC_X.Model
             {
                 //the data will be stored on separate lines separated by a space
                 //player_name " " score
-                writer.Write("data");
+                //for each in list `data`
+                //writer.Write("data");
             }
 
         }
