@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using Urho;
 using Urho.Gui;
 using Urho.Resources;
+using CC_X.Model;
 
 namespace CC_X
 {
-    class Program : IObserver
+    class Program : SimpleApplication, IObserver
     {
         UIElement uiRoot;
         ResourceCache cache;
+        XmlFile style;
+        Font font;
 
         Window menu;
         Window hallOfFame;
@@ -39,6 +42,7 @@ namespace CC_X
         Button medium;
         Button hard;
         Button submitCharName;
+        Button cheatMode;
 
         Text menuBtnText;
         Text helpBtnText;
@@ -57,14 +61,47 @@ namespace CC_X
         Text mediumText;
         Text hardText;
         Text submitCharNameText;
+        Text cheatModeText;
 
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
         LineEdit charName;
 
+        public Program(ApplicationOptions options) : base(options) { }
+
+        protected override void Start()
+        {
+            base.Start();
+        }
+
+        protected override void OnUpdate(float timeStep)
+        {
+            base.OnUpdate(timeStep);
+        }
+
+        //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
+        private void DeveloperCommands()
+        {
+
+        }
+
+        //Assigns keyboard input to corresponding main character logic.
+        private void GameCommands()
+        {
+
+        }
+
         static void Main(string[] args)
         {
+            var app = new Program(new ApplicationOptions("Data")
+            {
+                TouchEmulation = true,
+                WindowedMode = true
+            });
+            app.Run();
         }
+
+        
     }
 }
