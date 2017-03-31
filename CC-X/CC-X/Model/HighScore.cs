@@ -7,18 +7,42 @@ using System.Threading.Tasks;
 
 namespace CC_X.Model
 {
+    //Only the top 10 highscores will be saved.
     class HighScore
     {
-        const string highScoreFile = "highscore.txt";
-        //static string fileLocation = @"c:\Users\Joshua\Desktop\TeamProjectShared\3minutes\CC-X\CC-X"
-        int timesTest = 0;
+        const string highScoreFile = "highScore.txt";
+        List<string> data = new List<string>();
+                       
+        //This method will write all of the high scores to the "highScore.txt" file. 
+        //It will take in a list of all the data points and overwrite the contents of the file
         public void WriteToFile()
         {
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
-                writer.Write("test" + timesTest);
+                //the data will be stored on separate lines separated by a space
+                //player_name " " score
+                writer.Write("data");
             }
-            timesTest += 1;
+
+        }
+
+        //Read the data from "highScore.txt"
+        //Add the data to a list containing all the highscores. 
+        public void ReadFromFile()
+        {
+            //not implemented yet
+        }
+
+        //Updates the list containing the highscores if the new score is larger than the lowest highscore. 
+        public void AddHighScore(int newScore)
+        {
+            //not implemented yet
+        }
+
+        //Returns the list of highscores
+        public List<string> GetHighScores()
+        {
+            return data;
         }
     }
 }
