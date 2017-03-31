@@ -18,9 +18,10 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
-        public override void Serialize()
+        public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
         {
-            // Take the stuff in World and put it into a single comma-delimited string.
+            string info = string.Format("{0}, {1}", setting, id);
+            return info;
         }
 
         public override void DeSerialize()

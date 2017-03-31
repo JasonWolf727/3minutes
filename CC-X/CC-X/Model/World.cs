@@ -15,7 +15,7 @@ namespace CC_X.Model
         public int ID { get; set; }
         abstract public void UpdatePos(Vector3 position);
 
-        abstract public void Serialize();
+        abstract public string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health);
 
         abstract public void DeSerialize();
 

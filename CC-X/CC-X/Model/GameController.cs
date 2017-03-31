@@ -56,12 +56,12 @@ namespace CC_X.Model
         }
 
         // Load/save mechanism
-        private void Load()
+        private void Load(string filename)
         {
             throw new NotImplementedException();
         }
 
-        private void Save()
+        private void Save(string info)
         {
             throw new NotImplementedException();
         }
