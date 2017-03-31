@@ -11,10 +11,13 @@ namespace CC_X.Model
     {
         public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage
         public int Health { get; set; }//An integer from 1-100. If meets or exceeds 100, character dies
+        public bool IsDead = false;
         public Enemies()
         {
-
+            type = WorldType.Enemy;
+            IsDead = false;
         }
+        //If not dead, sets Enemies.Position to position
         public override void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();

@@ -11,8 +11,9 @@ namespace CC_X.Model
     {
         public Setting(SettingType setting, Vector3 position)
         {
-
-        }
+            type = WorldType.Setting;
+            IsDead = false;
+        }        
         public override void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();
