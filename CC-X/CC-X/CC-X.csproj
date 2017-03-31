@@ -59,6 +59,8 @@
     <Compile Include="Model\HighScore.cs" />
     <Compile Include="Model\HighScoreUnitTests.cs" />
     <Compile Include="Model\MainCharacter.cs" />
+    <Compile Include="Model\SerializationTest.cs" />
+    <Compile Include="Model\Serializer.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

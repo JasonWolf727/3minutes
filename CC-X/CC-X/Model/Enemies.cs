@@ -7,7 +7,7 @@ using Urho;
 
 namespace CC_X.Model
 {
-    class Enemies : World
+    class Enemies : World, Serializer
     {
         public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage
         public int Health { get; set; }//An integer from 1-100. If meets or exceeds 100, character dies
@@ -21,24 +21,26 @@ namespace CC_X.Model
         }
 
         // Store information concerning enemies
-        public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
+        public string Serialize(/*SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health*/)
         {
-            string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
-            return info;
+            //string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
+            //return info;
+            throw new NotImplementedException();
         }
 
         // Load information concerning enemies
-        public override void DeSerialize(string fileinfo)
+        public void DeSerialize(/*string fileinfo*/)
         {
-            string[] info = fileinfo.Split(',');
-            string[] tempnums = info[0].Split(',');
-            int[] nums = new int[3];
-            for (int i = 0; i < 3; ++i)
-                nums[i] = Convert.ToInt32(tempnums[i]);
-            this.Position = new Vector3(nums[0], nums[1], nums[2]);
-            this.ID = Convert.ToInt32(info[1]);
-            this.Damage = Convert.ToInt32(info[2]);
-            this.Health = Convert.ToInt32(info[3]);
+            //string[] info = fileinfo.Split(',');
+            //string[] tempnums = info[0].Split(',');
+            //int[] nums = new int[3];
+            //for (int i = 0; i < 3; ++i)
+            //    nums[i] = Convert.ToInt32(tempnums[i]);
+            //this.Position = new Vector3(nums[0], nums[1], nums[2]);
+            //this.ID = Convert.ToInt32(info[1]);
+            //this.Damage = Convert.ToInt32(info[2]);
+            //this.Health = Convert.ToInt32(info[3]);
+            throw new NotImplementedException();
         }
     }
 }

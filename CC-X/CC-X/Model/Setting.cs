@@ -7,7 +7,7 @@ using Urho;
 
 namespace CC_X.Model
 {
-    class Setting : World
+    class Setting : World, Serializer
     {
         public Setting(SettingType setting, Vector3 position)
         {
@@ -18,13 +18,16 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
-        public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)
+        // Store information concerning the environment
+        public string Serialize(/*SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health*/)
         {
-            string info = string.Format("{0}, {1}", setting, id);
-            return info;
+            //string info = string.Format("{0}, {1}", setting, id);
+            //return info;
+            throw new NotImplementedException();
         }
 
-        public override void DeSerialize(string fileinfo)
+        // Load the environment
+        public void DeSerialize(/*string fileinfo*/)
         {
             throw new NotImplementedException();
         }
