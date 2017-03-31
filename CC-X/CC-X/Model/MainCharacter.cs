@@ -61,5 +61,6 @@ namespace CC_X.Model
             //this.Health = Convert.ToInt32(info[3]);
             throw new NotImplementedException();
         }
+       
     }
 }
