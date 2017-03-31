@@ -10,23 +10,33 @@ namespace CC_X.Model
     class MainCharacter : World
     {         
         public int Damage { get; set; } //An integer value of damage can inflict. High number = high damage
-        public int Health { get; set; } //An integer from 1-100. If meets or exceeds 100, character dies
+        public int Health = 100; //If health <= 0, character dies        
+        
         public MainCharacter()
         {
-
+            type = WorldType.MainChar;
+            IsDead = false;
         }
+
+        //If not dead, sets MainCharacter.Position to position
         public override void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsCollided(Dictionary<int, World> worldObjs)
+        //Returns true if collided with other World objects. If World object type == WorldType.Enemies, decreases health accordingly
+        public bool DetectCollision(Dictionary<int, World> worldObjs)
         {
             throw new NotImplementedException();
         }
         public void ReceiveDamage(int damagePow)
         {
 
+        }
+
+        public bool IsMainCharDead()
+        {
+            throw new NotImplementedException();
         }
         // Store information concerning the Main Character
         public override string Serialize(SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health)

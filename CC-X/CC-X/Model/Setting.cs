@@ -8,11 +8,12 @@ using Urho;
 namespace CC_X.Model
 {
     class Setting : World
-    {
+    {        
         public Setting(SettingType setting, Vector3 position)
         {
-
-        }
+            type = WorldType.Setting;
+            IsDead = false;
+        }        
         public override void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();

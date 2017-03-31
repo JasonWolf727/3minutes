@@ -68,6 +68,13 @@ namespace CC_X
         LineEdit zSet;
         LineEdit charName;
 
+        //Create an instance of GameController
+        GameController game;
+
+        //Store scene nodes, but keep main character separate
+        public Dictionary<int, Node> NodesInScene;
+        Node MainChar;
+
         public Program(ApplicationOptions options) : base(options) { }
 
         protected override void Start()
@@ -88,6 +95,12 @@ namespace CC_X
 
         //Assigns keyboard input to corresponding main character logic.
         private void GameCommands()
+        {
+
+        }
+
+        //Adjusts on-screen health notification to match game.MainChar health
+        private void UpdateHealth()
         {
 
         }
