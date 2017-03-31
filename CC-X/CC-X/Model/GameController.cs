@@ -15,8 +15,8 @@ namespace CC_X.Model
 
         public GameController(Difficulty difficulty)
         {
-            
-        }        
+
+        }
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
