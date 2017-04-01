@@ -8,10 +8,8 @@ using Urho;
 namespace CC_X.Model
 {
     class MainCharacter : World, Serializer
-    {         
-        public int Damage { get; set; } //An integer value of damage can inflict. High number = high damage
-        public int Health = 100; //If health <= 0, character dies        
-        
+    {                 
+        public Vector3 PositionSinceLastCollide { get; set; }
         public MainCharacter()
         {
             type = WorldType.MainChar;
@@ -24,8 +22,8 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
-        //Returns true if collided with other World objects. If World object type == WorldType.Enemies, decreases health accordingly
-        public bool DetectCollision(Dictionary<int, World> worldObjs)
+        //Returns true if collided with other World objects. If World object type == WorldType.Enemies and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
+        public override bool DetectCollision(Dictionary<int, World> worldObjs)
         {
             throw new NotImplementedException();
         }

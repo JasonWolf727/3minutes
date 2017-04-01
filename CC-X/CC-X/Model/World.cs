@@ -16,7 +16,10 @@ namespace CC_X.Model
         public Vector3 Position { get; set; }
         public int ID { get; set; }
         public bool IsDead { get; set; }
-        abstract public void UpdatePos(Vector3 position);                
+        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
+        public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
+        abstract public void UpdatePos(Vector3 position);
+        abstract public bool DetectCollision(Dictionary<int, World> worldObjs);
 
     }
 }
