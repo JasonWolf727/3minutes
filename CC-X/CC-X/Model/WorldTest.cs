@@ -155,6 +155,43 @@ namespace CC_X.Model
             Assert.IsTrue(MainChar.Health == 0);
             Assert.IsTrue(MainChar.IsDead == true);
         }
-        //Yes we can!
+        [TestMethod]
+        public void UpdatePos_MainChar_NoException()
+        {            
+            World MainChar = new MainCharacter();
+            MainChar.Position = new Urho.Vector3(0.95f, 3.95f, 8);
+            Urho.Vector3 pos = new Urho.Vector3(1, 2, 3);
+            MainChar.UpdatePos(pos);
+
+            Assert.IsTrue(MainChar.Position.X == 1);
+            Assert.IsTrue(MainChar.Position.Y == 2);
+            Assert.IsTrue(MainChar.Position.Z == 3);
+
+            pos = new Urho.Vector3(0, 0, 0);
+            MainChar.UpdatePos(pos);
+
+            Assert.IsTrue(MainChar.Position.X == 0);
+            Assert.IsTrue(MainChar.Position.Y == 0);
+            Assert.IsTrue(MainChar.Position.Z == 0);
+        }
+        [TestMethod]
+        public void UpdatePos_Enemies_NoException()
+        {
+            World enemy = new Enemies();
+            enemy.Position = new Urho.Vector3(0.95f, 3.95f, 8);
+            Urho.Vector3 pos = new Urho.Vector3(1, 2, 3);
+            enemy.UpdatePos(pos);
+
+            Assert.IsTrue(enemy.Position.X == 1);
+            Assert.IsTrue(enemy.Position.Y == 2);
+            Assert.IsTrue(enemy.Position.Z == 3);
+
+            pos = new Urho.Vector3(0, 0, 0);
+            enemy.UpdatePos(pos);
+
+            Assert.IsTrue(enemy.Position.X == 0);
+            Assert.IsTrue(enemy.Position.Y == 0);
+            Assert.IsTrue(enemy.Position.Z == 0);
+        }
     }
 }
