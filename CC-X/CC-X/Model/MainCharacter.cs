@@ -40,7 +40,7 @@ namespace CC_X.Model
         // Store information concerning the Main Character
         public string Serialize()
         {
-            //string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
+            //string info = string.Format("'{0}', {1}, {2}, {3}", pos, id, pow, health);
             //return info;
             throw new NotImplementedException();
         }

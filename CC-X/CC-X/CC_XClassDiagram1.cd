@@ -25,7 +25,7 @@
   <Class Name="CC_X.Model.HighScoreUnitTests">
     <Position X="9.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAQAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\HighScoreUnitTests.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -83,6 +83,13 @@
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CC_X.Model.WorldTest">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAABAAAAAAAACAAQAAAAAAIAAAAAACAEAQAI=</HashCode>
+      <FileName>Model\WorldTest.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="CC_X.Model.Serializer">
     <Position X="7.25" Y="0.5" Width="1.5" />

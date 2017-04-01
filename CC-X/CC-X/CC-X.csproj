@@ -70,6 +70,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="CC_XClassDiagram1.cd" />
+    <None Include="Model\LoadSaveTest.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
