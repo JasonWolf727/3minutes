@@ -9,6 +9,6 @@ namespace CC_X.Model
     interface Serializer
     {
         string Serialize();
-        void DeSerialize();
+        void DeSerialize(string fileinfo);
     }
 }

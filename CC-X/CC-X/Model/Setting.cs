@@ -20,7 +20,7 @@ namespace CC_X.Model
         }
 
         // Store information concerning the environment
-        public string Serialize(/*SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health*/)
+        public string Serialize()
         {
             //string info = string.Format("{0}, {1}", setting, id);
             //return info;
@@ -28,7 +28,7 @@ namespace CC_X.Model
         }
 
         // Load the environment
-        public void DeSerialize(/*string fileinfo*/)
+        public void DeSerialize(string fileinfo)
         {
             throw new NotImplementedException();
         }
