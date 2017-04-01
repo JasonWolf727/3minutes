@@ -11,8 +11,7 @@ namespace CC_X.Model
     enum Level { One, Two, Three}
     class GameController
     {        
-        public Dictionary<int, World> SettingCollection { get; set; }
-        public Dictionary<int, World> EnemiesCollection { get; set; }
+        public Dictionary<int, World> WorldCollection { get; set; } //Contains Setting and Enemy objects      
         public World MainChar = new MainCharacter();
         public Difficulty DifficutlySelected { get; set; }
        

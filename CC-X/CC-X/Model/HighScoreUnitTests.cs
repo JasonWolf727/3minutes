@@ -17,5 +17,19 @@ namespace CC_X.Model
             cmdHS.AddHighScore(32, "PlayerOne");
             Assert.IsTrue(cmdHS.data[0] == "PlayerOne 32");
         }
+
+        [TestMethod]
+        public void AddHighScore_5thScoreAdded_Success()
+        {
+            HighScore cmdHS = new HighScore();
+            //not implemented yet
+        }
+
+        [TestMethod]
+        public void AddHighScore_10thScoreAdded_Success()
+        {
+            HighScore cmdHS = new HighScore();
+            //not implemented yet
+        }
     }
 }
