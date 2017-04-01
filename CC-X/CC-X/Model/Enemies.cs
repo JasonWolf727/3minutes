@@ -8,10 +8,7 @@ using Urho;
 namespace CC_X.Model
 {
     class Enemies : World, Serializer
-    {
-        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage
-        public int Health { get; set; }//An integer from 1-100. If meets or exceeds 100, character dies
-        public bool IsDead = false;
+    {        
         public Enemies()
         {
             type = WorldType.Enemy;
@@ -43,6 +40,11 @@ namespace CC_X.Model
             //this.ID = Convert.ToInt32(info[1]);
             //this.Damage = Convert.ToInt32(info[2]);
             //this.Health = Convert.ToInt32(info[3]);
+            throw new NotImplementedException();
+        }
+
+        public override bool DetectCollision(Dictionary<int, World> worldObjs)
+        {
             throw new NotImplementedException();
         }
     }

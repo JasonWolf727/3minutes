@@ -32,5 +32,10 @@ namespace CC_X.Model
         {
             throw new NotImplementedException();
         }
+
+        public override bool DetectCollision(Dictionary<int, World> worldObjs)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
