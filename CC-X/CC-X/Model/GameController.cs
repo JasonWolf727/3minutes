@@ -24,8 +24,8 @@ namespace CC_X.Model
         //Receives selected difficulty from view and generates level according to difficulty
         public GameController(Difficulty difficulty)
         {
-            
-        }        
+
+        }
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
@@ -83,6 +83,7 @@ namespace CC_X.Model
 
         private void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
+            // Setting isn't an official parameter, but right now, it's keeping the code from crashing.
             // Use a StringBuilder
             var csv = new StringBuilder();
             var setting = sett;

@@ -21,7 +21,7 @@ namespace CC_X.Model
         }
 
         // Store information concerning enemies
-        public string Serialize(/*SettingType setting, EnemyType enemy, Vector3 pos, int id, int pow, int health*/)
+        public string Serialize()
         {
             //string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
             //return info;
@@ -29,7 +29,7 @@ namespace CC_X.Model
         }
 
         // Load information concerning enemies
-        public void DeSerialize(/*string fileinfo*/)
+        public void DeSerialize(string fileinfo)
         {
             //string[] info = fileinfo.Split(',');
             //string[] tempnums = info[0].Split(',');
