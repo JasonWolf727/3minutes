@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CC_X.Model.Enemies">
+    <Position X="5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAAAAAAAAAAAEAAAACDAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Enemies.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CC_X.Model.GameController">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAwIAAIAAAoAABAAAAAABAAAAAAAAgAAAAAAAAAQA=</HashCode>
+      <FileName>Model\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CC_X.Model.HighScore">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAQAAAAAAIAAAAAAAAAAEAAAQAAAAAAE=</HashCode>
+      <FileName>Model\HighScore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CC_X.Model.HighScoreUnitTests">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\HighScoreUnitTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CC_X.Model.MainCharacter" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAgAAAAAAAABAAAAACDAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MainCharacter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CC_X.Model.SerializationTest">
+    <Position X="7.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\SerializationTest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CC_X.Model.Setting">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Setting.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CC_X.Model.World">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CC_X.Model.World.SettingType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\World.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CC_X.Model.World.EnemyType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\World.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CC_X.Model.World.WorldType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\World.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAgAAAAEAAAAACBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\World.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CC_X.Program">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASaQewoQQrgWQCAiEEBNAAkSACWkECBMQBjAJgkKAQg=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="CC_X.Model.Serializer">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IObserver" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
