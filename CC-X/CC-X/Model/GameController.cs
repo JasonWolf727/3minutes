@@ -70,7 +70,7 @@ namespace CC_X.Model
         // Writes the game state (previously serialized into a string) to the provided file (CSV).
         // Uploads the file, parsing its contents into a single string for deserialization.
 
-        private void Load(string filepath)
+        public void Load(string filepath)
         {
             //string[] temp = File.ReadAllLines(filepath);
             //var sett = new Setting(this.setting, Urho.Vector3);
@@ -82,7 +82,7 @@ namespace CC_X.Model
             throw new NotImplementedException();
         }
 
-        private void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
+        public void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
             // Setting isn't an official parameter, but right now, it's keeping the code from crashing.
             // Use a StringBuilder
