@@ -155,6 +155,6 @@ namespace CC_X.Model
             Assert.IsTrue(MainChar.Health == 0);
             Assert.IsTrue(MainChar.IsDead == true);
         }
-
+        //Yes we can!
     }
 }
