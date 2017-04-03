@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Urho;
+using Urho.Shapes;
 using Urho.Gui;
 using Urho.Resources;
 using CC_X.Model;
@@ -26,6 +27,7 @@ namespace CC_X
         Window chooseChar;
         Window selectDiff;
         Window giveCharName;
+        Window locWindow;
 
         Button mainMenu;
         Button helpBtn;
@@ -64,11 +66,19 @@ namespace CC_X
         Text hardText;
         Text submitCharNameText;
         Text cheatModeText;
+        Text coordinates;
+        Text messageHelper;
 
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
         LineEdit charName;
+
+        Node currentNode;
+        int numNodes;
+        int nodeSelect = 1;
+        public bool DeveloperMode { get; set; }
+        
 
         //Create an instance of GameController
         GameController game;
@@ -166,17 +176,144 @@ namespace CC_X
             exitBtn.SubscribeToReleased(_ => Exit());
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
+
+            //Set up Developer tools
+            coordinates = uiRoot.CreateText("Coordinates", 6);
+            coordinates.SetFont(font, 12);
+            coordinates.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Top);
+            coordinates.Value = "";
+            coordinates.SetStyle("Text", null);
+            coordinates.SetColor(Color.Black);
+            coordinates.Visible = false;
+            DeveloperMode = false;
+
+            messageHelper = uiRoot.CreateText("MessageHelper", 3);
+            messageHelper.SetFont(font, 14);
+            messageHelper.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            messageHelper.SetColor(Color.Red);
+            messageHelper.Value = "";
+            messageHelper.Visible = false;
+
+            //Set up location setter window
+            locWindow = uiRoot.CreateWindow("LocationWindow", 8);
+            locWindow.SetStyleAuto(null);
+            locWindow.SetMinSize(300, 165);
+            locWindow.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            locWindow.Opacity = 0.85f;
+            locWindow.Visible = false;
+
+            //Add set button to loc setter window
+            Button set = locWindow.CreateButton("SetBtn", 1);
+            set.SetStyleAuto(null);
+            set.SetMinSize(100, 30);
+            set.SetMaxSize(100, 30);
+            set.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            set.SubscribeToPressed(setLocClick);
+
+            Text setText = set.CreateText("SetText", 1);
+            setText.SetFont(font, 12);
+            setText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            setText.Value = "Set";
+
+            //Add text input to loc setter window
+            xSet = locWindow.CreateLineEdit("XSet", 2);
+            ySet = locWindow.CreateLineEdit("YSet", 3);
+            zSet = locWindow.CreateLineEdit("ZSet", 4);
+
+            xSet.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            xSet.SetMinSize(280, 30);
+            xSet.SetMaxSize(280, 30);
+            xSet.SetStyleAuto(null);
+            xSet.Text = "X: ";
+
+            ySet.Position = new IntVector2(10, 45);
+            ySet.SetMinSize(280, 30);
+            ySet.SetMaxSize(280, 30);
+            ySet.SetStyleAuto(null);
+            ySet.Text = "Y: ";
+
+            zSet.Position = new IntVector2(10, 90);
+            zSet.SetMinSize(280, 30);
+            zSet.SetMaxSize(280, 30);
+            zSet.SetStyleAuto(null);
+            zSet.Text = "Z: ";
+
         }
 
         protected override void OnUpdate(float timeStep)
         {
             base.OnUpdate(timeStep);
+            //Developer logic
+            if (Input.GetKeyPress(Key.M))
+            {
+                DeveloperMode = !DeveloperMode;
+                menu.Visible = !menu.Visible;
+                coordinates.Visible = !coordinates.Visible;
+            } 
+            if(DeveloperMode)
+            {
+                DeveloperCommands(timeStep);
+            }            
         }
 
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
-        private void DeveloperCommands()
+        private void DeveloperCommands(float timeStep)
         {
+            if (Input.GetKeyDown(Key.N1)) nodeSelect = 1;
+            if (Input.GetKeyDown(Key.N2)) nodeSelect = 2;
 
+            if (currentNode != null)
+            {
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key";
+            }
+            else
+            {
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n--: (--, --, --)\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key";
+            }            
+            
+
+            //Enable camera move
+            MoveCamera = true;
+            MoveSpeed = 10f;
+            float speed = MoveSpeed;
+
+            if (Input.GetKeyDown(Key.Shift))
+                speed *= 2f;
+
+            if (Input.GetKeyDown(Key.W)) CameraNode.Translate(Vector3.UnitZ * speed * timeStep);
+            if (Input.GetKeyDown(Key.S)) CameraNode.Translate(-Vector3.UnitZ * speed * timeStep);
+            if (Input.GetKeyDown(Key.A)) CameraNode.Translate(-Vector3.UnitX * speed * timeStep);
+            if (Input.GetKeyDown(Key.D)) CameraNode.Translate(Vector3.UnitX * speed * timeStep);
+            if (Input.GetKeyDown(Key.PageUp)) CameraNode.Translate(Vector3.UnitY * speed * timeStep);
+            if (Input.GetKeyDown(Key.PageDown)) CameraNode.Translate(-Vector3.UnitY * speed * timeStep);
+            if (Input.GetKeyDown(Key.R))
+            {
+                // Reset camera
+                CameraNode.Position = Vector3.Zero;
+                CameraNode.Rotation = Quaternion.Identity;
+            }            
+            //Create a node
+            if (Input.GetKeyPress(Key.Insert)) CreateNode();
+
+            //Select a node
+            if (Input.GetKeyPress(Key.G)) currentNode = GetNodeUserIsLookingAt();
+
+            //Bring up location setter
+            if (Input.GetKeyPress(Key.L) && currentNode != null && locWindow.Visible == false)
+            {
+                BringUpLocSetter();
+            }
+
+            if (currentNode != null)
+            {
+                if (Input.GetKeyDown(Key.KP_9)) currentNode.Translate(Vector3.UnitZ * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.KP_5)) currentNode.Translate(-Vector3.UnitZ * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.KP_8)) currentNode.Translate(Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.KP_2)) currentNode.Translate(-Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.KP_4)) currentNode.Translate(-Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.KP_6)) currentNode.Translate(Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.Local);
+            }
         }
 
         //Assigns keyboard input to corresponding main character logic.
@@ -250,7 +387,25 @@ namespace CC_X
         //Event handler for location setter
         void setLocClick(PressedEventArgs args)
         {
-                        
+            string xStr = xSet.Text;
+            string yStr = ySet.Text;
+            string zStr = zSet.Text;
+            try
+            {
+                float xCoor = (float)(Convert.ToDouble(xStr.Replace("X: ", "").Trim()));
+                float yCoor = (float)(Convert.ToDouble(yStr.Replace("Y: ", "").Trim()));
+                float zCoor = (float)(Convert.ToDouble(zStr.Replace("Z: ", "").Trim()));
+
+                currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
+            }
+            catch (Exception e)
+            {
+                messageHelper.Value = "Do not delete 'X: ','Y: ', or 'Z: '. Enter only numbers.";
+                messageHelper.Visible = true;
+            }
+
+            locWindow.Visible = false;
+            MoveCamera = true;
         }
         //Event handler for easy difficulty button
         void EasyClick(ReleasedEventArgs args)
@@ -276,17 +431,73 @@ namespace CC_X
         void CheatModeClick(ReleasedEventArgs args)
         {
 
+        }        
+        public void CreateNode()
+        {
+            ++numNodes;
+            string name = GetSelectedNodeType();
+            //Names of node types           
+
+            var node = Scene.CreateChild(name + numNodes);
+            node.Position = Camera.Node.Position;
+            node.Rotation = Camera.Node.Rotation;
+            node.Translate(new Vector3((float)Input.MousePosition.X / Graphics.Width, (float)Input.MousePosition.Y / Graphics.Height, 2));            
+
+            if(nodeSelect == 1)
+            {
+                var component2 = node.CreateComponent<Urho.Shapes.Plane>();
+                component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+                component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                node.Rotate(new Quaternion(-90, 0, 0), TransformSpace.Local);
+                node.SetScale(0.75f);
+            }
+            if (nodeSelect == 2)
+            {
+                var component2 = node.CreateComponent<AnimatedModel>();
+                component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+                component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+                node.CreateComponent<AnimationController>();
+                node.SetScale(0.2f);
+            }
+        }
+
+        //Brings up location setter window for developer mode
+        public void BringUpLocSetter()
+        {
+            locWindow.Visible = true;
+            messageHelper.Visible = false;
+            MoveCamera = false;
+            xSet.Text = "X: ";
+            ySet.Text = "Y: ";
+            zSet.Text = "Z: ";
+        }
+        //Returns string name of current node type select (for developer mode)
+        public string GetSelectedNodeType()
+        {
+            string s = "";
+            if (nodeSelect == 1) s = "Plane";
+            if (nodeSelect == 2) s = "Mutant";
+            return s;
         }
         //Return node that cursor is pointing at
         protected Node GetNodeUserIsLookingAt()
         {
-            throw new NotImplementedException();
+            Ray cameraRay = GetMouseRay();
+
+            var result = Scene.GetComponent<Octree>().RaycastSingle(cameraRay, RayQueryLevel.Triangle, 100, DrawableFlags.Geometry, 0x70000000);
+            if (result != null)
+            {
+                return result.Value.Node;
+            }
+            return null;
         }
         
         //Return the ray that passes through the cursor's location
         public Ray GetMouseRay()
         {
-            throw new NotImplementedException();
+            return Camera.GetScreenRay(
+                (float)Input.MousePosition.X / Graphics.Width,
+                (float)Input.MousePosition.Y / Graphics.Height);
         }
 
         //Load and play animation from file

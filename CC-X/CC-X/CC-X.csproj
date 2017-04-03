@@ -70,18 +70,75 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="CC_XClassDiagram1.cd" />
+    <None Include="Data\Models\Mutant\Layer\Mutant_Block_LY.ani" />
+    <None Include="Data\Models\Mutant\Layer\Mutant_HitHead_LY.ani" />
+    <None Include="Data\Models\Mutant\Layer\Mutant_Throw_LY.ani" />
+    <None Include="Data\Models\Mutant\Layer\Mutant_Wave_LY.ani" />
+    <None Include="Data\Models\Mutant\Mutant.mdl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\Mutant\Mutant_Death.ani" />
+    <None Include="Data\Models\Mutant\Mutant_HipHop1.ani" />
+    <None Include="Data\Models\Mutant\Mutant_Walk.ani" />
+    <None Include="Data\Models\Mutant\RootMotion\Mutant_JumpAttack_RM.ani" />
+    <None Include="Data\Models\Mutant\Skeleton\Mutant_Skeleton.fbx" />
+    <None Include="Data\Models\Swat\Skeleton\Swat_Skeleton.fbx" />
+    <None Include="Data\Models\Swat\Swat.mdl" />
+    <None Include="Data\Models\Swat\Swat_DeathFromBack.ani" />
+    <None Include="Data\Models\Swat\Swat_WalkFwd.ani" />
     <None Include="Model\LoadSaveTest.csv" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data\Materials\" />
-    <Folder Include="Data\Models\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Data\Materials\mutant_M.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Materials\Soldier_body1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Materials\Soldier_head6.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Image\mutant.png" />
+    <Content Include="Data\Models\Mutant\Materials\mutant_M.xml" />
+    <Content Include="Data\Models\Swat\Image\swat.png" />
+    <Content Include="Data\Models\Swat\Materials\Soldier_body1.xml" />
+    <Content Include="Data\Models\Swat\Materials\Soldier_head6.xml" />
     <Content Include="Data\Textures\earth.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Textures\grassPt1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\grassPt2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Textures\moon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Mutant_diffuse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Mutant_normal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_Body_diffuse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_Body_normal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_Body_specular.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_head_diffuse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_head_normal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Soldier_head_specular.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\UI\DefaultStyle.xml" />
