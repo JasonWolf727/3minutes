@@ -34,7 +34,8 @@ namespace CC_X
         Button developerBtn;
         Button backBtn;
         Button exitBtn;
-        Button startBtn;
+        Button newGameBtn;
+        Button loadGameBtn;
         Button charOptn1;
         Button charOptn2;
         Button charOptn3;
@@ -53,7 +54,8 @@ namespace CC_X
         Text exitBtnText;
         Text welcomeMsg;
         Text aboutMsg;
-        Text startBtnMsg;
+        Text loadGameText;
+        Text newGameText;
         Text charOptn1Text;
         Text charOptn2Text;
         Text charOptn3Text;
@@ -80,6 +82,90 @@ namespace CC_X
         protected override void Start()
         {
             base.Start();
+
+            //Setup Root UI and chache
+            uiRoot = UI.Root;            
+            cache = ResourceCache;
+
+            //Setup font and style
+            style = cache.GetXmlFile("UI/DefaultStyle.xml");
+            font = cache.GetFont("Fonts/Anonymous Pro.ttf");
+
+            //Setup UI default style
+            uiRoot.SetStyleAuto(style);
+
+            //Setup main menu/title screen
+            menu = uiRoot.CreateWindow("Menu", 1);
+            menu.SetStyleAuto(null);
+            menu.SetMinSize(300, 600);
+            menu.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);            
+            menu.Opacity = 0.85f;
+
+            //Add welcome message
+            welcomeMsg = menu.CreateText("Welcome", 0);
+            welcomeMsg.SetFont(font, 18);
+            welcomeMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            welcomeMsg.Value = "Welcome to\n\r\r\rCC-X!";
+
+            //Add buttons to main menu
+            newGameBtn = menu.CreateButton("NewGameBtn", 1);
+            newGameBtn.SetMinSize(230, 40);
+            newGameBtn.SetStyleAuto(null);
+            newGameBtn.Position = new IntVector2(35, 235);
+
+            loadGameBtn = menu.CreateButton("LoadGameBtn", 2);
+            loadGameBtn.SetMinSize(230, 40);
+            loadGameBtn.SetStyleAuto(null);
+            loadGameBtn.Position = new IntVector2(35, 280);
+
+            exitBtn = menu.CreateButton("ExitBtn", 3);
+            exitBtn.SetMinSize(230, 40);
+            exitBtn.SetStyleAuto(null);
+            exitBtn.Position = new IntVector2(35, 325); 
+
+            helpBtn = menu.CreateButton("HelpBtn", 4);
+            helpBtn.SetMinSize(100, 30);
+            helpBtn.SetStyleAuto(null);
+            helpBtn.SetAlignment(HorizontalAlignment.Left, VerticalAlignment.Bottom);
+
+            aboutBtn = menu.CreateButton("AboutBtn", 5);
+            aboutBtn.SetMinSize(100, 30);
+            aboutBtn.SetStyleAuto(null);
+            aboutBtn.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Bottom);
+
+
+            //Add text to the buttons
+            newGameText = newGameBtn.CreateText("newGameText", 1);
+            newGameText.SetFont(font, 16);
+            newGameText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            newGameText.Value = "New Game";
+
+            loadGameText = loadGameBtn.CreateText("loadGameText", 1);
+            loadGameText.SetFont(font, 16);
+            loadGameText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            loadGameText.Value = "Load Game";
+
+            exitBtnText = exitBtn.CreateText("exitBtnText", 1);
+            exitBtnText.SetFont(font, 16);
+            exitBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            exitBtnText.Value = "Exit";
+
+            helpBtnText = helpBtn.CreateText("helpBtnText", 1);
+            helpBtnText.SetFont(font, 12);
+            helpBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            helpBtnText.Value = "Help";
+
+            aboutBtnText = aboutBtn.CreateText("aboutBtnText", 1);
+            aboutBtnText.SetFont(font, 12);
+            aboutBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            aboutBtnText.Value = "About";
+
+            //Subscribe buttons to event handlers
+            newGameBtn.SubscribeToReleased(NewGameClick);
+            loadGameBtn.SubscribeToReleased(LoadGameClick);
+            exitBtn.SubscribeToReleased(_ => Exit());
+            helpBtn.SubscribeToReleased(HelpClick);
+            aboutBtn.SubscribeToReleased(AboutClick);
         }
 
         protected override void OnUpdate(float timeStep)
@@ -105,12 +191,16 @@ namespace CC_X
 
         }
                 
-        //Event handler for start button
-        void StartClick(ReleasedEventArgs args)
+        //Event handler for new game button
+        void NewGameClick(ReleasedEventArgs args)
         {
 
         }
+        //Event handler for load game button
+        void LoadGameClick(ReleasedEventArgs args)
+        {
 
+        }
         //Event handler for main menu button
         void MenuClick(ReleasedEventArgs args)
         {
