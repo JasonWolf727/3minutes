@@ -7,9 +7,9 @@ using Urho;
 
 namespace CC_X.Model
 {
-    class Enemies : World, Serializer
+    class Enemy : World, Serializer
     {        
-        public Enemies()
+        public Enemy()
         {
             type = WorldType.Enemy;
             IsDead = false;

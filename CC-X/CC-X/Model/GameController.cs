@@ -90,7 +90,7 @@ namespace CC_X.Model
             csv.AppendLine(setting.Serialize());
             var chara = new MainCharacter();
             csv.AppendLine(chara.Serialize());
-            var foes = new Enemies();
+            var foes = new Enemy();
             csv.AppendLine(foes.Serialize());
             File.WriteAllText(filepath, csv.ToString());
             //throw new NotImplementedException();

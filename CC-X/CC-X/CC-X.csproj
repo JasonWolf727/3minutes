@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IObserver.cs" />
-    <Compile Include="Model\Enemies.cs" />
+    <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\GameController.cs" />
     <Compile Include="Model\HighScore.cs" />
     <Compile Include="Model\HighScoreUnitTests.cs" />
