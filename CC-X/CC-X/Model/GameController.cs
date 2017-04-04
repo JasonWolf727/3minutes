@@ -13,6 +13,7 @@ namespace CC_X.Model
     {        
         public Dictionary<int, World> WorldCollection { get; set; } //Contains Setting and Enemy objects      
         public MainCharacter MainChar = new MainCharacter();
+        public Enemies foe = new Enemies();
         public Difficulty DifficutlySelected { get; set; }
        
         public Level HighestLevelReached = Level.One;
@@ -73,10 +74,9 @@ namespace CC_X.Model
         {
             string[] temp = File.ReadAllLines(filepath);
             //var sett = new Setting(this.setting, Urho.Vector3);
-            //sett.DeSerialize();
+            //sett.DeSerialize(temp[0]);
             MainChar.DeSerialize(temp[1]);
-            //var foes = new Enemies();
-            //foes.DeSerialize();
+            foe.DeSerialize(temp[2]);
             //throw new NotImplementedException();
         }
 
@@ -87,11 +87,9 @@ namespace CC_X.Model
             var csv = new StringBuilder();
             //var setting = sett;
             //csv.AppendLine(setting.Serialize());
-            csv.AppendLine(MainChar.Serialize());  // MainCharacter is ready to save
-            //var foes = new Enemies();
-            //csv.AppendLine(foes.Serialize());
+            csv.AppendLine(MainChar.Serialize());
+            csv.AppendLine(foe.Serialize());
             File.WriteAllText(filepath, csv.ToString());
-            //throw new NotImplementedException();
         }
     }
 }

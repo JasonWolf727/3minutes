@@ -23,24 +23,22 @@ namespace CC_X.Model
         // Store information concerning enemies
         public string Serialize()
         {
-            //string info = string.Format("{0}, {1}, {2}, {3}", pos, id, pow, health);
-            //return info;
-            throw new NotImplementedException();
+            string info = string.Format("{0}, {1}, {2}, {3}", this.Position, this.ID, this.Damage, this.Health);
+            return info;
         }
 
         // Load information concerning enemies
         public void DeSerialize(string fileinfo)
         {
-            //string[] info = fileinfo.Split(',');
-            //string[] tempnums = info[0].Split(',');
-            //int[] nums = new int[3];
-            //for (int i = 0; i < 3; ++i)
-            //    nums[i] = Convert.ToInt32(tempnums[i]);
-            //this.Position = new Vector3(nums[0], nums[1], nums[2]);
-            //this.ID = Convert.ToInt32(info[1]);
-            //this.Damage = Convert.ToInt32(info[2]);
-            //this.Health = Convert.ToInt32(info[3]);
-            throw new NotImplementedException();
+            string[] info = fileinfo.Split(',');
+            string[] tempnums = info[0].Split(',');
+            int[] nums = new int[3];
+            for (int i = 0; i < 3; ++i)
+                nums[i] = Convert.ToInt32(tempnums[i]);
+            this.Position = new Vector3(nums[0], nums[1], nums[2]);
+            this.ID = Convert.ToInt32(info[1]);
+            this.Damage = Convert.ToInt32(info[2]);
+            this.Health = Convert.ToInt32(info[3]);
         }
 
         public override bool DetectCollision(Dictionary<int, World> worldObjs)

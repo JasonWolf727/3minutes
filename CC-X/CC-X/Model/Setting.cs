@@ -22,15 +22,16 @@ namespace CC_X.Model
         // Store information concerning the environment
         public string Serialize()
         {
-            //string info = string.Format("{0}, {1}", setting, id);
-            //return info;
+            string info = string.Format("{0}, {1}", type, this.ID);
+            return info;
             throw new NotImplementedException();
         }
 
         // Load the environment
         public void DeSerialize(string fileinfo)
         {
-            throw new NotImplementedException();
+            string[] info = fileinfo.Split(',');
+            // The rest goes here...
         }
 
         public override bool DetectCollision(Dictionary<int, World> worldObjs)
