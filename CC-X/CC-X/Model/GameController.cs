@@ -12,7 +12,7 @@ namespace CC_X.Model
     class GameController
     {        
         public Dictionary<int, World> WorldCollection { get; set; } //Contains Setting and Enemy objects      
-        public World MainChar = new MainCharacter();
+        public MainCharacter MainChar = new MainCharacter();
         public Difficulty DifficutlySelected { get; set; }
        
         public Level HighestLevelReached = Level.One;
@@ -88,8 +88,7 @@ namespace CC_X.Model
             var csv = new StringBuilder();
             var setting = sett;
             csv.AppendLine(setting.Serialize());
-            var chara = new MainCharacter();
-            csv.AppendLine(chara.Serialize());
+            csv.AppendLine(MainChar.Serialize());  // MainCharacter is ready to save
             var foes = new Enemies();
             csv.AppendLine(foes.Serialize());
             File.WriteAllText(filepath, csv.ToString());
