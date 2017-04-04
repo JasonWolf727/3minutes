@@ -71,14 +71,13 @@ namespace CC_X.Model
 
         public void Load(string filepath)
         {
-            //string[] temp = File.ReadAllLines(filepath);
+            string[] temp = File.ReadAllLines(filepath);
             //var sett = new Setting(this.setting, Urho.Vector3);
             //sett.DeSerialize();
-            //var chara = new MainCharacter();
-            //chara.DeSerialize();
+            MainChar.DeSerialize(temp[1]);
             //var foes = new Enemies();
             //foes.DeSerialize();
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
@@ -86,11 +85,11 @@ namespace CC_X.Model
             // Setting isn't an official parameter, but right now, it's keeping the code from crashing.
             // Use a StringBuilder
             var csv = new StringBuilder();
-            var setting = sett;
-            csv.AppendLine(setting.Serialize());
+            //var setting = sett;
+            //csv.AppendLine(setting.Serialize());
             csv.AppendLine(MainChar.Serialize());  // MainCharacter is ready to save
-            var foes = new Enemies();
-            csv.AppendLine(foes.Serialize());
+            //var foes = new Enemies();
+            //csv.AppendLine(foes.Serialize());
             File.WriteAllText(filepath, csv.ToString());
             //throw new NotImplementedException();
         }
