@@ -31,7 +31,10 @@ namespace CC_X.Model
         {
 
         }
-
+        public void MoveLeft(float howMuch)
+        {
+            Position = new Vector3(-howMuch,Position.Y,Position.Z);
+        }
         public bool IsMainCharDead()
         {
             throw new NotImplementedException();
