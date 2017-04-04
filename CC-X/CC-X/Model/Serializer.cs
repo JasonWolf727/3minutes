@@ -12,3 +12,9 @@ namespace CC_X.Model
         void DeSerialize(string fileinfo);
     }
 }
+
+/*
+Notes to self:
+    Investigate Node.Save(Urho.IO.File destination);
+    Investigate Component.Save(Urho.IO.File destination);
+*/

@@ -12,7 +12,8 @@ namespace CC_X.Model
     class GameController
     {        
         public Dictionary<int, World> WorldCollection { get; set; } //Contains Setting and Enemy objects      
-        public World MainChar = new MainCharacter();
+        public MainCharacter MainChar = new MainCharacter();
+        public Enemies foe = new Enemies();
         public Difficulty DifficutlySelected { get; set; }
        
         public Level HighestLevelReached = Level.One;
@@ -71,29 +72,23 @@ namespace CC_X.Model
 
         public void Load(string filepath)
         {
-            //string[] temp = File.ReadAllLines(filepath);
+            string[] temp = File.ReadAllLines(filepath);
             //var sett = new Setting(this.setting, Urho.Vector3);
-            //sett.DeSerialize();
-            //var chara = new MainCharacter();
-            //chara.DeSerialize();
-            //var foes = new Enemies();
-            //foes.DeSerialize();
-            throw new NotImplementedException();
+            //sett.DeSerialize(temp[0]);
+            MainChar.DeSerialize(temp[1]);
+            foe.DeSerialize(temp[2]);
+            //throw new NotImplementedException();
         }
 
-        public void Save(Setting sett, string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
+        public void Save(string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
-            // Setting isn't an official parameter, but right now, it's keeping the code from crashing.
             // Use a StringBuilder
             var csv = new StringBuilder();
-            var setting = sett;
-            csv.AppendLine(setting.Serialize());
-            var chara = new MainCharacter();
-            csv.AppendLine(chara.Serialize());
-            var foes = new Enemy();
-            csv.AppendLine(foes.Serialize());
+            //var setting = sett;
+            //csv.AppendLine(setting.Serialize());
+            csv.AppendLine(MainChar.Serialize());
+            csv.AppendLine(foe.Serialize());
             File.WriteAllText(filepath, csv.ToString());
-            //throw new NotImplementedException();
         }
     }
 }
