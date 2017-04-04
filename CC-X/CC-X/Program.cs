@@ -75,6 +75,7 @@ namespace CC_X
         LineEdit charName;
 
         Node currentNode;
+        Light light;
         int numNodes;
         int nodeSelect = 1;
         public bool DeveloperMode { get; set; }
@@ -92,6 +93,9 @@ namespace CC_X
         protected override void Start()
         {
             base.Start();
+
+            //Delete
+            CreateGround();
 
             //Setup Root UI and chache
             uiRoot = UI.Root;            
@@ -238,6 +242,13 @@ namespace CC_X
             zSet.SetStyleAuto(null);
             zSet.Text = "Z: ";
 
+
+            //Add Light to the scene
+            light = Scene.CreateComponent<Light>();
+            light.LightType = LightType.Point;
+            light.Brightness = 0.5f;
+            light.CastShadows = true;
+            //light.SpecularIntensity = 0.05f;
         }
 
         protected override void OnUpdate(float timeStep)
@@ -259,18 +270,18 @@ namespace CC_X
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
         private void DeveloperCommands(float timeStep)
         {
-            if (Input.GetKeyDown(Key.N1)) nodeSelect = 1;
-            if (Input.GetKeyDown(Key.N2)) nodeSelect = 2;
+            if (Input.GetKeyPress(Key.N1)) nodeSelect = 1;
+            if (Input.GetKeyPress(Key.N2)) nodeSelect = 2;
+            if (Input.GetKeyPress(Key.N3)) nodeSelect = 3;
 
             if (currentNode != null)
             {
-                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key";
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString();
             }
             else
             {
-                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n--: (--, --, --)\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key";
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n--: (--, --, --)\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString();
             }            
-            
 
             //Enable camera move
             MoveCamera = true;
@@ -278,7 +289,7 @@ namespace CC_X
             float speed = MoveSpeed;
 
             if (Input.GetKeyDown(Key.Shift))
-                speed *= 2f;
+                speed *= 0.2f;
 
             if (Input.GetKeyDown(Key.W)) CameraNode.Translate(Vector3.UnitZ * speed * timeStep);
             if (Input.GetKeyDown(Key.S)) CameraNode.Translate(-Vector3.UnitZ * speed * timeStep);
@@ -290,7 +301,7 @@ namespace CC_X
             {
                 // Reset camera
                 CameraNode.Position = Vector3.Zero;
-                CameraNode.Rotation = Quaternion.Identity;
+                CameraNode.Rotation = new Quaternion(-0.2f,0,0); //Quaternion.Identity
             }            
             //Create a node
             if (Input.GetKeyPress(Key.Insert)) CreateNode();
@@ -447,9 +458,9 @@ namespace CC_X
             {
                 var component2 = node.CreateComponent<Urho.Shapes.Plane>();
                 component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
-                component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));                   
                 node.Rotate(new Quaternion(-90, 0, 0), TransformSpace.Local);
-                node.SetScale(0.75f);
+                node.SetScale(3f);                
             }
             if (nodeSelect == 2)
             {
@@ -459,6 +470,49 @@ namespace CC_X
                 node.CreateComponent<AnimationController>();
                 node.SetScale(0.2f);
             }
+            if (nodeSelect == 3)
+            {
+                var component2 = node.CreateComponent<AnimatedModel>();
+                component2.Model = ResourceCache.GetModel("Models/Mushroom.mdl");
+                component2.SetMaterial(ResourceCache.GetMaterial("Materials/Mushroom/Mushroom.xml"));                                
+                node.SetScale(0.02f);
+            }
+        }
+
+        //Create Ground
+        public void CreateGround()
+        {
+            ++numNodes;
+            var node = Scene.CreateChild("Plane" + numNodes);          
+            
+            var component2 = node.CreateComponent<Urho.Shapes.Plane>();
+            component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+            component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+            node.Pitch(-20,TransformSpace.Local);
+
+            for (int i = 0; i < 5; ++i)
+            {
+                var node2 = node.CreateChild("Plane" + numNodes);
+                //node2.Pitch(-20, TransformSpace.Local);
+
+                var component3 = node2.CreateComponent<Urho.Shapes.Plane>();
+                component3.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+                component3.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * i);
+                for (int i2 = 0; i2 < 5; ++i2)
+                {
+                    var node3 = node.CreateChild("Plane" + numNodes);
+                    //node2.Pitch(-20, TransformSpace.Local);
+
+                    var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
+                    component4.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+                    component4.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                    node3.Position = new Vector3(1f + i2, node.Position.Y, 1f * i);
+                }
+            }
+
+            node.Position = new Vector3(-0.7f, -0.5f, 2);
+            node.SetScale(3f);            
         }
 
         //Brings up location setter window for developer mode
@@ -477,6 +531,7 @@ namespace CC_X
             string s = "";
             if (nodeSelect == 1) s = "Plane";
             if (nodeSelect == 2) s = "Mutant";
+            if (nodeSelect == 3) s = "Mushroom";
             return s;
         }
         //Return node that cursor is pointing at
