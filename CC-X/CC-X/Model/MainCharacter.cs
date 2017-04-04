@@ -7,23 +7,26 @@ using Urho;
 
 namespace CC_X.Model
 {
-    class MainCharacter : World, Serializer
+    class MainCharacter : GameObj, Serializer
     {                 
+        public enum MainCharOptn { Swat, Mutant }
+        public MainCharOptn SelecterCharType { get; set; }
         public Vector3 PositionSinceLastCollide { get; set; }
+        public bool IsDead { get; set; }
+        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
+        public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
         public MainCharacter()
-        {
-            type = WorldType.MainChar;
-            IsDead = false;
+        {           
         }
 
         //If not dead, sets MainCharacter.Position to position
-        public override void UpdatePos(Vector3 position)
+        public void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();
         }
 
         //Returns true if collided with other World objects. If World object type == WorldType.Enemies and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
-        public override bool DetectCollision(Dictionary<int, World> worldObjs)
+        public bool DetectCollision(Dictionary<int, GameObj> worldObjs)
         {
             throw new NotImplementedException();
         }

@@ -96,7 +96,7 @@ namespace CC_X
         {
             base.Start();
 
-            //Set up scene and add Light to the scene           
+            //Set up scene and add light to the scene           
             lightNode = Scene.CreateChild("DirectionalLight");
             lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
             var light = lightNode.CreateComponent<Light>();
