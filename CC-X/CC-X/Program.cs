@@ -75,12 +75,14 @@ namespace CC_X
         LineEdit charName;
 
         Node currentNode;
-        Light light;
         int numNodes;
         int nodeSelect = 1;
-        public bool DeveloperMode { get; set; }
-        
+        public bool DeveloperMode { get; set; }        
 
+        public Node lightNode { get; private set; }
+
+        public Light light { get; private set; }
+        
         //Create an instance of GameController
         GameController game;
 
@@ -94,12 +96,24 @@ namespace CC_X
         {
             base.Start();
 
-            //Delete
-            CreateGround();
+            //Set up scene and add Light to the scene           
+            lightNode = Scene.CreateChild("DirectionalLight");
+            lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
+            var light = lightNode.CreateComponent<Light>();
+            light.LightType = LightType.Directional;
+            light.CastShadows = true;
+            light.ShadowBias = new BiasParameters(0.00025f, 0.5f);
+            light.ShadowCascade = new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
+            light.SpecularIntensity = 0.05f;
+            light.Color = new Color(1.2f, 1.2f, 1.2f);
+            light.Brightness = 0.75f;
+
+            //Set up camera pos
+            CameraNode.Position = new Vector3(75, 0, 0);
 
             //Setup Root UI and chache
-            uiRoot = UI.Root;            
-            cache = ResourceCache;
+            uiRoot = UI.Root;
+            cache = ResourceCache;            
 
             //Setup font and style
             style = cache.GetXmlFile("UI/DefaultStyle.xml");
@@ -240,15 +254,11 @@ namespace CC_X
             zSet.SetMinSize(280, 30);
             zSet.SetMaxSize(280, 30);
             zSet.SetStyleAuto(null);
-            zSet.Text = "Z: ";
+            zSet.Text = "Z: ";           
 
+            //Create Ground
+            CreateGround();
 
-            //Add Light to the scene
-            light = Scene.CreateComponent<Light>();
-            light.LightType = LightType.Point;
-            light.Brightness = 0.5f;
-            light.CastShadows = true;
-            //light.SpecularIntensity = 0.05f;
         }
 
         protected override void OnUpdate(float timeStep)
@@ -276,14 +286,13 @@ namespace CC_X
 
             if (currentNode != null)
             {
-                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString();
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString() /*+ "\n" + CameraNode.Position.X + "," + CameraNode.Position.Y + "," + CameraNode.Position.Z*/;
             }
             else
             {
                 coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n--: (--, --, --)\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString();
-            }            
+            }
 
-            //Enable camera move
             MoveCamera = true;
             MoveSpeed = 10f;
             float speed = MoveSpeed;
@@ -407,7 +416,9 @@ namespace CC_X
                 float yCoor = (float)(Convert.ToDouble(yStr.Replace("Y: ", "").Trim()));
                 float zCoor = (float)(Convert.ToDouble(zStr.Replace("Z: ", "").Trim()));
 
-                currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
+                //currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
+                lightNode.Position = new Vector3(xCoor, yCoor, zCoor);
+
             }
             catch (Exception e)
             {
@@ -488,9 +499,9 @@ namespace CC_X
             var component2 = node.CreateComponent<Urho.Shapes.Plane>();
             component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
             component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
-            node.Pitch(-20,TransformSpace.Local);
+            //node.Pitch(-20,TransformSpace.Local);
 
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 50; ++i)
             {
                 var node2 = node.CreateChild("Plane" + numNodes);
                 //node2.Pitch(-20, TransformSpace.Local);
@@ -499,7 +510,7 @@ namespace CC_X
                 component3.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
                 component3.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
                 node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * i);
-                for (int i2 = 0; i2 < 5; ++i2)
+                for (int i2 = 0; i2 < 50; ++i2)
                 {
                     var node3 = node.CreateChild("Plane" + numNodes);
                     //node2.Pitch(-20, TransformSpace.Local);
