@@ -14,14 +14,17 @@ namespace CC_X.Model
         [TestMethod]
         public void Load_Success()
         {
-            //GameController c = new GameController(Difficulty.Easy);
-            //World.SettingType setting = World.SettingType.Tree;
-            //Setting sett;
-            //c.Save(sett, "C:\\Users\\csant714\\Desktop\\3minutes\\CC-X\\CC-X\\Model\\LoadSaveTest.csv");
-            //string info = c.Load("C:\\Users\\csant714\\Desktop\\3minutes\\CC-X\\CC-X\\Model\\LoadSaveTest.csv");
-            //Assert.IsTrue(setting == World.SettingType.Tree);
-            throw new NotImplementedException();
-
+            try
+            {
+                GameController c = new GameController(Difficulty.Easy);
+                string filepath = "C:\\Users\\csant714\\Desktop\\3minutes\\CC - X\\CC - X\\Model\\LoadSaveTest.csv";
+                c.Save(filepath);
+                c.Load(filepath);
+            }
+            catch
+            {
+                throw new AssertFailedException();
+            }
         }
     }
 }
