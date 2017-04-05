@@ -11,14 +11,14 @@ namespace CC_X.Model
     public enum Difficulty { Easy, Medium, Hard }
     public enum Level { One, Two, Three}
     class GameController
-    {        
+    {
         public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Setting and Enemy objects      
         public MainCharacter MainChar = new MainCharacter();
         public Enemy foe = new Enemy();
         public Difficulty DifficutlySelected { get; set; }
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
-       
+
         public Level HighestLevelReached = Level.One;
         public HighScore highscore = new HighScore();
 
@@ -26,14 +26,13 @@ namespace CC_X.Model
         public string MainCharName = "";
 
         //IObserver object
-        public IObserver gui;
+        public IObserver gui { get; set; }
 
         //Receives selected difficulty from view and generates level according to difficulty
-        public GameController(/*IObserver observer, */Difficulty difficulty)
+        public GameController(Difficulty difficulty)
         {
             GameOver = false;
             GameObjCollection = new Dictionary<uint, GameObj>();
-            //gui = observer;
         }
 
         //Returns true when level is over
@@ -54,6 +53,7 @@ namespace CC_X.Model
         private void SetUpLevel1(Difficulty difficulty)
         {
             EndGameZone = new Vector3(75, 0, 124);
+            gui.SetUpLevel(Level.One, difficulty);
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly

@@ -86,7 +86,7 @@ namespace CC_X
         public Light light { get; private set; }
 
         //Create an instance of GameController
-        GameController game;
+        GameController game = new GameController(Difficulty.Easy); //Temp difficulty
 
         //Store scene nodes, but keep main character separate
         public Dictionary<int, Node> NodesInScene;
@@ -259,8 +259,6 @@ namespace CC_X
             zSet.Text = "Z: ";
 
             //Set up game
-            //var program = new Program(this.Options);
-            game = new GameController(Difficulty.Easy);
             GameStart = false;
 
         }
@@ -378,7 +376,7 @@ namespace CC_X
 
             //Create level 1
             game.SetUpLevel(Level.One, Difficulty.Easy);
-            CreateGround();
+            //CreateGround();
 
             chooseChar = uiRoot.CreateWindow("ChooseChar", 3);
             chooseChar.SetStyleAuto(null);
@@ -727,6 +725,7 @@ namespace CC_X
                 TouchEmulation = true,
                 WindowedMode = true
             });
+            app.game.gui = app;
             app.Run();
         }        
     }
