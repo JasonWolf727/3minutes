@@ -11,16 +11,18 @@ namespace CC_X.Model
     class Nature : GameObj, Serializer
     {
         public enum NatureType { Plane, Tree, Rock, Grass, None }
-        public Nature(NatureType natureObj, Vector3 position) { }                
+        public NatureType SelectedNatureType { get; set; }
+        public Nature(NatureType natureObj, Vector3 position) { } 
+                       
         // Store information concerning the environment
         public string Serialize()
         {
-            string info = string.Format("{0}", this.ID);
+            string info = string.Format("{0}, {1}, {2}", this.Position, this.ID, this.SelectedNatureType);
             return info;
-            throw new NotImplementedException();
         }
 
         // Load the environment
+        // NOT EDITED YET
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');

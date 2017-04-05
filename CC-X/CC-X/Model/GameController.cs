@@ -13,7 +13,7 @@ namespace CC_X.Model
     //Controls game play
     class GameController
     {
-        public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Setting and Enemy objects      
+        public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Nature and Enemy objects      
         public MainCharacter MainChar = new MainCharacter();
         public Enemy foe = new Enemy();
         public Difficulty DifficutlySelected { get; set; }

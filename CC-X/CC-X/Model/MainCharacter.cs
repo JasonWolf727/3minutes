@@ -64,7 +64,7 @@ namespace CC_X.Model
         // Store information concerning the Main Character
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}", this.Position, this.ID, this.Strength, this.Health);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}", this.Position, this.ID, this.SelectedCharType, this.Strength, this.Health, this.PositionSinceLastCollide, this.IsDead);
             return info;
         }
 
@@ -72,15 +72,45 @@ namespace CC_X.Model
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
-            string[] tempnums = info[0].Split(',');
-            int[] nums = new int[3];
+            string[] tempnums1 = info[0].Split(',');
+            int[] nums1 = new int[3];
             for (int i = 0; i < 3; ++i)
-                nums[i] = Convert.ToInt32(tempnums[i]);
-            this.Position = new Vector3(nums[0], nums[1], nums[2]); // cannot implicitly convert string to vector3
+                nums1[i] = Convert.ToInt32(tempnums1[i]);
+            this.Position = new Vector3(nums1[0], nums1[1], nums1[2]);
             this.ID = Convert.ToUInt32(info[1]);
-            this.Strength = Convert.ToInt32(info[2]);
-            this.Health = Convert.ToInt32(info[3]);
+            string tempChar = info[2].ToString();
+            switch (tempChar)
+            {
+                case "Swat":
+                    this.SelectedCharType = MainCharOptn.Swat;
+                    break;
+                case "Mutant":
+                    this.SelectedCharType = MainCharOptn.Mutant;
+                    break;
+                default:
+                    this.SelectedCharType = MainCharOptn.Swat;
+                    break;
+            }
+            this.Strength = Convert.ToInt32(info[3]);
+            this.Health = Convert.ToInt32(info[4]);
+            string[] tempnums2 = info[5].Split(',');
+            int[] nums2 = new int[3];
+            for (int j = 0; j < 3; ++j)
+                nums2[j] = Convert.ToInt32(tempnums2[j]);
+            this.PositionSinceLastCollide = new Vector3(nums2[0], nums2[1], nums2[2]);
+            string tempBool = info[6];
+            switch (tempBool)
+            {
+                case "true":
+                    this.IsDead = true;
+                    break;
+                case "false":
+                    this.IsDead = false;
+                    break;
+                default:
+                    this.IsDead = false;
+                    break;
+            }
         }
-       
     }
 }
