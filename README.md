@@ -13,11 +13,26 @@ After you start a new game:
 * Left arrow and right arrow move your character left and right respectively.
 * Once you get to the end zone, select an option from the menu. 
 
-## Work Completed: 
+## Work Completed:
+For GitHub:
+* Class Diagram and detailed class/method information has been updated according to notes provided in the Review period.
+* Game Specifications have been updated with more current information on how the game will work.
+* Journals are up to date. See `Expenses` below for more details.
+* Road Map has been updated with a more accurate schedule.
+
+In the code: 
+* Serialization/DeSerialization logic has been updated to reflect the current conditions of game objects.
+* The main program has been updated with capabilities to launch a basic game.
+* The `Settings` class has been renamed `Nature`.
+* Load/Save logic has been completed, though it may require some extra work for BETA phase. :-)
+* High Score has been redesigned.
+* Developer Mode has been created: this is essentially a debugging mode to test object placement before hardcoding it into the final game.
 
 ## Known Issues:
+No known issues
 
 ## Recording: 
+[Link to Recording](https://youtu.be/JftPD0mm-N8)
 
 ## Expenses: 
 | Developer | Hours invested | Hours left | Link to Journal | 
