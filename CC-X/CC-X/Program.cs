@@ -8,6 +8,7 @@ using Urho.Shapes;
 using Urho.Gui;
 using Urho.Resources;
 using CC_X.Model;
+using Urho.Actions;
 
 namespace CC_X
 {
@@ -358,15 +359,19 @@ namespace CC_X
         private void GameCommands(float timeStep)
         {
             MoveCamera = true;
-            if (Input.GetKeyDown(Key.W)) CameraNode.Translate(Vector3.UnitZ *  timeStep);
-            if (Input.GetKeyDown(Key.S)) CameraNode.Translate(-Vector3.UnitZ * timeStep);
-            if (Input.GetKeyDown(Key.A)) CameraNode.Translate(-Vector3.UnitX * timeStep);
-            if (Input.GetKeyDown(Key.D)) CameraNode.Translate(Vector3.UnitX * timeStep);
-
-            if (Input.GetKeyDown(Key.W)) MainChar.Translate(Vector3.UnitZ * timeStep);
-            if (Input.GetKeyDown(Key.S)) MainChar.Translate(-Vector3.UnitZ * timeStep);
-            if (Input.GetKeyDown(Key.A)) MainChar.Translate(-Vector3.UnitX * timeStep);
-            if (Input.GetKeyDown(Key.D)) MainChar.Translate(Vector3.UnitX * timeStep);
+            if (Input.GetKeyDown(Key.Up))
+            {
+                CameraNode.Translate(Vector3.UnitZ * timeStep);
+                MainChar.Translate(-Vector3.UnitZ * timeStep);
+                PlayAnimation(MainChar, "Swat/Swat_RunFwd.ani");
+            }
+            else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep); MainChar.Translate(Vector3.UnitZ * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunBwd.ani"); }
+            else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep); MainChar.Translate(Vector3.UnitX * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunLeft.ani"); }
+            else if (Input.GetKeyDown(Key.Right)) { CameraNode.Translate(Vector3.UnitX * timeStep); MainChar.Translate(-Vector3.UnitX * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunRight.ani"); }
+            else
+            {
+                PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
+            }
         }
 
         //Adjusts on-screen health notification to match game.MainChar health
@@ -435,22 +440,22 @@ namespace CC_X
         //Event handler for character selection option 1
         void CharOptn1Click(ReleasedEventArgs args)
         {
-            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Mutant;
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Swat;
 
-            MainChar = Scene.CreateChild("Mutant" + numNodes);
-            MainChar.Position = Camera.Node.Position;
-            MainChar.Rotation = Camera.Node.Rotation;
-            MainChar.Translate(new Vector3((float)Input.MousePosition.X / Graphics.Width, (float)Input.MousePosition.Y / Graphics.Height, 2));
-
+            MainChar = Scene.CreateChild("Swat" + numNodes);
+            MainChar.Position = new Vector3(75,-0.50523f,1.62f);
+            MainChar.Yaw(180,TransformSpace.Local);
             
             var component2 = MainChar.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
             MainChar.CreateComponent<AnimationController>();
             MainChar.SetScale(0.2f);
 
             chooseChar.Visible = false;
             GameStart = true;
+            DeveloperMode = false;
         }
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
@@ -703,9 +708,25 @@ namespace CC_X
         }
 
         //Load and play animation from file
-        void PlayAnimation(string file)
+        void PlayAnimation(Node node, string file)
         {
+            node.RemoveAllActions();
 
+            bool looped = false;
+            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani")
+            {
+                looped = true;
+            }
+
+            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani")
+            {
+                node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
+            }
+
+            AnimationController animation = node.GetComponent<AnimationController>();
+            animation.StopAll(0.2f);
+
+            animation.Play("Models/" + file, 0, looped, 0.2f);
         }
 
         static void Main(string[] args)

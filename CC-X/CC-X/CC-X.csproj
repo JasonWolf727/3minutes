@@ -98,12 +98,27 @@
     <Content Include="Data\Models\Swat\Swat_DeathFromBack.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Models\Swat\Swat_WalkFwd.ani">
+    <None Include="Data\Models\Swat\Swat_WalkFwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Data\Models\ThreeTreesWithBackground.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Data\Models\Swat\Swat_Idle.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\Swat\Swat_RunBwd.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\Swat\Swat_RunFwd.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\Swat\Swat_RunLeft.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\Swat\Swat_RunRight.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Model\LoadSaveTest.csv" />
     <None Include="packages.config" />
   </ItemGroup>
