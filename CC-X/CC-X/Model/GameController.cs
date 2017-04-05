@@ -13,7 +13,7 @@ namespace CC_X.Model
     //Controls game play
     class GameController
     {
-        public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Nature and Enemy objects      
+        public Dictionary<uint, GameObj> GameObjCollection { get; set; } // Contains Nature and Enemy objects      
         public MainCharacter MainChar = new MainCharacter();
         public Enemy foe = new Enemy();
         public Difficulty DifficutlySelected { get; set; }
@@ -105,27 +105,54 @@ namespace CC_X.Model
         }
 
         // Load/save mechanism
-        // Writes the game state (previously serialized into a string) to the provided file (CSV).
-        // Uploads the file, parsing its contents into a single string for deserialization.
+        // Save() writes the game state (previously serialized into a string) to the provided file (CSV).
+        // Load() uploads the file, parsing its contents into a string array for deserialization.
 
         public void Load(string filepath)
         {
             string[] temp = File.ReadAllLines(filepath);
-            //var sett = new Setting(this.setting, Urho.Vector3);
-            //sett.DeSerialize(temp[0]);
-            MainChar.DeSerialize(temp[1]);
-            foe.DeSerialize(temp[2]);
-            //throw new NotImplementedException();
+            MainChar.DeSerialize(temp[0]);
+
+            for (int i = 1; i < temp.Count(); ++i)
+            {
+                string TempString = temp[i];
+                if (TempString[0] == '+')
+                {
+                    var tempEnemy = new Enemy();
+                    tempEnemy.DeSerialize(TempString);
+                }
+                else if (TempString[0] == '-')
+                {
+                    Nature.NatureType tempType = new Nature.NatureType();
+                    tempType = Nature.NatureType.Plane;
+                    Vector3 num = new Vector3(0, 0, 0);
+                    var tempNature = new Nature(tempType, num);
+                    tempNature.DeSerialize(TempString);
+                }
+
+            }
         }
 
         public void Save(string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
             // Use a StringBuilder
             var csv = new StringBuilder();
-            //var setting = sett;
-            //csv.AppendLine(setting.Serialize());
             csv.AppendLine(MainChar.Serialize());
-            csv.AppendLine(foe.Serialize());
+            foreach (KeyValuePair<uint, GameObj> entry in GameObjCollection)
+            {
+                if (entry.Value is Enemy)
+                {
+                    var tempEnemy = (Enemy)entry.Value;
+                    csv.AppendLine('+' + tempEnemy.Serialize());
+                }
+                else if (entry.Value is Nature)
+                {
+                    var tempNature = (Nature)entry.Value;
+                    csv.AppendLine('-' + tempNature.Serialize());
+                }
+                else
+                    continue;
+            }
             File.WriteAllText(filepath, csv.ToString());
         }
     }
