@@ -29,7 +29,7 @@ namespace CC_X.Model
         // Store information concerning enemies
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}", this.Position, this.ID, this.Strength, this.Health);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}", this.Position, this.ID, this.ObjType, this.Strength, this.Health, this.IsDead);
             return info;
         }
 
@@ -43,8 +43,37 @@ namespace CC_X.Model
                 nums[i] = Convert.ToInt32(tempnums[i]);
             this.Position = new Vector3(nums[0], nums[1], nums[2]);
             this.ID = Convert.ToUInt32(info[1]);
-            this.Strength = Convert.ToInt32(info[2]);
-            this.Health = Convert.ToInt32(info[3]);
+            string tempChar = info[3].ToString();
+            switch (tempChar)
+            {
+                case "Zombie":
+                    this.ObjType = EnemyType.Zombie;
+                    break;
+                case "Car":
+                    this.ObjType = EnemyType.Car;
+                    break;
+                case "None":
+                    this.ObjType = EnemyType.None;
+                    break;
+                default:
+                    this.ObjType = EnemyType.None;
+                    break;
+            }
+            this.Strength = Convert.ToInt32(info[3]);
+            this.Health = Convert.ToInt32(info[4]);
+            string tempBool = info[5];
+            switch (tempBool)
+            {
+                case "true":
+                    this.IsDead = true;
+                    break;
+                case "false":
+                    this.IsDead = false;
+                    break;
+                default:
+                    this.IsDead = false;
+                    break;
+            }
         }
 
         public bool DetectCollision(Dictionary<int, GameObj> worldObjs)
