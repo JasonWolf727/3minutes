@@ -348,6 +348,16 @@ namespace CC_X
                 if (Input.GetKeyDown(Key.KP_6)) currentNode.Translate(Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
                 if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.Local);
             }
+            if (currentNode != null)
+            {
+                if (Input.GetKeyDown(Key.I)) currentNode.Translate(Vector3.UnitZ * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.J)) currentNode.Translate(-Vector3.UnitZ * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.U)) currentNode.Translate(Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.N)) currentNode.Translate(-Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.H)) currentNode.Translate(-Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.K)) currentNode.Translate(Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
+                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.Local);
+            }
         }
 
         //Assigns keyboard input to corresponding main character logic.
@@ -475,7 +485,7 @@ namespace CC_X
                 float zCoor = (float)(Convert.ToDouble(zStr.Replace("Z: ", "").Trim()));
 
                 //currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
-                lightNode.Position = new Vector3(xCoor, yCoor, zCoor);
+                currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
 
             }
             catch (Exception e)

@@ -16,6 +16,8 @@ namespace CC_X.Model
         public bool IsDead { get; set; }
         public int Strength { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
+        public int Experience { get; set; }
+        public int Points { get; set; }
         public MainCharacter()
         {           
         }
