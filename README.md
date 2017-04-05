@@ -23,5 +23,5 @@ After you start a new game:
 | Developer | Hours invested | Hours left | Link to Journal | 
 |----------|---------|----------|------|
 | Case | | | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
-| Johannes | | | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
+| Johannes | 24.34 | 25.66 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
 | Santana | | | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
