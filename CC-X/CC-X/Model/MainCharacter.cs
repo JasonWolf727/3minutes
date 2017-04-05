@@ -10,7 +10,7 @@ namespace CC_X.Model
     class MainCharacter : GameObj, Serializer
     {                 
         public enum MainCharOptn { Swat, Mutant }
-        public MainCharOptn SelecterCharType { get; set; }
+        public MainCharOptn SelectedCharType { get; set; }
         public Vector3 PositionSinceLastCollide { get; set; }
         public bool IsDead { get; set; }
         public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
@@ -36,7 +36,24 @@ namespace CC_X.Model
         }
         public void MoveLeft(float howMuch)
         {
-            Position = new Vector3(-howMuch,Position.Y,Position.Z);
+            var newPos = new Vector3(-howMuch,Position.Y,Position.Z);
+            Position += newPos;
+        }
+
+        public void MoveRight(float howMuch)
+        {
+            var newPos = new Vector3(howMuch, Position.Y, Position.Z);
+            Position += newPos;
+        }
+        public void MoveForward(float howMuch)
+        {
+            var newPos = new Vector3(Position.X, Position.Y, howMuch);
+            Position += newPos;
+        }
+        public void MoveBackward(float howMuch)
+        {
+            var newPos = new Vector3(Position.X, Position.Y, -howMuch);
+            Position += newPos;
         }
         public bool IsMainCharDead()
         {
@@ -59,7 +76,7 @@ namespace CC_X.Model
             for (int i = 0; i < 3; ++i)
                 nums[i] = Convert.ToInt32(tempnums[i]);
             this.Position = new Vector3(nums[0], nums[1], nums[2]); // cannot implicitly convert string to vector3
-            this.ID = Convert.ToInt32(info[1]);
+            this.ID = Convert.ToUInt32(info[1]);
             this.Damage = Convert.ToInt32(info[2]);
             this.Health = Convert.ToInt32(info[3]);
         }

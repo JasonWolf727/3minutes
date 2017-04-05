@@ -4,17 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Urho;
 
 namespace CC_X.Model
 {
-    enum Difficulty { Easy, Medium, Hard }
-    enum Level { One, Two, Three}
+    public enum Difficulty { Easy, Medium, Hard }
+    public enum Level { One, Two, Three}
     class GameController
     {        
-        public Dictionary<int, GameObj> WorldCollection { get; set; } //Contains Setting and Enemy objects      
+        public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Setting and Enemy objects      
         public MainCharacter MainChar = new MainCharacter();
         public Enemy foe = new Enemy();
         public Difficulty DifficutlySelected { get; set; }
+        public Vector3 EndGameZone { get; set; }
+        public bool GameOver { get; set; }
        
         public Level HighestLevelReached = Level.One;
         public HighScore highscore = new HighScore();
@@ -22,16 +25,35 @@ namespace CC_X.Model
         //View will set this to user input name
         public string MainCharName = "";
 
-        //Receives selected difficulty from view and generates level according to difficulty
-        public GameController(Difficulty difficulty)
-        {
+        //IObserver object
+        public IObserver gui;
 
+        //Receives selected difficulty from view and generates level according to difficulty
+        public GameController(/*IObserver observer, */Difficulty difficulty)
+        {
+            GameOver = false;
+            GameObjCollection = new Dictionary<uint, GameObj>();
+            //gui = observer;
+        }
+
+        //Returns true when level is over
+        public bool EndLevel()
+        {
+            if(Math.Abs(MainChar.Position.X - EndGameZone.X) <= 1.5f | Math.Abs(MainChar.Position.Z - EndGameZone.Z) <= 1)
+            {
+                GameOver = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
         {
-
+            EndGameZone = new Vector3(25.5f, 0, 41);
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
@@ -47,20 +69,23 @@ namespace CC_X.Model
         }
 
         //Populate WorldCollection according to level and difficulty.
-        private void SetUpLevel(Level level, Difficulty difficulty)
+        public void SetUpLevel(Level level, Difficulty difficulty)
         {
             switch(level)
             {
                 case Level.One:
                     {
+                        SetUpLevel1(difficulty);
                         break;
                     }
                 case Level.Two:
                     {
+                        SetUpLevel2(difficulty);
                         break;
                     }
                 case Level.Three:
                     {
+                        SetUpLevel3(difficulty);
                         break;
                     }
             }

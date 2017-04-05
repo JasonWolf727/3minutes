@@ -41,7 +41,7 @@ namespace CC_X.Model
             for (int i = 0; i < 3; ++i)
                 nums[i] = Convert.ToInt32(tempnums[i]);
             this.Position = new Vector3(nums[0], nums[1], nums[2]);
-            this.ID = Convert.ToInt32(info[1]);
+            this.ID = Convert.ToUInt32(info[1]);
             this.Damage = Convert.ToInt32(info[2]);
             this.Health = Convert.ToInt32(info[3]);
         }
