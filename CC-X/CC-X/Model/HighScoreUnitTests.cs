@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CC_X.Model
 {
     [TestClass]
-    class HighScoreUnitTests
+    public class HighScoreUnitTests
     {
         [TestMethod]
         public void AddHighScore_FirstScoreAdded_Success()
