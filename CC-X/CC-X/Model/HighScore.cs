@@ -83,7 +83,8 @@ namespace CC_X.Model
             else
             {
                 collectionScoreObj.Add(newScoreData);
-            }        
+            }
+            WriteToFile();       
             
         }
 

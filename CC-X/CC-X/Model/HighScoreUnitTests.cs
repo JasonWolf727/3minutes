@@ -13,9 +13,9 @@ namespace CC_X.Model
         [TestMethod]
         public void AddHighScore_FirstScoreAdded_Success()
         {
-            //HighScore cmdHS = new HighScore();
-            //cmdHS.AddHighScore(32, "PlayerOne");
-            //Assert.IsTrue(cmdHS.collectionScoreObj[0] == "PlayerOne 32");
+            HighScore cmdHS = new HighScore();
+            cmdHS.AddHighScore("Fred", 32);
+            Assert.IsTrue(cmdHS.collectionScoreObj[0].ToString() == "PlayerOne 32");
         }
 
         [TestMethod]
