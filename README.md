@@ -18,6 +18,7 @@ After you start a new game:
 ## Known Issues:
 
 ## Recording: 
+[Link to Recording](https://youtu.be/JftPD0mm-N8)
 
 ## Expenses: 
 | Developer | Hours invested | Hours left | Link to Journal | 
