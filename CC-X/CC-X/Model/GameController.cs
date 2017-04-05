@@ -113,7 +113,7 @@ namespace CC_X.Model
             string[] temp = File.ReadAllLines(filepath);
             MainChar.DeSerialize(temp[0]);
 
-            for (int i = 1; i < temp.Count(); ++i)
+            for (int i = 1; i < temp.Count(); ++i) // Aid found at: http://stackoverflow.com/questions/3878820/c-how-to-get-first-char-of-a-string
             {
                 string TempString = temp[i];
                 if (TempString[0] == '+')
@@ -138,7 +138,7 @@ namespace CC_X.Model
             // Use a StringBuilder
             var csv = new StringBuilder();
             csv.AppendLine(MainChar.Serialize());
-            foreach (KeyValuePair<uint, GameObj> entry in GameObjCollection)
+            foreach (KeyValuePair<uint, GameObj> entry in GameObjCollection) // Aid found at: http://stackoverflow.com/questions/141088/what-is-the-best-way-to-iterate-over-a-dictionary-in-c
             {
                 if (entry.Value is Enemy)
                 {
