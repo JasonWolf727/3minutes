@@ -39,7 +39,7 @@ namespace CC_X.Model
         //Returns true when level is over
         public bool EndLevel()
         {
-            if(Math.Abs(MainChar.Position.X - EndGameZone.X) <= 1.5f && Math.Abs(MainChar.Position.Z - EndGameZone.Z) <= 1)
+            if(Math.Abs(MainChar.Position.X - EndGameZone.X) <= 5 && Math.Abs(MainChar.Position.Z - EndGameZone.Z) <= 1)
             {
                 GameOver = true;
                 return true;
@@ -49,6 +49,18 @@ namespace CC_X.Model
                 return false;
             }
         }
+
+        //Calculates player's experience
+        public void CalcExperience(int points)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CalcPoints(Level level, Difficulty difficulty, int time)
+        {
+            throw new NotImplementedException();
+        }
+
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
