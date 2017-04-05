@@ -296,10 +296,11 @@ namespace CC_X
             if (Input.GetKeyPress(Key.N1)) nodeSelect = 1;
             if (Input.GetKeyPress(Key.N2)) nodeSelect = 2;
             if (Input.GetKeyPress(Key.N3)) nodeSelect = 3;
+            if (Input.GetKeyPress(Key.N4)) nodeSelect = 4;
 
             if (currentNode != null)
             {
-                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString() + "\n" + CameraNode.Position.X + "," + CameraNode.Position.Y + "," + CameraNode.Position.Z;
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString() /*+ "\n" + CameraNode.Position.X + "," + CameraNode.Position.Y + "," + CameraNode.Position.Z*/;
             }
             else
             {
@@ -545,6 +546,13 @@ namespace CC_X
                 component2.SetMaterial(ResourceCache.GetMaterial("Materials/Mushroom/Mushroom.xml"));                                
                 node.SetScale(0.02f);
             }
+            if (nodeSelect == 4)
+            {
+                var component2 = node.CreateComponent<AnimatedModel>();
+                component2.Model = ResourceCache.GetModel("Models/ThreeTreesWithBackground.mdl");
+                component2.SetMaterial(ResourceCache.GetMaterial("Materials/ThreeTreesWithBackground.xml"));
+                node.SetScale(0.02f);
+            }
         }
 
         //Create Ground
@@ -673,6 +681,7 @@ namespace CC_X
             if (nodeSelect == 1) s = "Plane";
             if (nodeSelect == 2) s = "Mutant";
             if (nodeSelect == 3) s = "Mushroom";
+            if (nodeSelect == 4) s = "Tree";
             return s;
         }
         //Return node that cursor is pointing at
