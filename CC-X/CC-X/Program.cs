@@ -363,7 +363,7 @@ namespace CC_X
         //Assigns keyboard input to corresponding main character logic.
         private void GameCommands(float timeStep)
         {
-            MoveCamera = true;
+            MoveCamera = false;
             if (Input.GetKeyDown(Key.Up)) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
             else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
             else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
