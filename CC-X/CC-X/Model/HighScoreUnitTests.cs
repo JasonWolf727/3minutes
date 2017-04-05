@@ -8,14 +8,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CC_X.Model
 {
     [TestClass]
-    class HighScoreUnitTests
+    public class HighScoreUnitTests
     {
         [TestMethod]
         public void AddHighScore_FirstScoreAdded_Success()
         {
             HighScore cmdHS = new HighScore();
-            cmdHS.AddHighScore(32, "PlayerOne");
-            Assert.IsTrue(cmdHS.data[0] == "PlayerOne 32");
+            cmdHS.AddHighScore("Fred", 32);
+            Assert.IsTrue(cmdHS.collectionScoreObj[0].ToString() == "PlayerOne 32");
         }
 
         [TestMethod]

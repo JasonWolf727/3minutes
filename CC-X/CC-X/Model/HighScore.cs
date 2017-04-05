@@ -11,7 +11,7 @@ namespace CC_X.Model
     class HighScore
     {
         const string highScoreFile = "highScore.txt";
-        public List<string> data = new List<string>();
+        public List<Score> collectionScoreObj = new List<Score>();
 
         //This method will write all of the high scores to the "highScore.txt" file. 
         //It will take in a list of all the data points and overwrite the contents of the file
@@ -22,9 +22,9 @@ namespace CC_X.Model
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
                 string dataToWrite = "";
-                for (int i = 0; i < data.Count; i++)
+                for (int i = 0; i < collectionScoreObj.Count; i++)
                 {
-                    dataToWrite = dataToWrite + data[i] + "/n";   
+                    dataToWrite = dataToWrite + collectionScoreObj[i].ToString() + "/n";   
                 }
                 writer.WriteLine(dataToWrite);
             }
@@ -37,11 +37,16 @@ namespace CC_X.Model
         {
             using (StreamReader reader = new StreamReader(highScoreFile))
             {
-                data.Clear();
+                collectionScoreObj.Clear();
                 string line = reader.ReadLine();
                 while (line != null)
                 {
-                    data.Add(line);
+                    string[] contents = new string[2];
+                    contents = line.Split(' ');
+                    Score scoreObj = new Score();
+                    scoreObj.Name = contents[0];
+                    scoreObj.PlayerScore = Convert.ToInt32(contents[1]);
+                    collectionScoreObj.Add(scoreObj);
                     line = reader.ReadLine();
                 }
                 
@@ -49,32 +54,37 @@ namespace CC_X.Model
         }
 
         //Updates the list containing the highscores if the new score is larger than the lowest highscore. 
-        public void AddHighScore(int newScore, string playerName)
+        public void AddHighScore(string playerName, int newScore)
         {
             ReadFromFile();
-            string newScoreData = "";
-            newScoreData = newScoreData + newScore + playerName;
-            if (data.Count() != 0)
+            Score newScoreData = new Score();
+            newScoreData.Name = playerName;
+            newScoreData.PlayerScore = newScore;
+            if (collectionScoreObj.Count() != 0)
             {
                 int loc = -1;
-                for (int i = 0; i < data.Count(); i++)
+                for (int i = 0; i < collectionScoreObj.Count(); i++)
                 {
-                    var contents = data[i].Split(' ');
-                    if (newScore > Convert.ToInt32(contents[1]))
+                    if (newScore > collectionScoreObj[i].PlayerScore)
                     {
                         loc = i;
                     }
                 }
                 if (loc != -1)
                 {
-                    data.Insert(loc, newScoreData);
-                    data.RemoveAt(data.Count() - 1);
+                    collectionScoreObj.Insert(loc, newScoreData);
+                    if (collectionScoreObj.Count() > 10)
+                    {
+                        collectionScoreObj.RemoveAt(collectionScoreObj.Count() - 1);
+                    }
+                    
                 }
             }
             else
             {
-                data.Add(newScoreData);
-            }        
+                collectionScoreObj.Add(newScoreData);
+            }
+            WriteToFile();       
             
         }
 
@@ -82,7 +92,12 @@ namespace CC_X.Model
         public List<string> GetHighScores()
         {
             ReadFromFile();
-            return data;
+            List<string> scores = new List<string>();
+            for (int item = 0; item < collectionScoreObj.Count(); item++)
+            {
+                scores.Add(collectionScoreObj[item].ToString());
+            }
+            return scores;
         }
     }
 }
