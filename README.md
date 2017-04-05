@@ -23,8 +23,10 @@ For GitHub:
 In the code: 
 * Serialization/DeSerialization logic has been updated to reflect the current conditions of game objects.
 * The main program has been updated with capabilities to launch a basic game.
-* The faulty `Settings` method has been replaced with a new `Nature` method that does the same thing, but better. :-)
-* Load/Save logic has been completed, though it may require some extra work for BETA phase.
+* The `Settings` class has been renamed `Nature`.
+* Load/Save logic has been completed, though it may require some extra work for BETA phase. :-)
+* High Score has been redesigned.
+* Developer Mode has been created: this is essentially a debugging mode to test object placement before hardcoding it into the final game.
 
 ## Known Issues:
 No known issues
