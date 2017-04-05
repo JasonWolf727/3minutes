@@ -7,6 +7,7 @@ using Urho;
 
 namespace CC_X.Model
 {
+    //Parent for objects in the game
     abstract class GameObj
     {
         public Vector3 Position { get; set; }

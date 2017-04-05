@@ -71,7 +71,7 @@ namespace CC_X.Model
         {
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 4, 8);
-            zombie.Damage = 20;
+            zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(3, 4, 8);
             MainChar.Health = 100;
@@ -88,7 +88,7 @@ namespace CC_X.Model
         {
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 4, 8);
-            zombie.Damage = 20;
+            zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(3, 2, 8);
             MainChar.Health = 100;
@@ -105,7 +105,7 @@ namespace CC_X.Model
         {
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 4, 8);
-            zombie.Damage = 20;
+            zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(0.95f, 3.95f, 8);
             MainChar.Health = 100;
@@ -122,7 +122,7 @@ namespace CC_X.Model
         {
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 4, 8);
-            zombie.Damage = 20;
+            zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(3, 4, 8);
             MainChar.Health = 100;

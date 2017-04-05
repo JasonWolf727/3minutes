@@ -7,6 +7,7 @@ using Urho;
 
 namespace CC_X.Model
 {
+    //Class for harmless objects that populate the scenery
     class Nature : GameObj, Serializer
     {
         public enum NatureType { Plane, Tree, Rock, Grass, None }

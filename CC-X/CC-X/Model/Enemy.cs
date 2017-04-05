@@ -7,10 +7,11 @@ using Urho;
 
 namespace CC_X.Model
 {
+    //Class for objects that reduce main character's health
     class Enemy : GameObj, Serializer
     {
         public bool IsDead { get; set; }
-        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage.
+        public int Strength { get; set; }//An integer value of damage can inflict. High number = high damage.
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. 
         public EnemyType ObjType { get; set; }      
         public enum EnemyType { Zombie, Car, None }
@@ -28,7 +29,7 @@ namespace CC_X.Model
         // Store information concerning enemies
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}", this.Position, this.ID, this.Damage, this.Health);
+            string info = string.Format("{0}, {1}, {2}, {3}", this.Position, this.ID, this.Strength, this.Health);
             return info;
         }
 
@@ -42,7 +43,7 @@ namespace CC_X.Model
                 nums[i] = Convert.ToInt32(tempnums[i]);
             this.Position = new Vector3(nums[0], nums[1], nums[2]);
             this.ID = Convert.ToUInt32(info[1]);
-            this.Damage = Convert.ToInt32(info[2]);
+            this.Strength = Convert.ToInt32(info[2]);
             this.Health = Convert.ToInt32(info[3]);
         }
 

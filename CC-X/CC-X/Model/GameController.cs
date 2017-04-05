@@ -10,6 +10,7 @@ namespace CC_X.Model
 {
     public enum Difficulty { Easy, Medium, Hard }
     public enum Level { One, Two, Three}
+    //Controls game play
     class GameController
     {
         public Dictionary<uint, GameObj> GameObjCollection { get; set; } //Contains Setting and Enemy objects      
@@ -19,7 +20,7 @@ namespace CC_X.Model
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
 
-        public Level HighestLevelReached = Level.One;
+        public Level CurrentLevel = Level.One;
         public HighScore highscore = new HighScore();
 
         //View will set this to user input name
