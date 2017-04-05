@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IObserver.cs" />
-    <Compile Include="Model\Enemies.cs" />
+    <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\GameController.cs" />
     <Compile Include="Model\HighScore.cs" />
     <Compile Include="Model\HighScoreUnitTests.cs" />
@@ -63,20 +63,20 @@
     <Compile Include="Model\WorldTest.cs" />
     <Compile Include="Model\SerializationTest.cs" />
     <Compile Include="Model\Serializer.cs" />
-    <Compile Include="Model\Setting.cs" />
+    <Compile Include="Model\Nature.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\World.cs" />
+    <Compile Include="Model\GameObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="CC_XClassDiagram1.cd" />
     <Content Include="Data\Materials\ThreeTreesWithBackground.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Models\Mushroom.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="CC_XClassDiagram1.cd" />
     <None Include="Data\Models\Mutant\Layer\Mutant_Block_LY.ani" />
     <None Include="Data\Models\Mutant\Layer\Mutant_HitHead_LY.ani" />
     <None Include="Data\Models\Mutant\Layer\Mutant_Throw_LY.ani" />

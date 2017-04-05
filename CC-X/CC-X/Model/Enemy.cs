@@ -7,15 +7,20 @@ using Urho;
 
 namespace CC_X.Model
 {
-    class Enemies : World, Serializer
-    {        
-        public Enemies()
+    class Enemy : GameObj, Serializer
+    {
+        public bool IsDead { get; set; }
+        public int Damage { get; set; }//An integer value of damage can inflict. High number = high damage.
+        public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. 
+        public EnemyType ObjType { get; set; }      
+        public enum EnemyType { Zombie, Car, None }
+
+        public Enemy()
         {
-            type = WorldType.Enemy;
-            IsDead = false;
+
         }
         //If not dead, sets Enemies.Position to position
-        public override void UpdatePos(Vector3 position)
+        public void UpdatePos(Vector3 position)
         {
             throw new NotImplementedException();
         }
@@ -41,7 +46,7 @@ namespace CC_X.Model
             this.Health = Convert.ToInt32(info[3]);
         }
 
-        public override bool DetectCollision(Dictionary<int, World> worldObjs)
+        public bool DetectCollision(Dictionary<int, GameObj> worldObjs)
         {
             throw new NotImplementedException();
         }
