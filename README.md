@@ -37,6 +37,6 @@ No known issues
 ## Expenses: 
 | Developer | Hours invested | Hours left | Link to Journal | 
 |----------|---------|----------|------|
-| Case | | | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
+| Case | 23.01 | 26.99 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
 | Johannes | 24.34 | 25.66 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
-| Santana | | | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
+| Santana | 16.5 | 33.5 | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
