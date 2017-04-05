@@ -359,15 +359,10 @@ namespace CC_X
         private void GameCommands(float timeStep)
         {
             MoveCamera = true;
-            if (Input.GetKeyDown(Key.Up))
-            {
-                CameraNode.Translate(Vector3.UnitZ * timeStep);
-                MainChar.Translate(-Vector3.UnitZ * timeStep);
-                PlayAnimation(MainChar, "Swat/Swat_RunFwd.ani");
-            }
-            else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep); MainChar.Translate(Vector3.UnitZ * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunBwd.ani"); }
-            else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep); MainChar.Translate(Vector3.UnitX * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunLeft.ani"); }
-            else if (Input.GetKeyDown(Key.Right)) { CameraNode.Translate(Vector3.UnitX * timeStep); MainChar.Translate(-Vector3.UnitX * timeStep); PlayAnimation(MainChar, "Swat/Swat_RunRight.ani"); }
+            if (Input.GetKeyDown(Key.Up)) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
+            else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
+            else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
+            else if (Input.GetKeyDown(Key.Right)) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
             else
             {
                 PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
@@ -713,12 +708,12 @@ namespace CC_X
             node.RemoveAllActions();
 
             bool looped = false;
-            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani")
+            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
             {
                 looped = true;
             }
 
-            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani")
+            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
             {
                 node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
             }
