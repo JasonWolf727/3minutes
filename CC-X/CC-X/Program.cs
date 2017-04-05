@@ -77,7 +77,8 @@ namespace CC_X
         Node currentNode;
         int numNodes;
         int nodeSelect = 1;
-        public bool DeveloperMode { get; set; }        
+        public bool DeveloperMode { get; set; }   
+        public bool GameStart { get; set; }     
 
         public Node lightNode { get; private set; }
 
@@ -259,6 +260,7 @@ namespace CC_X
             //Set up game
             //var program = new Program(this.Options);
             game = new GameController(Difficulty.Easy);
+            GameStart = false;
 
         }
 
@@ -282,7 +284,11 @@ namespace CC_X
             if(DeveloperMode)
             {
                 DeveloperCommands(timeStep);
-            }            
+            }        
+            if(GameStart)
+            {
+                GameCommands(timeStep);
+            }
         }
 
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
@@ -349,9 +355,18 @@ namespace CC_X
         }
 
         //Assigns keyboard input to corresponding main character logic.
-        private void GameCommands()
+        private void GameCommands(float timeStep)
         {
+            MoveCamera = true;
+            if (Input.GetKeyDown(Key.W)) CameraNode.Translate(Vector3.UnitZ *  timeStep);
+            if (Input.GetKeyDown(Key.S)) CameraNode.Translate(-Vector3.UnitZ * timeStep);
+            if (Input.GetKeyDown(Key.A)) CameraNode.Translate(-Vector3.UnitX * timeStep);
+            if (Input.GetKeyDown(Key.D)) CameraNode.Translate(Vector3.UnitX * timeStep);
 
+            if (Input.GetKeyDown(Key.W)) MainChar.Translate(Vector3.UnitZ * timeStep);
+            if (Input.GetKeyDown(Key.S)) MainChar.Translate(-Vector3.UnitZ * timeStep);
+            if (Input.GetKeyDown(Key.A)) MainChar.Translate(-Vector3.UnitX * timeStep);
+            if (Input.GetKeyDown(Key.D)) MainChar.Translate(Vector3.UnitX * timeStep);
         }
 
         //Adjusts on-screen health notification to match game.MainChar health
@@ -435,6 +450,7 @@ namespace CC_X
             MainChar.SetScale(0.2f);
 
             chooseChar.Visible = false;
+            GameStart = true;
         }
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
