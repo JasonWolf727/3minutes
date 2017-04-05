@@ -266,6 +266,7 @@ namespace CC_X
         {
             base.OnUpdate(timeStep);
             //Developer logic
+            game.MainChar.Position = MainChar.Position;
             if (game.EndLevel())
             {
                 menu.Visible = true;
