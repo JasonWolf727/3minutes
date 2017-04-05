@@ -82,7 +82,7 @@ namespace CC_X
         public Node lightNode { get; private set; }
 
         public Light light { get; private set; }
-        
+
         //Create an instance of GameController
         GameController game;
 
@@ -123,11 +123,11 @@ namespace CC_X
             uiRoot.SetStyleAuto(style);
 
             //Setup main menu/title screen
-            menu = uiRoot.CreateWindow("Menu", 1);
+            menu = uiRoot.CreateWindow();
             menu.SetStyleAuto(null);
             menu.SetMinSize(300, 600);
             menu.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);            
-            menu.Opacity = 0.85f;
+            menu.Opacity = 0.85f;          
 
             //Add welcome message
             welcomeMsg = menu.CreateText("Welcome", 0);
@@ -254,10 +254,11 @@ namespace CC_X
             zSet.SetMinSize(280, 30);
             zSet.SetMaxSize(280, 30);
             zSet.SetStyleAuto(null);
-            zSet.Text = "Z: ";           
+            zSet.Text = "Z: ";
 
-            //Create Ground
-            CreateGround();
+            //Set up game
+            //var program = new Program(this.Options);
+            game = new GameController(Difficulty.Easy);
 
         }
 
@@ -265,10 +266,13 @@ namespace CC_X
         {
             base.OnUpdate(timeStep);
             //Developer logic
+            if (game.EndLevel())
+            {
+                menu.Visible = true;
+            }            
             if (Input.GetKeyPress(Key.M))
             {
                 DeveloperMode = !DeveloperMode;
-                menu.Visible = !menu.Visible;
                 coordinates.Visible = !coordinates.Visible;
             } 
             if(DeveloperMode)
@@ -280,13 +284,17 @@ namespace CC_X
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
         private void DeveloperCommands(float timeStep)
         {
+            if(menu.Visible == true)
+            {
+                menu.Visible = false;
+            }
             if (Input.GetKeyPress(Key.N1)) nodeSelect = 1;
             if (Input.GetKeyPress(Key.N2)) nodeSelect = 2;
             if (Input.GetKeyPress(Key.N3)) nodeSelect = 3;
 
             if (currentNode != null)
             {
-                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString() /*+ "\n" + CameraNode.Position.X + "," + CameraNode.Position.Y + "," + CameraNode.Position.Z*/;
+                coordinates.Value = "Current node type:" + GetSelectedNodeType() + "\n\n" + currentNode.Name + ": (" + currentNode.Position.X.ToString() + ", " + currentNode.Position.Y.ToString() + ", " + currentNode.Position.Z.ToString() + ")\n\nBack To Menu: M key\nSelect: G key\nSet Loc: L key\nInsert Node: INS Key\nMove Node: Keypad\nRotate: T Key" + "\nCamera Rotation:\n(" + CameraNode.Rotation.X.ToString() + ", " + CameraNode.Rotation.Y.ToString() + ", " + CameraNode.Rotation.Z.ToString() + "\nNode Rotation:\n(" + currentNode.Rotation.X.ToString() + ", " + currentNode.Rotation.Y.ToString() + ", " + currentNode.Rotation.Z.ToString() + "\n" + CameraNode.Position.X + "," + CameraNode.Position.Y + "," + CameraNode.Position.Z;
             }
             else
             {
@@ -309,7 +317,7 @@ namespace CC_X
             if (Input.GetKeyDown(Key.R))
             {
                 // Reset camera
-                CameraNode.Position = Vector3.Zero;
+                CameraNode.Position = new Vector3(75,0,0);
                 CameraNode.Rotation = new Quaternion(-0.2f,0,0); //Quaternion.Identity
             }            
             //Create a node
@@ -351,7 +359,28 @@ namespace CC_X
         //Event handler for new game button
         void NewGameClick(ReleasedEventArgs args)
         {
+            menu.Visible = false;
 
+            //Create level 1
+            game.SetUpLevel(Level.One, Difficulty.Easy);
+            CreateGround();
+
+            chooseChar = uiRoot.CreateWindow("ChooseChar", 3);
+            chooseChar.SetStyleAuto(null);
+            chooseChar.SetMinSize(300, 600);
+            chooseChar.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            chooseChar.Opacity = 0.85f;
+
+            charOptn1 = chooseChar.CreateButton();
+            charOptn1.SetMinSize(100, 30);
+            charOptn1.SetStyleAuto(null);
+            charOptn1.SetAlignment(HorizontalAlignment.Center,VerticalAlignment.Bottom);
+            charOptn1.SubscribeToReleased(CharOptn1Click);
+
+            charOptn1Text = charOptn1.CreateText();
+            charOptn1Text.SetFont(font, 16);
+            charOptn1Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn1Text.Value = "Select";
         }
         //Event handler for load game button
         void LoadGameClick(ReleasedEventArgs args)
@@ -387,7 +416,21 @@ namespace CC_X
         //Event handler for character selection option 1
         void CharOptn1Click(ReleasedEventArgs args)
         {
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Mutant;
 
+            MainChar = Scene.CreateChild("Mutant" + numNodes);
+            MainChar.Position = Camera.Node.Position;
+            MainChar.Rotation = Camera.Node.Rotation;
+            MainChar.Translate(new Vector3((float)Input.MousePosition.X / Graphics.Width, (float)Input.MousePosition.Y / Graphics.Height, 2));
+
+            
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            chooseChar.Visible = false;
         }
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
@@ -494,36 +537,109 @@ namespace CC_X
         public void CreateGround()
         {
             ++numNodes;
-            var node = Scene.CreateChild("Plane" + numNodes);          
+            Node node = Scene.CreateChild("Plane" + numNodes);          
             
             var component2 = node.CreateComponent<Urho.Shapes.Plane>();
             component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
             component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+
             //node.Pitch(-20,TransformSpace.Local);
 
-            for (int i = 0; i < 50; ++i)
+            for (int row = 0; row < 50; ++row)
             {
                 var node2 = node.CreateChild("Plane" + numNodes);
-                //node2.Pitch(-20, TransformSpace.Local);
-
                 var component3 = node2.CreateComponent<Urho.Shapes.Plane>();
-                component3.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
-                component3.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
-                node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * i);
-                for (int i2 = 0; i2 < 50; ++i2)
+                if (row != 34)
+                {                    
+                    component3.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+                    component3.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                }
+                //Road
+                else
+                {
+                    component3.SetMaterial(Material.FromImage("Textures/Road1.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                    node2.Yaw(90, TransformSpace.Local);
+                }
+                Nature plane2 = new Nature(Nature.NatureType.Plane, node2.Position);
+                plane2.ID = node2.ID;
+                game.GameObjCollection[plane2.ID] = plane2;
+
+                for (int col = 0; col < 50; ++col)
                 {
                     var node3 = node.CreateChild("Plane" + numNodes);
                     //node2.Pitch(-20, TransformSpace.Local);
-
                     var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
-                    component4.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
-                    component4.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
-                    node3.Position = new Vector3(1f + i2, node.Position.Y, 1f * i);
+                    if (row != 34 && (row != 41 | (col < 23 | col > 26)))
+                    {                        
+                        component4.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+                        component4.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                    }
+
+                    else if (row == 41 && col >=23 && col <= 26)
+                    {
+                        component4.Color = Color.White;
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);                        
+                    }
+
+                    //Road
+                    else if (row == 34)
+                    {
+                        component4.SetMaterial(Material.FromImage("Textures/Road1.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                        node3.Yaw(90, TransformSpace.Local);
+                    }
+                    Nature plane3 = new Nature(Nature.NatureType.Plane, node3.Position);
+                    plane3.ID = node3.ID;
+                    game.GameObjCollection[plane3.ID] = plane3;
                 }
             }
 
             node.Position = new Vector3(-0.7f, -0.5f, 2);
-            node.SetScale(3f);            
+            node.SetScale(3f);
+
+            Nature plane = new Nature(Nature.NatureType.Plane,node.Position);
+            plane.ID = node.ID;
+            game.GameObjCollection[plane.ID] = plane;
+        }
+
+        public void SetUpLevel1(Difficulty difficulty)
+        {
+            CreateGround();
+        }
+
+        public void SetUpLevel2(Difficulty difficulty)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetUpLevel3(Difficulty difficulty)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetUpLevel(Level level, Difficulty difficulty)
+        {
+            switch (level)
+            {
+                case Level.One:
+                    {
+                        SetUpLevel1(difficulty);
+                        break;
+                    }
+                case Level.Two:
+                    {
+                        SetUpLevel2(difficulty);
+                        break;
+                    }
+                case Level.Three:
+                    {
+                        SetUpLevel3(difficulty);
+                        break;
+                    }
+            }
         }
 
         //Brings up location setter window for developer mode
@@ -580,8 +696,6 @@ namespace CC_X
                 WindowedMode = true
             });
             app.Run();
-        }
-
-        
+        }        
     }
 }
