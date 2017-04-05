@@ -39,7 +39,7 @@ namespace CC_X.Model
         //Returns true when level is over
         public bool EndLevel()
         {
-            if(Math.Abs(MainChar.Position.X - EndGameZone.X) <= 1.5f | Math.Abs(MainChar.Position.Z - EndGameZone.Z) <= 1)
+            if(Math.Abs(MainChar.Position.X - EndGameZone.X) <= 1.5f && Math.Abs(MainChar.Position.Z - EndGameZone.Z) <= 1)
             {
                 GameOver = true;
                 return true;
@@ -53,7 +53,7 @@ namespace CC_X.Model
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
         private void SetUpLevel1(Difficulty difficulty)
         {
-            EndGameZone = new Vector3(25.5f, 0, 41);
+            EndGameZone = new Vector3(75, 0, 124);
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly

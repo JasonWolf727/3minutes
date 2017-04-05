@@ -267,15 +267,10 @@ namespace CC_X
 
         protected override void OnUpdate(float timeStep)
         {
-            base.OnUpdate(timeStep);
-            //Developer logic
-            if(MainChar != null)
-            {
-                game.MainChar.Position = MainChar.Position;
-            }
+            base.OnUpdate(timeStep);            
             if (game.EndLevel())
             {
-                menu.Visible = true;
+                menu.Visible = true; //Temporary indicator
             }            
             if (Input.GetKeyPress(Key.M))
             {
@@ -289,6 +284,7 @@ namespace CC_X
             if(GameStart)
             {
                 GameCommands(timeStep);
+                game.MainChar.Position = MainChar.Position;
             }
         }
 
