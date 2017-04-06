@@ -258,9 +258,8 @@ namespace CC_X
             zSet.SetStyleAuto(null);
             zSet.Text = "Z: ";
 
-            //Set up game
-            GameStart = false;
-
+            //Turn off game controls
+            GameStart = false;            
         }
 
         protected override void OnUpdate(float timeStep)
@@ -297,6 +296,7 @@ namespace CC_X
             if (Input.GetKeyPress(Key.N2)) nodeSelect = 2;
             if (Input.GetKeyPress(Key.N3)) nodeSelect = 3;
             if (Input.GetKeyPress(Key.N4)) nodeSelect = 4;
+            if (Input.GetKeyPress(Key.N5)) nodeSelect = 5;
 
             if (currentNode != null)
             {
@@ -363,7 +363,7 @@ namespace CC_X
         //Assigns keyboard input to corresponding main character logic.
         private void GameCommands(float timeStep)
         {
-            MoveCamera = false;
+            MoveCamera = true;
             if (Input.GetKeyDown(Key.Up)) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
             else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
             else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
@@ -557,12 +557,197 @@ namespace CC_X
                 node.SetScale(0.02f);
             }
             if (nodeSelect == 4)
-            {
-                var component2 = node.CreateComponent<AnimatedModel>();
-                component2.Model = ResourceCache.GetModel("Models/ThreeTreesWithBackground.mdl");
-                component2.SetMaterial(ResourceCache.GetMaterial("Materials/ThreeTreesWithBackground.xml"));
-                node.SetScale(0.02f);
+            {                
+                node.Rotation = new Quaternion(90, 0, 0);
+                var component = node.CreateComponent<AnimatedModel>();
+                component.Model = ResourceCache.GetModel("Models/Tree1Trunk.mdl");
+                component.SetMaterial(Material.FromImage("Textures/Tree1Bark.jpg"));               
+
+
+                Node Leaves = node.CreateChild("TreeType1Leaves", 1);
+                var component2 = Leaves.CreateComponent<AnimatedModel>();
+                component2.Model = ResourceCache.GetModel("Models/Tree1Leaves.mdl");
+                component2.SetMaterial(Material.FromImage("Textures/Tree1Leaves.png"));
+                node.SetScale(0.2f);
             }
+            if (nodeSelect == 5)
+            {
+                CreateAudi(node.Position);
+            }
+        }
+
+        //Create tree of style 1
+        public void CreateTree1(Vector3 position)
+        {
+            Node Trunk = Scene.CreateChild("TreeType1");
+
+
+            Trunk.Rotation = new Quaternion(90, 0, 0);
+            var component = Trunk.CreateComponent<AnimatedModel>();
+            component.Model = ResourceCache.GetModel("Models/Tree1Trunk.mdl");
+            component.SetMaterial(Material.FromImage("Textures/Tree1Bark.jpg"));
+            Trunk.CreateComponent<AnimationController>();
+
+
+            Node Leaves = Trunk.CreateChild("TreeType1Leaves", 1);
+            var component2 = Leaves.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Tree1Leaves.mdl");
+            component2.SetMaterial(Material.FromImage("Textures/Tree1Leaves.png"));
+
+            Trunk.Position = position;
+            Trunk.SetScale(0.2f);
+
+            //Add to GameController Dictionary
+            Nature Tree = new Nature(Nature.NatureType.Tree, Trunk.Position);
+            Tree.ID = Trunk.ID;
+            game.GameObjCollection[Tree.ID] = Tree;
+        }
+
+        //Creates car, with body as parent node
+        public void CreateAudi(Vector3 position)
+        {
+            Node body = Scene.CreateChild();
+            body.Rotation = new Quaternion(90, 0, 0);
+            var component = body.CreateComponent<AnimatedModel>();
+            component.Model = ResourceCache.GetModel("Models/Audi/AudiBody.mdl");
+            component.SetMaterial(Material.FromImage("Textures/Audi R8-white.jpg"));
+            body.CreateComponent<AnimationController>();
+
+            Node brakeLights = body.CreateChild();
+            var brakeLightsComponent = brakeLights.CreateComponent<AnimatedModel>();
+            brakeLightsComponent.Model = ResourceCache.GetModel("Models/Audi/AudiBrakeLights.mdl");
+            brakeLightsComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Led_Light.001.xml"));
+            brakeLights.CreateComponent<AnimationController>();
+
+            Node doorHandles = body.CreateChild();
+            doorHandles.CreateComponent<AnimationController>();
+            var doorHandlesComponent = doorHandles.CreateComponent<AnimatedModel>();
+            doorHandlesComponent.Model = ResourceCache.GetModel("Models/Audi/AudiDoorHandles.mdl");
+            doorHandlesComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node emblem = body.CreateChild();
+            emblem.CreateComponent<AnimationController>();
+            var emblemComponent = emblem.CreateComponent<AnimatedModel>();
+            emblemComponent.Model = ResourceCache.GetModel("Models/Audi/AudiEmblem.mdl");
+            emblemComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node emblemBack = body.CreateChild();
+            emblemBack.CreateComponent<AnimationController>();
+            var emblemBackComponent = emblemBack.CreateComponent<AnimatedModel>();
+            emblemBackComponent.Model = ResourceCache.GetModel("Models/Audi/AudiEmblemBack.mdl");
+            emblemBackComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node exhaust = body.CreateChild();
+            exhaust.CreateComponent<AnimationController>();
+            var exhaustComponent = exhaust.CreateComponent<AnimatedModel>();
+            exhaustComponent.Model = ResourceCache.GetModel("Models/Audi/AudiExhaust.mdl");
+            exhaustComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node frontGrill = body.CreateChild();
+            frontGrill.CreateComponent<AnimationController>();
+            var frontGrillComponent = frontGrill.CreateComponent<AnimatedModel>();
+            frontGrillComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontGrill.mdl");
+            frontGrillComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node frontHeadL = body.CreateChild();
+            frontHeadL.CreateComponent<AnimationController>();
+            var frontHeadLComponent = frontHeadL.CreateComponent<AnimatedModel>();
+            frontHeadLComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontHeadL.mdl");
+            frontHeadLComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Karbon.001.xml"));
+
+            Node frontMudFlap = body.CreateChild();
+            frontMudFlap.CreateComponent<AnimationController>();
+            var frontMudFlapComponent = frontMudFlap.CreateComponent<AnimatedModel>();
+            frontMudFlapComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontMudFlap.mdl");
+            frontMudFlapComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Body_Material0.xml"));
+
+            Node tipGrill = body.CreateChild();
+            tipGrill.CreateComponent<AnimationController>();
+            var tipGrillComponent = tipGrill.CreateComponent<AnimatedModel>();
+            tipGrillComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontTipGrill.mdl");
+            tipGrillComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Karbon.001.xml"));
+
+            Node frontWinsh = body.CreateChild();
+            frontWinsh.CreateComponent<AnimationController>();
+            var frontWinshComponent = frontWinsh.CreateComponent<AnimatedModel>();
+            frontWinshComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontWinsh.mdl");
+            frontWinshComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node insideBackGrill = body.CreateChild();
+            insideBackGrill.CreateComponent<AnimationController>();
+            var insideBackGrillComponent = insideBackGrill.CreateComponent<AnimatedModel>();
+            insideBackGrillComponent.Model = ResourceCache.GetModel("Models/Audi/AudiInsideBackGrill.mdl");
+            insideBackGrillComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node insideFrontGrill = body.CreateChild();
+            insideFrontGrill.CreateComponent<AnimationController>();
+            var insideFrontGrillComponent = insideFrontGrill.CreateComponent<AnimatedModel>();
+            insideFrontGrillComponent.Model = ResourceCache.GetModel("Models/Audi/AudiInsideFrontGill.mdl");
+            insideFrontGrillComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node insideGrill = body.CreateChild();
+            insideGrill.CreateComponent<AnimationController>();
+            var insideGrillComponent = insideGrill.CreateComponent<AnimatedModel>();
+            insideGrillComponent.Model = ResourceCache.GetModel("Models/Audi/AudiInsideGrillply.mdl");
+            insideGrillComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node licensePlate = body.CreateChild();
+            licensePlate.CreateComponent<AnimationController>();
+            var licensePlateComponent = licensePlate.CreateComponent<AnimatedModel>();
+            licensePlateComponent.Model = ResourceCache.GetModel("Models/Audi/AudiLicensePlate.mdl");
+            licensePlateComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Karbon.001.xml"));
+
+            Node rearMudFlap = body.CreateChild();
+            rearMudFlap.CreateComponent<AnimationController>();
+            var rearMudFlapComponent = rearMudFlap.CreateComponent<AnimatedModel>();
+            rearMudFlapComponent.Model = ResourceCache.GetModel("Models/Audi/AudiRearMudFlap.mdl");
+            rearMudFlapComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Body_Material0.xml"));
+
+            Node rearViews = body.CreateChild();
+            rearViews.CreateComponent<AnimationController>();
+            var rearViewsComponent = rearViews.CreateComponent<AnimatedModel>();
+            rearViewsComponent.Model = ResourceCache.GetModel("Models/Audi/AudiRearViews.mdl");
+            rearViewsComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Body_Material0.xml"));
+
+            Node rearWinshield = body.CreateChild();
+            rearWinshield.CreateComponent<AnimationController>();
+            var rearWinshieldComponent = rearWinshield.CreateComponent<AnimatedModel>();
+            rearWinshieldComponent.Model = ResourceCache.GetModel("Models/Audi/AudiRearWinshield.mdl");
+            rearWinshieldComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node sideBackWinsh = body.CreateChild();
+            sideBackWinsh.CreateComponent<AnimationController>();
+            var sideBackWinshComponent = sideBackWinsh.CreateComponent<AnimatedModel>();
+            sideBackWinshComponent.Model = ResourceCache.GetModel("Models/Audi/AudiSideBackWinsh.mdl");
+            sideBackWinshComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Body_Material0.xml"));
+
+            Node sideWind = body.CreateChild();
+            sideWind.CreateComponent<AnimationController>();
+            var sideWindComponent = sideWind.CreateComponent<AnimatedModel>();
+            sideWindComponent.Model = ResourceCache.GetModel("Models/Audi/AudiSideWind.mdl");
+            sideWindComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            Node tailFin = body.CreateChild();
+            tailFin.CreateComponent<AnimationController>();
+            var tailFinComponent = tailFin.CreateComponent<AnimatedModel>();
+            tailFinComponent.Model = ResourceCache.GetModel("Models/Audi/AudiTailFin.mdl");
+            tailFinComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Karbon.001.xml"));
+
+            Node wheels = body.CreateChild();
+            wheels.CreateComponent<AnimationController>();
+            var wheelsComponent = wheels.CreateComponent<AnimatedModel>();
+            wheelsComponent.Model = ResourceCache.GetModel("Models/Audi/AudiWheels.mdl");
+            wheelsComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Aluminum2.xml"));
+
+            Node tires = body.CreateChild();
+            tires.CreateComponent<AnimationController>();
+            var tiresComponent = tires.CreateComponent<AnimatedModel>();
+            tiresComponent.Model = ResourceCache.GetModel("Models/Audi/AudiTires.mdl");
+            tiresComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
+
+            body.Yaw(-90, TransformSpace.World);
+            body.SetScale(0.135f);
+            body.Position = position;
         }
 
         //Create Ground
@@ -691,7 +876,8 @@ namespace CC_X
             if (nodeSelect == 1) s = "Plane";
             if (nodeSelect == 2) s = "Mutant";
             if (nodeSelect == 3) s = "Mushroom";
-            if (nodeSelect == 4) s = "Tree";
+            if (nodeSelect == 4) s = "Tree1";
+            if (nodeSelect == 5) s = "Audi";
             return s;
         }
         //Return node that cursor is pointing at
