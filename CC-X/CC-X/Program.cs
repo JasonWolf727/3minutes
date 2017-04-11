@@ -364,10 +364,10 @@ namespace CC_X
         private void GameCommands(float timeStep)
         {
             MoveCamera = true;
-            if (Input.GetKeyDown(Key.Up)) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
-            else if (Input.GetKeyDown(Key.Down)) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
-            else if (Input.GetKeyDown(Key.Left)) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
-            else if (Input.GetKeyDown(Key.Right)) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
+            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
+            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
+            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
+            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
             else
             {
                 PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
@@ -653,7 +653,7 @@ namespace CC_X
             frontHeadL.CreateComponent<AnimationController>();
             var frontHeadLComponent = frontHeadL.CreateComponent<AnimatedModel>();
             frontHeadLComponent.Model = ResourceCache.GetModel("Models/Audi/AudiFrontHeadL.mdl");
-            frontHeadLComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/Karbon.001.xml"));
+            frontHeadLComponent.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));
 
             Node frontMudFlap = body.CreateChild();
             frontMudFlap.CreateComponent<AnimationController>();
