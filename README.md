@@ -1,5 +1,14 @@
 # 3minutes
-## Instructions:
+
+## History
+* March 14: Created README.MD document
+* March 31: Design Phase completed
+* April 5: Alpha Tag
+* April 12: Beta Tag
+* April 19: Release Candidate
+* April 24: Final Release
+
+## Instructions as of Alpha Tag:
 When the menu appears:
 * Click `New Game` to start a new game.
 * Click `Load Game` to load a game.
@@ -14,6 +23,8 @@ After you start a new game:
 * Once you get to the end zone, select an option from the menu. 
 
 ## Work Completed:
+
+### As of Alpha Tag (April 5):
 For GitHub:
 * Class Diagram and detailed class/method information has been updated according to notes provided in the Review period.
 * Game Specifications have been updated with more current information on how the game will work.
@@ -28,13 +39,16 @@ In the code:
 * High Score has been redesigned.
 * Developer Mode has been created: this is essentially a debugging mode to test object placement before hardcoding it into the final game.
 
-## Known Issues:
+### As of Beta Tag (April 12):
+To Update...
+
+## Known Issues as of Alpha Tag:
 No known issues
 
 ## Recording: 
-[Link to Recording](https://youtu.be/JftPD0mm-N8)
+[Link to Alpha Recording](https://youtu.be/JftPD0mm-N8)
 
-## Expenses: 
+## Expenses as of Alpha Tag: 
 | Developer | Hours invested | Hours left | Link to Journal | 
 |----------|---------|----------|------|
 | Case | 23.01 | 26.99 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
