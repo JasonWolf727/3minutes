@@ -25,7 +25,6 @@ namespace CC_X
         Window about;
         Window setLoc;
         Window setName;
-        Window chooseChar;
         Window selectDiff;
         Window giveCharName;
         Window locWindow;
@@ -78,6 +77,9 @@ namespace CC_X
         LineEdit charName;
 
         Node currentNode;
+        Node swat;
+        Node ninja;
+        Node mutant;
         int numNodes;
         int nodeSelect = 1;
         public bool DeveloperMode { get; set; }   
@@ -86,6 +88,11 @@ namespace CC_X
         public Node lightNode { get; private set; }
 
         public Light light { get; private set; }
+        public string ForwardAniFile { get; set; }
+        public string BackwardAniFile { get; set; }
+        public string LeftAniFile { get; set; }
+        public string RightAniFile { get; set; }
+        public string IdleAniFile { get; set; }
 
         //Create an instance of GameController
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
@@ -449,13 +456,13 @@ namespace CC_X
         {
             MoveCamera = true;
             List<object> collisionData = game.DetectCollision();
-            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
-            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
-            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
-            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
+            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2,TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
+            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
+            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, LeftAniFile); }
+            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, RightAniFile); }
             else
             {
-                PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
+                PlayAnimation(MainChar, IdleAniFile);
             }
         }
 
@@ -472,24 +479,76 @@ namespace CC_X
 
             //Create level 1
             game.SetUpLevel(Level.One, Difficulty.Easy);
-            //CreateGround();
-
-            chooseChar = uiRoot.CreateWindow("ChooseChar", 3);
-            chooseChar.SetStyleAuto(null);
-            chooseChar.SetMinSize(300, 600);
-            chooseChar.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            chooseChar.Opacity = 0.85f;
-
-            charOptn1 = chooseChar.CreateButton();
+            
+            //Set up Character selection
+            charOptn1 = uiRoot.CreateButton("Select1",10);
             charOptn1.SetMinSize(100, 30);
             charOptn1.SetStyleAuto(null);
-            charOptn1.SetAlignment(HorizontalAlignment.Center,VerticalAlignment.Bottom);
+            charOptn1.SetAlignment(HorizontalAlignment.Left,VerticalAlignment.Center);
             charOptn1.SubscribeToReleased(CharOptn1Click);
 
             charOptn1Text = charOptn1.CreateText();
             charOptn1Text.SetFont(font, 16);
             charOptn1Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             charOptn1Text.Value = "Select";
+
+            charOptn2 = uiRoot.CreateButton("Select2", 11);
+            charOptn2.SetMinSize(100, 30);
+            charOptn2.SetStyleAuto(null);
+            charOptn2.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn2.SubscribeToReleased(CharOptn2Click);
+
+            charOptn2Text = charOptn2.CreateText();
+            charOptn2Text.SetFont(font, 16);
+            charOptn2Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn2Text.Value = "Select";
+
+            charOptn3 = uiRoot.CreateButton("Select3", 12);
+            charOptn3.SetMinSize(100, 30);
+            charOptn3.SetStyleAuto(null);
+            charOptn3.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Center);
+            charOptn3.SubscribeToReleased(CharOptn3Click);
+
+            charOptn3Text = charOptn3.CreateText();
+            charOptn3Text.SetFont(font, 16);
+            charOptn3Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn3Text.Value = "Select";
+
+            //Display characters to choose from
+            //Swat
+            swat = Scene.CreateChild("Swat" + numNodes);
+            swat.Position = new Vector3(74.20757f, -0.50523f, 1.62f);
+
+            var component2 = swat.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
+            swat.CreateComponent<AnimationController>();
+            swat.SetScale(0.2f);
+            PlayAnimation(swat, "Swat/Swat_Idle.ani");
+
+            //Ninja
+            ninja = Scene.CreateChild("Ninja" + numNodes);
+            ninja.Position = new Vector3(75, -0.50523f, 1.62f);
+            ninja.Yaw(180, TransformSpace.Local);
+
+            var component3 = ninja.CreateComponent<AnimatedModel>();
+            component3.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
+            component3.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
+            ninja.CreateComponent<AnimationController>();
+            ninja.SetScale(0.2f);
+            PlayAnimation(ninja, "NinjaSnowWar/Ninja_Idle1.ani");
+
+            //Mutant
+            mutant = Scene.CreateChild("Mutant" + numNodes);
+            mutant.Position = new Vector3(75.79312f, -0.50523f, 1.62f);
+
+            var component4 = mutant.CreateComponent<AnimatedModel>();
+            component4.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+            component4.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            mutant.CreateComponent<AnimationController>();
+            mutant.SetScale(0.2f);
+            PlayAnimation(mutant, "Mutant/Mutant_Idle1.ani");
         }
         //Event handler for load game button
         void LoadGameClick(ReleasedEventArgs args)
@@ -564,6 +623,14 @@ namespace CC_X
         //Event handler for character selection option 1
         void CharOptn1Click(ReleasedEventArgs args)
         {
+            swat.Remove();
+            ninja.Remove();
+            mutant.Remove();
+
+            charOptn1.Visible = false;
+            charOptn2.Visible = false;
+            charOptn3.Visible = false;
+
             game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Swat;
 
             MainChar = Scene.CreateChild("Swat" + numNodes);
@@ -577,18 +644,77 @@ namespace CC_X
             MainChar.CreateComponent<AnimationController>();
             MainChar.SetScale(0.2f);
 
-            chooseChar.Visible = false;
+            ForwardAniFile = "Swat/Swat_SprintFwd.ani";
+            BackwardAniFile = "Swat/Swat_SprintBwd.ani";
+            LeftAniFile = "Swat/Swat_SprintLeft.ani";
+            RightAniFile = "Swat/Swat_SprintRight.ani";
+            IdleAniFile = "Swat/Swat_Idle.ani";
+
             GameStart = true;
             DeveloperMode = false;
         }
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
         {
+            swat.Remove();
+            ninja.Remove();
+            mutant.Remove();
 
+            charOptn1.Visible = false;
+            charOptn2.Visible = false;
+            charOptn3.Visible = false;
+
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Ninja;
+
+            MainChar = Scene.CreateChild("Ninja" + numNodes);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            ForwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            BackwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            LeftAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            RightAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
+
+            GameStart = true;
+            DeveloperMode = false;
         }
         //Event handler for character selection option 3
         void CharOptn3Click(ReleasedEventArgs args)
         {
+            swat.Remove();
+            ninja.Remove();
+            mutant.Remove();
+
+            charOptn1.Visible = false;
+            charOptn2.Visible = false;
+            charOptn3.Visible = false;
+
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Mutant;
+
+            MainChar = Scene.CreateChild("Mutant" + numNodes);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            MainChar.Yaw(180, TransformSpace.Local);
+
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            ForwardAniFile = "Mutant/Mutant_Run.ani";
+            BackwardAniFile = "Mutant/Mutant_Run.ani";
+            LeftAniFile = "Mutant/Mutant_Run.ani";
+            RightAniFile = "Mutant/Mutant_Run.ani";
+            IdleAniFile = "Mutant/Mutant_Idle0.ani";
+
+            GameStart = true;
+            DeveloperMode = false;
 
         }
         //Event handler for developer button
@@ -1036,20 +1162,20 @@ namespace CC_X
             node.RemoveAllActions();
 
             bool looped = false;
-            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
-            {
-                looped = true;
-            }
+            //if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
+            //{
+            looped = true;
+            //}
 
-            if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
-            {
-                node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
-            }
+            //if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
+            //{
+            node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
+            //}
 
             AnimationController animation = node.GetComponent<AnimationController>();
-            animation.StopAll(0.2f);
+            animation.StopAll(0.2f);           
 
-            animation.Play("Models/" + file, 0, looped, 0.2f);
+            animation.Play("Models/" + file, 0, looped, 0.2f);            
         }
 
         static void Main(string[] args)
