@@ -98,7 +98,39 @@ namespace CC_X
         {
             base.Start();
 
-            //Set up scene and add light to the scene           
+            //Set up scene and add light to the scene
+            SetupScene();
+
+            //Setup Root UI and chache
+            uiRoot = UI.Root;
+            cache = ResourceCache;
+
+            //Setup font and style
+            style = cache.GetXmlFile("UI/DefaultStyle.xml");
+            font = cache.GetFont("Fonts/Anonymous Pro.ttf");
+
+            //Setup UI default style
+            uiRoot.SetStyleAuto(style);
+
+            //Setup the menu
+            SetupMenu();
+
+            //Add buttons to main menu
+            SetupButtons();
+
+            //Set up Developer tools
+            SetupDeveloperMode();
+
+            //Establish a Location Setter Window
+            SetupLSW();
+
+            //Turn off game controls
+            GameStart = false;
+        }
+
+        protected void SetupScene()
+        {
+            //Generate scene light and shadow effects
             lightNode = Scene.CreateChild("DirectionalLight");
             lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
             var light = lightNode.CreateComponent<Light>();
@@ -112,32 +144,27 @@ namespace CC_X
 
             //Set up camera pos
             CameraNode.Position = new Vector3(75, 0, 0);
+        }
 
-            //Setup Root UI and chache
-            uiRoot = UI.Root;
-            cache = ResourceCache;            
-
-            //Setup font and style
-            style = cache.GetXmlFile("UI/DefaultStyle.xml");
-            font = cache.GetFont("Fonts/Anonymous Pro.ttf");
-
-            //Setup UI default style
-            uiRoot.SetStyleAuto(style);
-
+        protected void SetupMenu()
+        {
             //Setup main menu/title screen
             menu = uiRoot.CreateWindow();
             menu.SetStyleAuto(null);
             menu.SetMinSize(300, 600);
-            menu.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);            
-            menu.Opacity = 0.85f;          
+            menu.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            menu.Opacity = 0.85f;
 
             //Add welcome message
             welcomeMsg = menu.CreateText("Welcome", 0);
             welcomeMsg.SetFont(font, 18);
             welcomeMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
             welcomeMsg.Value = "Welcome to\n\r\r\rCC-X!";
+        }
 
-            //Add buttons to main menu
+        protected void SetupButtons()
+        {
+            //Load each button with their respective attributes
             newGameBtn = menu.CreateButton("NewGameBtn", 1);
             newGameBtn.SetMinSize(230, 40);
             newGameBtn.SetStyleAuto(null);
@@ -151,7 +178,7 @@ namespace CC_X
             exitBtn = menu.CreateButton("ExitBtn", 3);
             exitBtn.SetMinSize(230, 40);
             exitBtn.SetStyleAuto(null);
-            exitBtn.Position = new IntVector2(35, 325); 
+            exitBtn.Position = new IntVector2(35, 325);
 
             helpBtn = menu.CreateButton("HelpBtn", 4);
             helpBtn.SetMinSize(100, 30);
@@ -196,8 +223,10 @@ namespace CC_X
             exitBtn.SubscribeToReleased(_ => Exit());
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
+        }
 
-            //Set up Developer tools
+        protected void SetupDeveloperMode()
+        {
             coordinates = uiRoot.CreateText("Coordinates", 6);
             coordinates.SetFont(font, 12);
             coordinates.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Top);
@@ -213,7 +242,10 @@ namespace CC_X
             messageHelper.SetColor(Color.Red);
             messageHelper.Value = "";
             messageHelper.Visible = false;
+        }
 
+        protected void SetupLSW()
+        {
             //Set up location setter window
             locWindow = uiRoot.CreateWindow("LocationWindow", 8);
             locWindow.SetStyleAuto(null);
@@ -257,9 +289,6 @@ namespace CC_X
             zSet.SetMaxSize(280, 30);
             zSet.SetStyleAuto(null);
             zSet.Text = "Z: ";
-
-            //Turn off game controls
-            GameStart = false;            
         }
 
         protected override void OnUpdate(float timeStep)
