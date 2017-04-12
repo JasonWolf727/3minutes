@@ -951,9 +951,31 @@ namespace CC_X
             game.GameObjCollection[plane.ID] = plane;
         }
 
+        //Create forest for level 1
+        public void CreateForestLevel1()
+        {
+            //++numNodes;
+            //Node nodeT = Scene.CreateChild("Tree1" + numNodes);
+
+            //var component2 = nodeT.CreateComponent<Urho.Shapes.Plane>();
+            //component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
+            //component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
+
+            for (float zpos = 0; zpos < 130; zpos+=2)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
+            {
+                Vector3 LeftLeftTreePos = new Vector3(73f, -2f, zpos);
+                Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
+                Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
+                Vector3 RightRightTreePos = new Vector3(77f, -2f, zpos);
+                CreateTree1(LeftLeftTreePos);
+
+            }
+        }
+
         public void SetUpLevel1(Difficulty difficulty)
         {
             CreateGround();
+            //CreateForestLevel1();
         }
 
         public void SetUpLevel2(Difficulty difficulty)
