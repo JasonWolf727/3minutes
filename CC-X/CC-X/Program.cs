@@ -961,21 +961,37 @@ namespace CC_X
             //component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
             //component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
 
-            for (float zpos = 0; zpos < 130; zpos+=2)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
+            for (float zpos = 0; zpos < 135; zpos+=5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
             {
                 Vector3 LeftLeftTreePos = new Vector3(73f, -2f, zpos);
-                Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
-                Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
+                //Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
+                //Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
                 Vector3 RightRightTreePos = new Vector3(77f, -2f, zpos);
-                CreateTree1(LeftLeftTreePos);
-
+                if (zpos <= 101 | zpos >= 106)
+                {
+                    CreateTree1(LeftLeftTreePos);
+                    //CreateTree1(LeftMiddleTreePos);
+                    //CreateTree1(RightMiddleTreePos);
+                    CreateTree1(RightRightTreePos);
+                }
+                if (zpos == 130)
+                {
+                    Vector3 LeftMiddleMiddleTreePos = new Vector3(74.4f, -2f, zpos);
+                    Vector3 RightMiddleMiddleTreePos = new Vector3(75.6f, -2f, zpos);
+                    CreateTree1(LeftLeftTreePos);
+                    //CreateTree1(LeftMiddleTreePos);
+                    //CreateTree1(RightMiddleTreePos);
+                    CreateTree1(RightRightTreePos);
+                    CreateTree1(RightMiddleMiddleTreePos);
+                    CreateTree1(LeftMiddleMiddleTreePos);
+                }
             }
         }
 
         public void SetUpLevel1(Difficulty difficulty)
         {
             CreateGround();
-            //CreateForestLevel1();
+            CreateForestLevel1();
         }
 
         public void SetUpLevel2(Difficulty difficulty)
