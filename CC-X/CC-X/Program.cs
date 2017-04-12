@@ -52,11 +52,13 @@ namespace CC_X
         Text helpBtnText;
         Text aboutBtnText;
         Text hallOfFameBtnText;
+        Text hallOfFameMsg;
         Text developerBtnText;
         Text backBtnText;
         Text exitBtnText;
         Text welcomeMsg;
         Text aboutMsg;
+        Text helpMsg;
         Text loadGameText;
         Text newGameText;
         Text charOptn1Text;
@@ -160,6 +162,49 @@ namespace CC_X
             welcomeMsg.SetFont(font, 18);
             welcomeMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
             welcomeMsg.Value = "Welcome to\n\r\r\rCC-X!";
+
+            //Setup High Score screen
+            hallOfFame = uiRoot.CreateWindow();
+            hallOfFame.SetStyleAuto(null);
+            hallOfFame.SetMinSize(300, 600);
+            hallOfFame.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            hallOfFame.Opacity = 0.85f;
+            hallOfFame.Visible = false;
+
+            //Add High Score message
+            hallOfFameMsg = hallOfFame.CreateText();
+            hallOfFameMsg.SetFont(font, 18);
+            hallOfFameMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            hallOfFameMsg.Value = "Hall of Fame\n";
+
+            //Setup About screen
+            about = uiRoot.CreateWindow();
+            about.SetStyleAuto(null);
+            about.SetMinSize(300, 600);
+            about.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            about.Opacity = 0.85f;
+            about.Visible = false;
+
+            //Add About message
+            aboutMsg = about.CreateText();
+            aboutMsg.SetFont(font, 18);
+            aboutMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            aboutMsg.Value = "About\n";
+
+            //Setup Help screen
+            help = uiRoot.CreateWindow();
+            help.SetStyleAuto(null);
+            help.SetMinSize(300, 600);
+            help.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            help.Opacity = 0.85f;
+            help.Visible = false;
+
+            //Add Help message
+            helpMsg = help.CreateText();
+            helpMsg.SetFont(font, 18);
+            helpMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            helpMsg.Value = "Help\n";
+
         }
 
         protected void SetupButtons()
@@ -175,10 +220,15 @@ namespace CC_X
             loadGameBtn.SetStyleAuto(null);
             loadGameBtn.Position = new IntVector2(35, 280);
 
+            hallOfFameBtn = menu.CreateButton("HallOfFameBtn", 6);
+            hallOfFameBtn.SetMinSize(230, 40);
+            hallOfFameBtn.SetStyleAuto(null);
+            hallOfFameBtn.Position = new IntVector2(35, 325);
+
             exitBtn = menu.CreateButton("ExitBtn", 3);
             exitBtn.SetMinSize(230, 40);
             exitBtn.SetStyleAuto(null);
-            exitBtn.Position = new IntVector2(35, 325);
+            exitBtn.Position = new IntVector2(35, 370);
 
             helpBtn = menu.CreateButton("HelpBtn", 4);
             helpBtn.SetMinSize(100, 30);
@@ -190,7 +240,6 @@ namespace CC_X
             aboutBtn.SetStyleAuto(null);
             aboutBtn.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Bottom);
 
-
             //Add text to the buttons
             newGameText = newGameBtn.CreateText("newGameText", 1);
             newGameText.SetFont(font, 16);
@@ -201,6 +250,11 @@ namespace CC_X
             loadGameText.SetFont(font, 16);
             loadGameText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             loadGameText.Value = "Load Game";
+
+            hallOfFameBtnText = hallOfFameBtn.CreateText("aboutBtnText", 1);
+            hallOfFameBtnText.SetFont(font, 16);
+            hallOfFameBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            hallOfFameBtnText.Value = "High Scores";
 
             exitBtnText = exitBtn.CreateText("exitBtnText", 1);
             exitBtnText.SetFont(font, 16);
@@ -215,7 +269,7 @@ namespace CC_X
             aboutBtnText = aboutBtn.CreateText("aboutBtnText", 1);
             aboutBtnText.SetFont(font, 12);
             aboutBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            aboutBtnText.Value = "About";
+            aboutBtnText.Value = "About";            
 
             //Subscribe buttons to event handlers
             newGameBtn.SubscribeToReleased(NewGameClick);
@@ -223,6 +277,7 @@ namespace CC_X
             exitBtn.SubscribeToReleased(_ => Exit());
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
+            hallOfFameBtn.SubscribeToReleased(HallOfFameClick);
         }
 
         protected void SetupDeveloperMode()
@@ -296,7 +351,7 @@ namespace CC_X
             base.OnUpdate(timeStep);            
             if (game.EndLevel())
             {
-                menu.Visible = true; //Temporary indicator
+                //menu.Visible = true; //Temporary indicator
             }            
             if (Input.GetKeyPress(Key.M))
             {
@@ -449,23 +504,62 @@ namespace CC_X
         //Event handler for help button
         void HelpClick(ReleasedEventArgs args)
         {
+            menu.Visible = false;
+            help.Visible = true;
 
+            backBtn = help.CreateButton();
+            backBtn.SetMinSize(100, 30);
+            backBtn.SetStyleAuto(null);
+            backBtn.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            backBtn.SubscribeToReleased(BackClick);
+
+            backBtnText = backBtn.CreateText("backBtnText", 1);
+            backBtnText.SetFont(font, 12);
+            backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            backBtnText.Value = "Back";
         }
 
         //Event handler for about button
         void AboutClick(ReleasedEventArgs args)
         {
+            menu.Visible = false;
+            about.Visible = true;
 
+            backBtn = about.CreateButton();
+            backBtn.SetMinSize(100, 30);
+            backBtn.SetStyleAuto(null);
+            backBtn.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            backBtn.SubscribeToReleased(BackClick);
+
+            backBtnText = backBtn.CreateText("backBtnText", 1);
+            backBtnText.SetFont(font, 12);
+            backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            backBtnText.Value = "Back";
         }
         //Event handler for high score/hall of fame button
         void HallOfFameClick(ReleasedEventArgs args)
         {
+            menu.Visible = false;
+            hallOfFame.Visible = true;
 
+            backBtn = hallOfFame.CreateButton();
+            backBtn.SetMinSize(100, 30);
+            backBtn.SetStyleAuto(null);
+            backBtn.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            backBtn.SubscribeToReleased(BackClick);
+
+            backBtnText = backBtn.CreateText("backBtnText", 1);
+            backBtnText.SetFont(font, 12);
+            backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            backBtnText.Value = "Back";
         }
         //Event handler for for back button
         void BackClick(ReleasedEventArgs args)
         {
-
+            about.Visible = false;
+            hallOfFame.Visible = false;
+            help.Visible = false;
+            menu.Visible = true;
         }
         //Event handler for character selection option 1
         void CharOptn1Click(ReleasedEventArgs args)
