@@ -60,21 +60,20 @@ namespace CC_X.Model
                     {
                         if (Math.Abs(MainChar.Position.X - obj.Position.X) <= 0.05f && Math.Abs(MainChar.Position.Z - obj.Position.Z) <= 0.05f)
                         {
-                            MainChar.Health = MainChar.Health - ((Enemy)obj).Strength;
-                            
-                            return new List<object>(){ true,null };
+                            MainChar.ReceiveDamage(((Enemy)obj).Strength);                            
+                            return new List<object>(){ true,obj.Position };
                         }
                     }   
-                    if(obj is Nature)
+                    if(obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
                     {
                         return new List<object>() { true, obj.Position };
                     }
                 }
-                return new List<object>() { false, null };
+                return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
             else
             {
-                return new List<object>() { false, null };
+                return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
         }
 

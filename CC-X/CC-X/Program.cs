@@ -259,7 +259,7 @@ namespace CC_X
             zSet.Text = "Z: ";
 
             //Turn off game controls
-            GameStart = false;            
+            GameStart = false;       
         }
 
         protected override void OnUpdate(float timeStep)
@@ -365,10 +365,10 @@ namespace CC_X
         {
             MoveCamera = true;
             List<object> collisionData = game.DetectCollision();
-            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 && (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
-            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 && (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
-            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f && (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
-            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 && (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
+            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2); MainChar.Translate(-Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintFwd.ani"); }
+            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2); MainChar.Translate(Vector3.UnitZ * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintBwd.ani"); }
+            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2); MainChar.Translate(Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintLeft.ani"); }
+            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2); MainChar.Translate(-Vector3.UnitX * timeStep * 2); PlayAnimation(MainChar, "Swat/Swat_SprintRight.ani"); }
             else
             {
                 PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
@@ -749,6 +749,11 @@ namespace CC_X
             body.Yaw(-90, TransformSpace.World);
             body.SetScale(0.135f);
             body.Position = position;
+
+            //Add to GameController Dictionary
+            Enemy Audi = new Enemy();
+            Audi.ID = body.ID;
+            game.GameObjCollection[Audi.ID] = Audi;
         }
 
         //Create Ground

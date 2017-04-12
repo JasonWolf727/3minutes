@@ -19,7 +19,9 @@ namespace CC_X.Model
         public int Experience { get; set; }
         public int Points { get; set; }
         public MainCharacter()
-        {           
+        {
+            IsDead = false;
+            Health = 100; 
         }
 
         //If not dead, sets MainCharacter.Position to position
@@ -30,7 +32,11 @@ namespace CC_X.Model
         
         public void ReceiveDamage(int damagePow)
         {
-
+            Health = Health - damagePow;
+            if(Health <= 0)
+            {
+                IsDead = true;
+            }
         }
         public void MoveLeft(float howMuch)
         {

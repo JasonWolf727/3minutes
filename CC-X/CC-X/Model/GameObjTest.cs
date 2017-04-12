@@ -123,7 +123,7 @@ namespace CC_X.Model
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 80);
+            Assert.IsTrue(game.MainChar.Health == 80);
         }
         [TestMethod]
         public void DetectCollision_AssessDamageAndDeath_NoException()
@@ -142,28 +142,28 @@ namespace CC_X.Model
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 80);
-            Assert.IsFalse(MainChar.IsDead == false);
+            Assert.IsTrue(game.MainChar.Health == 80);
+            Assert.IsTrue(game.MainChar.IsDead != true);
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 60);
-            Assert.IsFalse(MainChar.IsDead == false);
+            Assert.IsTrue(game.MainChar.Health == 60);
+            Assert.IsTrue(game.MainChar.IsDead != true);
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 40);
-            Assert.IsFalse(MainChar.IsDead == false);
+            Assert.IsTrue(game.MainChar.Health == 40);
+            Assert.IsTrue(game.MainChar.IsDead != true);
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 20);
-            Assert.IsFalse(MainChar.IsDead == false);
+            Assert.IsTrue(game.MainChar.Health == 20);
+            Assert.IsTrue(game.MainChar.IsDead != true);
 
             game.DetectCollision();
 
-            Assert.IsTrue(MainChar.Health == 0);
-            Assert.IsTrue(MainChar.IsDead == true);
+            Assert.IsTrue(game.MainChar.Health == 0);
+            Assert.IsTrue(game.MainChar.IsDead == true);
         }
         [TestMethod]
         public void UpdatePos_MainChar_NoException()
