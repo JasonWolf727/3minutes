@@ -981,10 +981,20 @@ namespace CC_X
             }
         }
 
+        //Create cars for level 1
+        public void CreateCarsLevel1()
+        {
+            Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(65f, -.5f, 103.5f);
+            CreateAudi(FarLaneAudiInitialPlacement);
+            CreateAudi(CloseLaneAudiInitialPlacement);
+        }
+
         public void SetUpLevel1(Difficulty difficulty)
         {
             CreateGround();
             CreateForestLevel1();
+            CreateCarsLevel1();
         }
 
         public void SetUpLevel2(Difficulty difficulty)
