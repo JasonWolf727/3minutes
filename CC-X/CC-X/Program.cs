@@ -954,13 +954,6 @@ namespace CC_X
         //Create forest for level 1
         public void CreateForestLevel1()
         {
-            //++numNodes;
-            //Node nodeT = Scene.CreateChild("Tree1" + numNodes);
-
-            //var component2 = nodeT.CreateComponent<Urho.Shapes.Plane>();
-            //component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
-            //component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
-
             for (float zpos = 0; zpos < 135; zpos+=5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
             {
                 Vector3 LeftLeftTreePos = new Vector3(73f, -2f, zpos);
