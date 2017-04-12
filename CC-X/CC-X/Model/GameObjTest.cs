@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CC_X.Model
 {
     [TestClass]
-    public class WorldTest
+    public class GameObjTest
     {
         [TestMethod]
         public void DetectCollision_zombieMainChar_NoCollision()
@@ -17,11 +17,12 @@ namespace CC_X.Model
             zombie.Position = new Urho.Vector3(1, 2, 1);
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(5, 4, 1);
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
-
-            Assert.IsFalse(MainChar.DetectCollision(world) == false);
+            Assert.IsTrue((bool)(game.DetectCollision()[0]) != true);
         }
 
         [TestMethod]
@@ -30,12 +31,13 @@ namespace CC_X.Model
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 2, 3);
             MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.95f, 4, 3);
+            MainChar.Position = new Urho.Vector3(0.96f, 4, 3);
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
+            game.GameObjCollection[0] = zombie;
 
-            Assert.IsTrue(MainChar.DetectCollision(world) == true);
+            Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
         }
 
         [TestMethod]
@@ -45,11 +47,12 @@ namespace CC_X.Model
             zombie.Position = new Urho.Vector3(1, 2, 8);
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(1, 4, 8);
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
-
-            Assert.IsTrue(MainChar.DetectCollision(world) == true);
+            Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
         }
 
         [TestMethod]
@@ -58,12 +61,13 @@ namespace CC_X.Model
             Enemy zombie = new Enemy();
             zombie.Position = new Urho.Vector3(1, 4, 8);
             MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(3, 4, 8);
+            MainChar.Position = new Urho.Vector3(1.05f, 4, 8);
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
-
-            Assert.IsTrue(MainChar.DetectCollision(world) == true);
+            Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
         }
 
         [TestMethod]
@@ -73,13 +77,14 @@ namespace CC_X.Model
             zombie.Position = new Urho.Vector3(1, 4, 8);
             zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(3, 4, 8);
+            MainChar.Position = new Urho.Vector3(0.96f, 4, 8);
             MainChar.Health = 100;
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
-
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 80);
         }
@@ -92,11 +97,13 @@ namespace CC_X.Model
             MainCharacter MainChar = new MainCharacter();
             MainChar.Position = new Urho.Vector3(3, 2, 8);
             MainChar.Health = 100;
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
+            
+            game.GameObjCollection[0] = zombie;
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 100);
         }
@@ -107,13 +114,14 @@ namespace CC_X.Model
             zombie.Position = new Urho.Vector3(1, 4, 8);
             zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.95f, 3.95f, 8);
+            MainChar.Position = new Urho.Vector3(0.96f, 3.95f, 8);
             MainChar.Health = 100;
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
-
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 80);
         }
@@ -124,33 +132,35 @@ namespace CC_X.Model
             zombie.Position = new Urho.Vector3(1, 4, 8);
             zombie.Strength = 20;
             MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(3, 4, 8);
+            MainChar.Position = new Urho.Vector3(0.96f, 4, 8);
             MainChar.Health = 100;
 
-            Dictionary<int, GameObj> world = new Dictionary<int, GameObj>();
-            world[1] = zombie;
+            GameController game = new GameController(Difficulty.Easy);
+            game.MainChar = MainChar;
+            
+            game.GameObjCollection[0] = zombie;
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 80);
             Assert.IsFalse(MainChar.IsDead == false);
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 60);
             Assert.IsFalse(MainChar.IsDead == false);
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 40);
             Assert.IsFalse(MainChar.IsDead == false);
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 20);
             Assert.IsFalse(MainChar.IsDead == false);
 
-            MainChar.DetectCollision(world);
+            game.DetectCollision();
 
             Assert.IsTrue(MainChar.Health == 0);
             Assert.IsTrue(MainChar.IsDead == true);

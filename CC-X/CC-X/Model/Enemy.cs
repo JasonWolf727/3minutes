@@ -74,11 +74,6 @@ namespace CC_X.Model
                     this.IsDead = false;
                     break;
             }
-        }
-
-        public bool DetectCollision(Dictionary<int, GameObj> worldObjs)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

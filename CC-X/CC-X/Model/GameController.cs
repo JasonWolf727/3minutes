@@ -49,6 +49,34 @@ namespace CC_X.Model
                 return false;
             }
         }
+        //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
+        public List<object> DetectCollision()
+        {
+            if(MainChar != null)
+            {
+                foreach (GameObj obj in GameObjCollection.Values)
+                {
+                    if(obj is Enemy)
+                    {
+                        if (Math.Abs(MainChar.Position.X - obj.Position.X) <= 0.05f && Math.Abs(MainChar.Position.Z - obj.Position.Z) <= 0.05f)
+                        {
+                            MainChar.Health = MainChar.Health - ((Enemy)obj).Strength;
+                            
+                            return new List<object>(){ true,null };
+                        }
+                    }   
+                    if(obj is Nature)
+                    {
+                        return new List<object>() { true, obj.Position };
+                    }
+                }
+                return new List<object>() { false, null };
+            }
+            else
+            {
+                return new List<object>() { false, null };
+            }
+        }
 
         //Calculates player's experience
         public void CalcExperience(int points)
@@ -66,6 +94,7 @@ namespace CC_X.Model
         private void SetUpLevel1(Difficulty difficulty)
         {
             EndGameZone = new Vector3(75, 0, 124);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
             gui.SetUpLevel(Level.One, difficulty);
         }
 

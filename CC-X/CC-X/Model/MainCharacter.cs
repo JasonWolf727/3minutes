@@ -27,12 +27,7 @@ namespace CC_X.Model
         {
             throw new NotImplementedException();
         }
-
-        //Returns true if collided with other World objects. If World object type == WorldType.Enemies and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
-        public bool DetectCollision(Dictionary<int, GameObj> worldObjs)
-        {
-            throw new NotImplementedException();
-        }
+        
         public void ReceiveDamage(int damagePow)
         {
 
