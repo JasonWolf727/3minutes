@@ -236,7 +236,7 @@ namespace CC_X
             aboutMsg = about.CreateText();
             aboutMsg.SetFont(font, 18);
             aboutMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
-            aboutMsg.Value = "About\n";
+            aboutMsg.Value = "About"; //\n This program was created by\n Joshua Case\n Michael Johannes\n Carlos Santana\n Please enjoy responsibly!\n";
 
             //Setup Help screen
             help = uiRoot.CreateWindow();
@@ -1115,7 +1115,7 @@ namespace CC_X
             game.GameObjCollection[Audi.ID] = Audi;
 
             //Stores the node ID of the Audi body
-            Car2ID = Convert.ToInt32(body.ID);
+            Car2ID = Convert.ToInt32(Audi.ID);
         }
 
         //Create Ground
@@ -1199,13 +1199,13 @@ namespace CC_X
                 //Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
                 //Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
                 Vector3 RightRightTreePos = new Vector3(77f, -2f, zpos);
-                if (zpos <= 101 | zpos >= 106)
-                {
-                    CreateTree1(LeftLeftTreePos);
+                //if (zpos <= 101 | zpos >= 106)
+                //{
+                //    CreateTree1(LeftLeftTreePos);
                     //CreateTree1(LeftMiddleTreePos);
                     //CreateTree1(RightMiddleTreePos);
-                    CreateTree1(RightRightTreePos);
-                }
+                //    CreateTree1(RightRightTreePos);
+                //}
                 if (zpos == 130)
                 {
                     Vector3 LeftMiddleMiddleTreePos = new Vector3(74.4f, -2f, zpos);
