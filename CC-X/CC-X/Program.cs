@@ -93,6 +93,7 @@ namespace CC_X
         //Store scene nodes, but keep main character separate
         public Dictionary<int, Node> NodesInScene;
         Node MainChar;
+        int Car2ID;
 
         public Program(ApplicationOptions options) : base(options) { }
 
@@ -366,6 +367,8 @@ namespace CC_X
             {
                 GameCommands(timeStep);
                 game.MainChar.Position = MainChar.Position;
+                //Moves the cars
+                //MoveCar(timeStep);
             }
         }
 
@@ -456,6 +459,35 @@ namespace CC_X
             else
             {
                 PlayAnimation(MainChar, "Swat/Swat_Idle.ani");
+            }
+        }
+
+        //Move the car to the right 1 timestep. 
+        //If X > 80 resets the cars position.
+        private void MoveCar(float timeStep)
+        {
+            //FarLaneCar
+            if (game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position.X > 80f)
+            {
+                Vector3 resetPosition = new Vector3(65f, -.5f, 104.3f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position = resetPosition;
+            }
+            else
+            {
+                Vector3 movePosition = new Vector3(game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position.X + timeStep, -.5f, 104.3f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position = movePosition;
+            }
+
+            //CloseLaneCar
+            if (game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position.X > 80f)
+            {
+                Vector3 resetPosition = new Vector3(65f, -.5f, 103.5f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position = resetPosition;
+            }
+            else
+            {
+                Vector3 movePosition = new Vector3(game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position.X + timeStep, -.5f, 103.5f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position = movePosition;
             }
         }
 
@@ -877,6 +909,9 @@ namespace CC_X
             Enemy Audi = new Enemy();
             Audi.ID = body.ID;
             game.GameObjCollection[Audi.ID] = Audi;
+
+            //Stores the node ID of the Audi body
+            Car2ID = Convert.ToInt32(body.ID);
         }
 
         //Create Ground
@@ -985,7 +1020,7 @@ namespace CC_X
         public void CreateCarsLevel1()
         {
             Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
-            Vector3 CloseLaneAudiInitialPlacement = new Vector3(65f, -.5f, 103.5f);
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
             CreateAudi(FarLaneAudiInitialPlacement);
             CreateAudi(CloseLaneAudiInitialPlacement);
         }
