@@ -110,6 +110,7 @@ namespace CC_X
         //Store scene nodes, but keep main character separate
         public Dictionary<int, Node> NodesInScene;
         Node MainChar;
+        int Car2ID;
 
         public Program(ApplicationOptions options) : base(options) { }
 
@@ -418,6 +419,8 @@ namespace CC_X
             {
                 GameCommands(timeStep);
                 game.MainChar.Position = MainChar.Position;
+                //Moves the cars
+                //MoveCar(timeStep);
             }
         }
 
@@ -513,6 +516,35 @@ namespace CC_X
             else
             {
                 PlayAnimation(MainChar, IdleAniFile);
+            }
+        }
+
+        //Move the car to the right 1 timestep. 
+        //If X > 80 resets the cars position.
+        private void MoveCar(float timeStep)
+        {
+            //FarLaneCar
+            if (game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position.X > 80f)
+            {
+                Vector3 resetPosition = new Vector3(65f, -.5f, 104.3f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position = resetPosition;
+            }
+            else
+            {
+                Vector3 movePosition = new Vector3(game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position.X + timeStep, -.5f, 104.3f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID - 1))].Position = movePosition;
+            }
+
+            //CloseLaneCar
+            if (game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position.X > 80f)
+            {
+                Vector3 resetPosition = new Vector3(65f, -.5f, 103.5f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position = resetPosition;
+            }
+            else
+            {
+                Vector3 movePosition = new Vector3(game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position.X + timeStep, -.5f, 103.5f);
+                game.GameObjCollection[Convert.ToUInt32((Car2ID))].Position = movePosition;
             }
         }
 
@@ -1059,6 +1091,9 @@ namespace CC_X
             Enemy Audi = new Enemy();
             Audi.ID = body.ID;
             game.GameObjCollection[Audi.ID] = Audi;
+
+            //Stores the node ID of the Audi body
+            Car2ID = Convert.ToInt32(body.ID);
         }
 
         //Create Ground
@@ -1133,9 +1168,50 @@ namespace CC_X
             game.GameObjCollection[plane.ID] = plane;
         }
 
+        //Create forest for level 1
+        public void CreateForestLevel1()
+        {
+            for (float zpos = 0; zpos < 135; zpos+=5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
+            {
+                Vector3 LeftLeftTreePos = new Vector3(73f, -2f, zpos);
+                //Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
+                //Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
+                Vector3 RightRightTreePos = new Vector3(77f, -2f, zpos);
+                if (zpos <= 101 | zpos >= 106)
+                {
+                    CreateTree1(LeftLeftTreePos);
+                    //CreateTree1(LeftMiddleTreePos);
+                    //CreateTree1(RightMiddleTreePos);
+                    CreateTree1(RightRightTreePos);
+                }
+                if (zpos == 130)
+                {
+                    Vector3 LeftMiddleMiddleTreePos = new Vector3(74.4f, -2f, zpos);
+                    Vector3 RightMiddleMiddleTreePos = new Vector3(75.6f, -2f, zpos);
+                    CreateTree1(LeftLeftTreePos);
+                    //CreateTree1(LeftMiddleTreePos);
+                    //CreateTree1(RightMiddleTreePos);
+                    CreateTree1(RightRightTreePos);
+                    CreateTree1(RightMiddleMiddleTreePos);
+                    CreateTree1(LeftMiddleMiddleTreePos);
+                }
+            }
+        }
+
+        //Create cars for level 1
+        public void CreateCarsLevel1()
+        {
+            Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
+            CreateAudi(FarLaneAudiInitialPlacement);
+            CreateAudi(CloseLaneAudiInitialPlacement);
+        }
+
         public void SetUpLevel1(Difficulty difficulty)
         {
             CreateGround();
+            CreateForestLevel1();
+            CreateCarsLevel1();
         }
 
         public void SetUpLevel2(Difficulty difficulty)
