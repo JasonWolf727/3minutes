@@ -57,7 +57,8 @@ Known Issues:
 
 ## Recording: 
 [Link to Alpha Recording](https://youtu.be/JftPD0mm-N8)
-[Link to Beta Recording]()
+
+[Link to Beta Recording](https://youtu.be/n0qHjYO-3Fk)
 
 ## Expenses as of Beta Tag:
 Note: Johannes and Case may require updating.
