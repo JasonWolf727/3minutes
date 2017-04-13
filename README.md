@@ -49,6 +49,7 @@ In the code:
 * The main program has been refactored: code for creating the game has been rearranged into methods outside the Start() method.
 * Each button now generates a separate screen; however, these screens are empty.
 * Health and Time indicators have been added
+* Character selection implemented
 
 ## Known Issues as of Beta Tag:
 Known Issues:
