@@ -520,6 +520,7 @@ namespace CC_X
             time.Visible = true;
             health.Visible = true;
             UpdateHealth();
+            MoveCars(timeStep);
 
             List<object> collisionData = game.DetectCollision();
             if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2,TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
@@ -1111,7 +1112,9 @@ namespace CC_X
 
             //Add to GameController Dictionary
             Enemy Audi = new Enemy();
+            Audi.ObjType = Enemy.EnemyType.Car;
             Audi.ID = body.ID;
+            Audi.Strength = 100;
             game.GameObjCollection[Audi.ID] = Audi;
 
             //Stores the node ID of the Audi body
@@ -1219,11 +1222,35 @@ namespace CC_X
                 }
             }
         }
+        //Moves the cars
+        public void MoveCars(float timeStep)
+        {
+            foreach(GameObj obj in game.GameObjCollection.Values)
+            {
+                if(obj is Enemy)
+                {
+                    if(((Enemy)(obj)).ObjType == Enemy.EnemyType.Car)
+                    {
+                        Node node = Scene.GetNode((uint)(obj.ID));
+                        if ((node.Position.X >=148))
+                        {
+                            obj.Position = new Vector3(0, -.5f, 104.3f);
+                            node.Position = new Vector3(0, -.5f, 104.3f);
+                        }
+                        else
+                        {                            
+                            node.Translate(Vector3.UnitX * timeStep * 20, TransformSpace.World);
+                        }
+                        
+                    }
+                }
+            }
+        }
 
         //Create cars for level 1
         public void CreateCarsLevel1()
         {
-            Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
+            Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);            
             Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
             CreateAudi(FarLaneAudiInitialPlacement);
             CreateAudi(CloseLaneAudiInitialPlacement);
