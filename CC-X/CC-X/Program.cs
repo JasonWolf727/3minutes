@@ -72,6 +72,7 @@ namespace CC_X
         Text cheatModeText;
         Text coordinates;
         Text time;
+        Text health;
         Text messageHelper;
 
         LineEdit xSet;
@@ -98,6 +99,7 @@ namespace CC_X
         public string LeftAniFile { get; set; }
         public string RightAniFile { get; set; }
         public string IdleAniFile { get; set; }
+        public string DeathAniFile { get; set; }
         public int timeTotal { get; set; }
         public int seconds { get; set; }
         public int secondsTen { get; set; }
@@ -258,6 +260,15 @@ namespace CC_X
             time.SetStyle("Text", null);
             time.SetColor(Color.Red);
             time.Visible = false;
+
+            //Set up health for game
+            health = uiRoot.CreateText("Time", 13);
+            health.SetFont(font, 20);
+            health.SetPosition(935,20);
+            health.Value = "";
+            health.SetStyle("Text", null);
+            health.SetColor(Color.Red);
+            health.Visible = false;
         }
 
         protected void SetupButtons()
@@ -507,6 +518,8 @@ namespace CC_X
             MoveCamera = true;
             time.Value = TimeDisplay;
             time.Visible = true;
+            health.Visible = true;
+            UpdateHealth();
 
             List<object> collisionData = game.DetectCollision();
             if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2,TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
@@ -551,7 +564,13 @@ namespace CC_X
         //Adjusts on-screen health notification to match game.MainChar health
         private void UpdateHealth()
         {
-
+            game.DetectCollision();
+            health.Value = "Health: " + game.MainChar.Health.ToString();
+            string newHealth = (health.Value).Remove(0, 8);
+            if(Convert.ToInt32(newHealth) <=0)
+            {
+                PlayAnimation(MainChar,DeathAniFile);
+            }
         }
                 
         //Event handler for new game button
@@ -731,6 +750,7 @@ namespace CC_X
             LeftAniFile = "Swat/Swat_SprintLeft.ani";
             RightAniFile = "Swat/Swat_SprintRight.ani";
             IdleAniFile = "Swat/Swat_Idle.ani";
+            DeathAniFile = "Swat/Swat_DeathFromBack.ani";
 
             GameStart = true;
             DeveloperMode = false;
@@ -764,6 +784,7 @@ namespace CC_X
             LeftAniFile = "NinjaSnowWar/Ninja_Walk.ani";
             RightAniFile = "NinjaSnowWar/Ninja_Walk.ani";
             IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
+            DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
 
             GameStart = true;
             DeveloperMode = false;
@@ -798,6 +819,7 @@ namespace CC_X
             LeftAniFile = "Mutant/Mutant_Run.ani";
             RightAniFile = "Mutant/Mutant_Run.ani";
             IdleAniFile = "Mutant/Mutant_Idle0.ani";
+            DeathAniFile = "Mutant/Mutant_Death.ani";
 
             GameStart = true;
             DeveloperMode = false;
@@ -1100,7 +1122,7 @@ namespace CC_X
         public void CreateGround()
         {
             ++numNodes;
-            Node node = Scene.CreateChild("Plane" + numNodes);          
+            Node node = Scene.CreateChild("Plane" + numNodes);
             
             var component2 = node.CreateComponent<Urho.Shapes.Plane>();
             component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
