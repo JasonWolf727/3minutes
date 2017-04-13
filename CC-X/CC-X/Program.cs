@@ -30,6 +30,7 @@ namespace CC_X
         Window selectDiff;
         Window giveCharName;
         Window locWindow;
+        Window gameOverWind;
 
         Button mainMenu;
         Button helpBtn;
@@ -74,6 +75,7 @@ namespace CC_X
         Text time;
         Text health;
         Text messageHelper;
+        Text gameOverText;
 
         LineEdit xSet;
         LineEdit ySet;
@@ -88,8 +90,8 @@ namespace CC_X
         Node mutant;
         int numNodes;
         int nodeSelect = 1;
-        public bool DeveloperMode { get; set; }   
-        public bool GameStart { get; set; }     
+        public bool DeveloperMode { get; set; }
+        public bool GameStart { get; set; }
 
         public Node lightNode { get; private set; }
 
@@ -105,6 +107,9 @@ namespace CC_X
         public int secondsTen { get; set; }
         public int minutes { get; set; }
         public string TimeDisplay { get; set; }
+        public int CurrentTime { get; set; }
+        public int LastLevelTime { get; set; }
+        
 
         //Create an instance of GameController
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
@@ -176,7 +181,8 @@ namespace CC_X
 
         private void Elapsed_Interval(object sender, ElapsedEventArgs e)
         {
-            ++timeTotal;            
+            ++timeTotal;
+            CurrentTime = timeTotal;
             if(timeTotal%60 == 0 && timeTotal != 0)
             {
                 secondsTen = 0;
@@ -194,7 +200,19 @@ namespace CC_X
             }
             TimeDisplay = minutes + ":" + secondsTen + seconds;
         }
-
+        public void ResetTime()
+        {
+            timeTotal = 0;
+            seconds = 0;
+            secondsTen = 0;
+            minutes = 0;
+            CurrentTime = 0;
+        }
+        public void UpdateCurrentTime()
+        {
+            CurrentTime = timeTotal;
+            game.CurrentTime = timeTotal;
+        }
         protected void SetupMenu()
         {
             //Setup main menu/title screen
@@ -254,21 +272,45 @@ namespace CC_X
 
             //Set up timer for game
             time = uiRoot.CreateText("Time", 13);
-            time.SetFont(font, 20);
+            time.SetFont(font, 15);
             time.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Top);
             time.Value = "";
-            time.SetStyle("Text", null);
             time.SetColor(Color.Red);
             time.Visible = false;
 
             //Set up health for game
             health = uiRoot.CreateText("Time", 13);
-            health.SetFont(font, 20);
-            health.SetPosition(935,20);
+            health.SetFont(font, 15);
+            health.SetPosition(900,20);
             health.Value = "";
-            health.SetStyle("Text", null);
             health.SetColor(Color.Red);
             health.Visible = false;
+
+            //Setup End of level screen
+            gameOverWind = uiRoot.CreateWindow();
+            gameOverWind.SetStyleAuto(null);
+            gameOverWind.SetMinSize(300, 600);
+            gameOverWind.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            gameOverWind.Opacity = 0.85f;
+            gameOverWind.Visible = false;
+
+            //Add end of level message
+            gameOverText = gameOverWind.CreateText();
+            gameOverText.SetFont(font, 18);
+            gameOverText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            gameOverText.Value = "Your time: 0 seconds";
+
+            mainMenu = gameOverWind.CreateButton();
+            mainMenu.SetMinSize(100, 30);
+            mainMenu.SetStyleAuto(null);
+            mainMenu.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            mainMenu.SubscribeToReleased(BackClick);
+
+            menuBtnText = mainMenu.CreateText("backBtnText", 1);
+            menuBtnText.SetFont(font, 12);
+            menuBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            menuBtnText.Value = "Menu";
+            mainMenu.SubscribeToReleased(EndLevelClick);
         }
 
         protected void SetupButtons()
@@ -413,9 +455,9 @@ namespace CC_X
         protected override void OnUpdate(float timeStep)
         {
             base.OnUpdate(timeStep);            
-            if (game.EndLevel())
+            if (game.EndLevel() && timeTotal > 10)
             {
-                //menu.Visible = true; //Temporary indicator
+                gameOverWind.Visible = true;
             }            
             if (Input.GetKeyPress(Key.M))
             {
@@ -430,9 +472,7 @@ namespace CC_X
             {
                 GameCommands(timeStep);
                 game.MainChar.Position = MainChar.Position;
-                //Moves the cars
-                //MoveCar(timeStep);
-            }
+            }            
         }
 
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
@@ -498,7 +538,7 @@ namespace CC_X
                 if (Input.GetKeyDown(Key.KP_2)) currentNode.Translate(-Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
                 if (Input.GetKeyDown(Key.KP_4)) currentNode.Translate(-Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
                 if (Input.GetKeyDown(Key.KP_6)) currentNode.Translate(Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
-                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.Local);
+                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.World);
             }
             if (currentNode != null)
             {
@@ -508,7 +548,7 @@ namespace CC_X
                 if (Input.GetKeyDown(Key.N)) currentNode.Translate(-Vector3.UnitY * speed * timeStep * 0.2f, TransformSpace.World);
                 if (Input.GetKeyDown(Key.H)) currentNode.Translate(-Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
                 if (Input.GetKeyDown(Key.K)) currentNode.Translate(Vector3.UnitX * speed * timeStep * 0.2f, TransformSpace.World);
-                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.Local);
+                if (Input.GetKeyDown(Key.T)) currentNode.Rotate(new Quaternion(0.5f, 0, 0), TransformSpace.World);
             }
         }
 
@@ -520,17 +560,47 @@ namespace CC_X
             time.Visible = true;
             health.Visible = true;
             UpdateHealth();
+            UpdateGameObjPos();
             MoveCars(timeStep);
-
-            List<object> collisionData = game.DetectCollision();
-            if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2,TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
-            else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
-            else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, LeftAniFile); }
-            else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, RightAniFile); }
+            if (game.MainChar.Health <= 0)
+            {
+                PlayAnimation(MainChar, DeathAniFile);
+                game.GameOver = true;
+                GameStart = false;
+                LastLevelTime = timeTotal;
+                ResetTime();
+                gameOverText.Value = "Your time: " + LastLevelTime + " seconds";
+                gameOverWind.Visible = true;
+            }
             else
             {
-                PlayAnimation(MainChar, IdleAniFile);
+                List<object> collisionData = game.DetectCollision();
+                if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
+                else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
+                else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, LeftAniFile); }
+                else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, RightAniFile); }
+                else
+                {
+                    PlayAnimation(MainChar, IdleAniFile);                    
+                }
+            }            
+        }
+
+        private void UpdateGameObjPos()
+        {
+            foreach(GameObj obj in game.GameObjCollection.Values)
+            {
+                if(obj is Enemy)
+                {
+                    Node node = Scene.GetNode(obj.ID);
+                    obj.Position = node.Position;
+                    ((Enemy)(obj)).persnlBubble.X = Convert.ToInt32(node.Position.X);
+                    ((Enemy)(obj)).persnlBubble.Y = Convert.ToInt32(node.Position.Z);
+                }
             }
+            game.MainChar.Position = MainChar.Position;
+            game.MainChar.persnlBubble.X = Convert.ToInt32(MainChar.Position.X);
+            game.MainChar.persnlBubble.Y = Convert.ToInt32(MainChar.Position.Z);
         }
 
         //Move the car to the right 1 timestep. 
@@ -566,12 +636,7 @@ namespace CC_X
         private void UpdateHealth()
         {
             game.DetectCollision();
-            health.Value = "Health: " + game.MainChar.Health.ToString();
-            string newHealth = (health.Value).Remove(0, 8);
-            if(Convert.ToInt32(newHealth) <=0)
-            {
-                PlayAnimation(MainChar,DeathAniFile);
-            }
+            health.Value = "Health: " + game.MainChar.Health.ToString();                        
         }
                 
         //Event handler for new game button
@@ -678,6 +743,11 @@ namespace CC_X
             backBtnText.SetFont(font, 12);
             backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             backBtnText.Value = "Back";
+        }
+        void EndLevelClick(ReleasedEventArgs args)
+        {
+            gameOverWind.Visible = false;
+            menu.Visible = true;            
         }
 
         //Event handler for about button
@@ -890,12 +960,12 @@ namespace CC_X
             //Names of node types           
 
             var node = Scene.CreateChild(name + numNodes);
-            node.Position = Camera.Node.Position;
-            node.Rotation = Camera.Node.Rotation;
+            node.Position = Camera.Node.Position;            
             node.Translate(new Vector3((float)Input.MousePosition.X / Graphics.Width, (float)Input.MousePosition.Y / Graphics.Height, 2));            
 
             if(nodeSelect == 1)
             {
+                node.Rotation = Camera.Node.Rotation;
                 var component2 = node.CreateComponent<Urho.Shapes.Plane>();
                 component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
                 component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));                   
@@ -904,6 +974,7 @@ namespace CC_X
             }
             if (nodeSelect == 2)
             {
+                node.Rotation = Camera.Node.Rotation;
                 var component2 = node.CreateComponent<AnimatedModel>();
                 component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
                 component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
@@ -913,12 +984,13 @@ namespace CC_X
             if (nodeSelect == 3)
             {
                 var component2 = node.CreateComponent<AnimatedModel>();
-                component2.Model = ResourceCache.GetModel("Models/Mushroom.mdl");
-                component2.SetMaterial(ResourceCache.GetMaterial("Materials/Mushroom/Mushroom.xml"));                                
+                component2.Model = ResourceCache.GetModel("Models/Rock3.mdl");
+                component2.SetMaterial(Material.FromImage("Textures/Rock-Texture-Surface.jpg"));
+                node.Roll(-90, TransformSpace.Local);
                 node.SetScale(0.02f);
             }
             if (nodeSelect == 4)
-            {                
+            {
                 node.Rotation = new Quaternion(90, 0, 0);
                 var component = node.CreateComponent<AnimatedModel>();
                 component.Model = ResourceCache.GetModel("Models/Tree1Trunk.mdl");
@@ -1258,6 +1330,7 @@ namespace CC_X
 
         public void SetUpLevel1(Difficulty difficulty)
         {
+            game.GameOver = false;
             CreateGround();
             CreateForestLevel1();
             CreateCarsLevel1();
@@ -1311,7 +1384,7 @@ namespace CC_X
             string s = "";
             if (nodeSelect == 1) s = "Plane";
             if (nodeSelect == 2) s = "Mutant";
-            if (nodeSelect == 3) s = "Mushroom";
+            if (nodeSelect == 3) s = "Rock";
             if (nodeSelect == 4) s = "Tree1";
             if (nodeSelect == 5) s = "Audi";
             return s;
@@ -1343,15 +1416,15 @@ namespace CC_X
             node.RemoveAllActions();
 
             bool looped = false;
-            //if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
-            //{
-            looped = true;
-            //}
+            if (!file.ToLower().Contains("death") )
+            {
+                looped = true;
+            }
 
-            //if (file == "Swat/Swat_Idle.ani" | file == "Swat/Swat_RunBwd.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_RunLeft.ani" | file == "Swat/Swat_RunRight.ani" | file == "Swat/Swat_RunFwd.ani" | file == "Swat/Swat_SprintFwd.ani" | file == "Swat/Swat_SprintBwd.ani" | file == "Swat/Swat_SprintLeft.ani" | file == "Swat/Swat_SprintRight.ani")
-            //{
-            node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
-            //}
+            if (!file.ToLower().Contains("death"))
+            {
+                node.RunActions(new RepeatForever(new MoveBy(1f, node.Rotation * new Vector3(0, 0, 0))));
+            }
 
             AnimationController animation = node.GetComponent<AnimationController>();
             animation.StopAll(0.2f);           

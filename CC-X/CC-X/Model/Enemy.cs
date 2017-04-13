@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Urho;
+using System.Drawing;
 
 namespace CC_X.Model
 {
@@ -15,10 +16,10 @@ namespace CC_X.Model
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. 
         public EnemyType ObjType { get; set; }      
         public enum EnemyType { Zombie, Car, None }
-
+        public Rectangle persnlBubble;
         public Enemy()
         {
-
+            persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
         }
         //If not dead, sets Enemies.Position to position
         public void UpdatePos(Vector3 position)

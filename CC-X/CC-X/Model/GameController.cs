@@ -19,6 +19,7 @@ namespace CC_X.Model
         public Difficulty DifficutlySelected { get; set; }
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
+        public int CurrentTime { get; set; }
 
         public Level CurrentLevel = Level.One;
         public HighScore highscore = new HighScore();
@@ -52,22 +53,47 @@ namespace CC_X.Model
         //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
         public List<object> DetectCollision()
         {
-            if(MainChar != null)
+            //if(MainChar != null)
+            //{
+            //    foreach (GameObj obj in GameObjCollection.Values)
+            //    {
+            //        if(obj is Enemy)
+            //        {
+            //            if (Math.Abs(MainChar.Position.X - obj.Position.X) <= 0.05f && Math.Abs(MainChar.Position.Z - obj.Position.Z) <= 0.05f)
+            //            {
+            //                MainChar.ReceiveDamage(((Enemy)obj).Strength);                            
+            //                return new List<object>(){ true,obj.Position };
+            //            }
+            //        }   
+            //        if(obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
+            //        {
+            //            return new List<object>() { true, obj.Position };
+            //        }
+            //    }
+            //    return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
+            //}
+            //else
+            //{
+            //    return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
+            //}
+            if (MainChar != null)
             {
+                UpdateCurrentTime();
                 foreach (GameObj obj in GameObjCollection.Values)
                 {
-                    if(obj is Enemy)
+                    if (obj is Enemy)
                     {
-                        if (Math.Abs(MainChar.Position.X - obj.Position.X) <= 0.05f && Math.Abs(MainChar.Position.Z - obj.Position.Z) <= 0.05f)
+                        if (MainChar.persnlBubble.IntersectsWith(((Enemy)(obj)).persnlBubble) && MainChar.TimeSinceLastCollide != CurrentTime)
                         {
-                            MainChar.ReceiveDamage(((Enemy)obj).Strength);                            
-                            return new List<object>(){ true,obj.Position };
+                            MainChar.TimeSinceLastCollide = CurrentTime;
+                            MainChar.ReceiveDamage(((Enemy)obj).Strength);
+                            return new List<object>() { true, obj.Position };
                         }
-                    }   
-                    if(obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
-                    {
-                        return new List<object>() { true, obj.Position };
                     }
+                    //if (obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
+                    //{
+                    //    return new List<object>() { true, obj.Position };
+                    //}
                 }
                 return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
@@ -76,7 +102,10 @@ namespace CC_X.Model
                 return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
         }
-
+        public void UpdateCurrentTime()
+        {
+            gui.UpdateCurrentTime();
+        }
         //Calculates player's experience
         public void CalcExperience(int points)
         {

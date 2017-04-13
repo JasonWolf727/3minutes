@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Urho;
+using System.Drawing;
 
 namespace CC_X.Model
 {
@@ -12,18 +13,20 @@ namespace CC_X.Model
     {                 
         public enum MainCharOptn { Swat, Mutant, Ninja }
         public MainCharOptn SelectedCharType { get; set; }
-        public Vector3 PositionSinceLastCollide { get; set; }
+        public int TimeSinceLastCollide { get; set; }
         public bool IsDead { get; set; }
         public int Strength { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
         public int Experience { get; set; }
         public int Points { get; set; }
+        public Rectangle persnlBubble;
         public MainCharacter()
         {
             IsDead = false;
-            Health = 100; 
+            Health = 100;
+            persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
         }
-
+        
         //If not dead, sets MainCharacter.Position to position
         public void UpdatePos(Vector3 position)
         {
@@ -67,7 +70,7 @@ namespace CC_X.Model
         // Store information concerning the Main Character
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}", this.Position, this.ID, this.SelectedCharType, this.Strength, this.Health, this.PositionSinceLastCollide, this.IsDead);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}", this.Position, this.ID, this.SelectedCharType, this.Strength, this.Health, this.TimeSinceLastCollide, this.IsDead);
             return info;
         }
 
@@ -100,7 +103,7 @@ namespace CC_X.Model
             int[] nums2 = new int[3];
             for (int j = 0; j < 3; ++j)
                 nums2[j] = Convert.ToInt32(tempnums2[j]);
-            this.PositionSinceLastCollide = new Vector3(nums2[0], nums2[1], nums2[2]);
+            //this.TimeSinceLastCollide = new Vector3(nums2[0], nums2[1], nums2[2]);
             string tempBool = info[6];
             switch (tempBool)
             {

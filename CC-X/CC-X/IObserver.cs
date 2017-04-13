@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public interface IObserver
 {
+    void UpdateCurrentTime();
 
     void SetUpLevel1(Difficulty difficulty);
 
