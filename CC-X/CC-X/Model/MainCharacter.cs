@@ -10,7 +10,7 @@ namespace CC_X.Model
     //Class for the main character in the game
     class MainCharacter : GameObj, Serializer
     {                 
-        public enum MainCharOptn { Swat, Mutant }
+        public enum MainCharOptn { Swat, Mutant, Ninja }
         public MainCharOptn SelectedCharType { get; set; }
         public Vector3 PositionSinceLastCollide { get; set; }
         public bool IsDead { get; set; }
