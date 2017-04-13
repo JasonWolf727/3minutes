@@ -9,6 +9,8 @@ using Urho.Gui;
 using Urho.Resources;
 using CC_X.Model;
 using Urho.Actions;
+using System.Net.Sockets;
+using System.Timers;
 
 namespace CC_X
 {
@@ -69,12 +71,15 @@ namespace CC_X
         Text submitCharNameText;
         Text cheatModeText;
         Text coordinates;
+        Text time;
         Text messageHelper;
 
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
         LineEdit charName;
+
+        Timer timer;
 
         Node currentNode;
         Node swat;
@@ -93,6 +98,11 @@ namespace CC_X
         public string LeftAniFile { get; set; }
         public string RightAniFile { get; set; }
         public string IdleAniFile { get; set; }
+        public int timeTotal { get; set; }
+        public int seconds { get; set; }
+        public int secondsTen { get; set; }
+        public int minutes { get; set; }
+        public string TimeDisplay { get; set; }
 
         //Create an instance of GameController
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
@@ -153,6 +163,33 @@ namespace CC_X
 
             //Set up camera pos
             CameraNode.Position = new Vector3(75, 0, 0);
+
+            //Set up timer for game
+            TimeDisplay = "0:00";
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Elapsed += Elapsed_Interval;            
+        }
+
+        private void Elapsed_Interval(object sender, ElapsedEventArgs e)
+        {
+            ++timeTotal;            
+            if(timeTotal%60 == 0 && timeTotal != 0)
+            {
+                secondsTen = 0;
+                seconds = 0;
+                ++minutes;
+            }
+            else if (timeTotal % 10 == 0 && timeTotal != 0)
+            {
+                seconds = 0;
+                ++secondsTen;
+            }
+            else
+            {
+                ++seconds;
+            }
+            TimeDisplay = minutes + ":" + secondsTen + seconds;
         }
 
         protected void SetupMenu()
@@ -212,6 +249,14 @@ namespace CC_X
             helpMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
             helpMsg.Value = "Help\n";
 
+            //Set up timer for game
+            time = uiRoot.CreateText("Time", 13);
+            time.SetFont(font, 20);
+            time.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Top);
+            time.Value = "";
+            time.SetStyle("Text", null);
+            time.SetColor(Color.Red);
+            time.Visible = false;
         }
 
         protected void SetupButtons()
@@ -379,6 +424,8 @@ namespace CC_X
         //Assigns keyboard input to corresponding developer commands. Developer commands: used for building game only.
         private void DeveloperCommands(float timeStep)
         {
+            time.Visible = false;
+
             if(menu.Visible == true)
             {
                 menu.Visible = false;
@@ -455,6 +502,9 @@ namespace CC_X
         private void GameCommands(float timeStep)
         {
             MoveCamera = true;
+            time.Value = TimeDisplay;
+            time.Visible = true;
+
             List<object> collisionData = game.DetectCollision();
             if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2,TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
             else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
@@ -652,6 +702,8 @@ namespace CC_X
 
             GameStart = true;
             DeveloperMode = false;
+
+            timer.Start();
         }
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
@@ -683,6 +735,8 @@ namespace CC_X
 
             GameStart = true;
             DeveloperMode = false;
+
+            timer.Start();
         }
         //Event handler for character selection option 3
         void CharOptn3Click(ReleasedEventArgs args)
@@ -715,6 +769,8 @@ namespace CC_X
 
             GameStart = true;
             DeveloperMode = false;
+
+            timer.Start();
 
         }
         //Event handler for developer button
