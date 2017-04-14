@@ -16,6 +16,9 @@ namespace CC_X.Model
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. 
         public EnemyType ObjType { get; set; }      
         public enum EnemyType { Zombie, Car, None }
+        public enum CarDir { Left, Right }
+        public CarDir CarMovingDirection { get; set; }
+        public float CarSpeed { get; set; }
         public Rectangle persnlBubble;
         public Enemy()
         {

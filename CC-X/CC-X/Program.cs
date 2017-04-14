@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Urho;
 using Urho.Shapes;
 using Urho.Gui;
@@ -83,6 +84,7 @@ namespace CC_X
         LineEdit charName;
 
         Timer timer;
+        Dispatcher Dispatcher = Dispatcher.CurrentDispatcher;
 
         Node currentNode;
         Node swat;
@@ -455,9 +457,15 @@ namespace CC_X
         protected override void OnUpdate(float timeStep)
         {
             base.OnUpdate(timeStep);            
-            if (game.EndLevel() && timeTotal > 10)
+            if (game.GameOver && timeTotal > 10)
             {
+                game.GameOver = false;
+                GameStart = false;
+                LastLevelTime = timeTotal;
+                ResetTime();
+                gameOverText.Value = "Your time: " + LastLevelTime + " seconds";
                 gameOverWind.Visible = true;
+                PlayAnimation(MainChar, IdleAniFile);
             }            
             if (Input.GetKeyPress(Key.M))
             {
@@ -560,6 +568,7 @@ namespace CC_X
             time.Visible = true;
             health.Visible = true;
             UpdateHealth();
+            game.EndLevel();
             UpdateGameObjPos();
             MoveCars(timeStep);
             if (game.MainChar.Health <= 0)
@@ -1005,7 +1014,7 @@ namespace CC_X
             }
             if (nodeSelect == 5)
             {
-                CreateAudi(node.Position);
+                CreateVolks(node.Position);
             }
         }
 
@@ -1192,6 +1201,31 @@ namespace CC_X
             //Stores the node ID of the Audi body
             Car2ID = Convert.ToInt32(Audi.ID);
         }
+        public void CreateVolks(Vector3 position, float yaw = -90, Enemy.CarDir direction = Enemy.CarDir.Right, float speed = 20)
+        {
+            Node volks = Scene.CreateChild();
+            volks.Rotation = new Quaternion(90, 0, 0);
+            var component = volks.CreateComponent<AnimatedModel>();
+            component.Model = ResourceCache.GetModel("Models/volks2.mdl");
+            component.SetMaterial(ResourceCache.GetMaterial("Materials/Audi/tyyre.xml"));            
+            volks.CreateComponent<AnimationController>();
+
+            volks.Yaw(yaw, TransformSpace.World);
+            volks.SetScale(0.165f);
+            volks.Position = position;
+
+            //Add to GameController Dictionary
+            Enemy Volks = new Enemy();
+            Volks.ObjType = Enemy.EnemyType.Car;
+            Volks.ID = volks.ID;
+            Volks.Strength = 100;
+            Volks.CarMovingDirection = direction;
+            Volks.CarSpeed = speed;
+            game.GameObjCollection[Volks.ID] = Volks;
+
+            //Stores the node ID of the Audi body
+            Car2ID = Convert.ToInt32(Volks.ID);
+        }
 
         //Create Ground
         public void CreateGround()
@@ -1304,14 +1338,29 @@ namespace CC_X
                     if(((Enemy)(obj)).ObjType == Enemy.EnemyType.Car)
                     {
                         Node node = Scene.GetNode((uint)(obj.ID));
-                        if ((node.Position.X >=148))
+                        if(((Enemy)(obj)).CarMovingDirection == Enemy.CarDir.Right)
                         {
-                            obj.Position = new Vector3(0, -.5f, 104.3f);
-                            node.Position = new Vector3(0, -.5f, 104.3f);
+                            if (node.Position.X >= 148)
+                            {
+                                obj.Position = new Vector3(0, -0.4327534f, 104.3f);
+                                node.Position = new Vector3(0, -0.4327534f, 104.3f);
+                            }
+                            else
+                            {
+                                node.Translate(Vector3.UnitX * timeStep * ((Enemy)(obj)).CarSpeed, TransformSpace.World);
+                            }
                         }
                         else
-                        {                            
-                            node.Translate(Vector3.UnitX * timeStep * 20, TransformSpace.World);
+                        {
+                            if (node.Position.X <= 0)
+                            {
+                                obj.Position = new Vector3(148, -0.4327534f, 104.3f);
+                                node.Position = new Vector3(148, -0.4327534f, 104.3f);
+                            }
+                            else
+                            {
+                                node.Translate(-Vector3.UnitX * timeStep * ((Enemy)(obj)).CarSpeed, TransformSpace.World);
+                            }
                         }
                         
                     }
@@ -1322,10 +1371,21 @@ namespace CC_X
         //Create cars for level 1
         public void CreateCarsLevel1()
         {
-            Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);            
-            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
-            CreateAudi(FarLaneAudiInitialPlacement);
-            CreateAudi(CloseLaneAudiInitialPlacement);
+            Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);            
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.5f); //X = 74f is temperary. Normally 64f
+            //Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
+            //Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
+
+            //CreateAudi(FarLaneAudiInitialPlacement);
+            //CreateAudi(CloseLaneAudiInitialPlacement);
+            CreateVolks(FarLaneAudiInitialPlacement,90,Enemy.CarDir.Left);
+            CreateVolks(CloseLaneAudiInitialPlacement);
+            CreateVolks(new Vector3(148, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left,18);
+            CreateVolks(new Vector3(70, -0.4327534f, 103.5f), speed: 18);
+            CreateVolks(new Vector3(28, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 5);
+            CreateVolks(new Vector3(129, -0.4327534f, 103.5f), speed: 5);
+            CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
+            CreateVolks(new Vector3(55, -0.4327534f, 103.5f), speed: 10);
         }
 
         public void SetUpLevel1(Difficulty difficulty)
