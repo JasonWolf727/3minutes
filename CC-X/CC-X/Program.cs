@@ -209,6 +209,7 @@ namespace CC_X
             secondsTen = 0;
             minutes = 0;
             CurrentTime = 0;
+            timer.Stop();
         }
         public void UpdateCurrentTime()
         {
@@ -456,17 +457,7 @@ namespace CC_X
 
         protected override void OnUpdate(float timeStep)
         {
-            base.OnUpdate(timeStep);            
-            if (game.GameOver && timeTotal > 10)
-            {
-                game.GameOver = false;
-                GameStart = false;
-                LastLevelTime = timeTotal;
-                ResetTime();
-                gameOverText.Value = "Your time: " + LastLevelTime + " seconds";
-                gameOverWind.Visible = true;
-                PlayAnimation(MainChar, IdleAniFile);
-            }            
+            base.OnUpdate(timeStep);                        
             if (Input.GetKeyPress(Key.M))
             {
                 DeveloperMode = !DeveloperMode;
@@ -571,15 +562,18 @@ namespace CC_X
             game.EndLevel();
             UpdateGameObjPos();
             MoveCars(timeStep);
-            if (game.MainChar.Health <= 0)
+            if (game.MainChar.Health <= 0 |(game.GameOver && timeTotal > 10))
             {
-                PlayAnimation(MainChar, DeathAniFile);
-                game.GameOver = true;
+                if (game.MainChar.Health <= 0) PlayAnimation(MainChar, DeathAniFile);
+                else PlayAnimation(MainChar, IdleAniFile);
+
+                game.GameOver = false;
                 GameStart = false;
                 LastLevelTime = timeTotal;
                 ResetTime();
                 gameOverText.Value = "Your time: " + LastLevelTime + " seconds";
                 gameOverWind.Visible = true;
+
             }
             else
             {
