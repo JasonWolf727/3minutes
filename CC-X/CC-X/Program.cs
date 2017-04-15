@@ -996,14 +996,14 @@ namespace CC_X
             {
                 node.Rotation = new Quaternion(90, 0, 0);
                 var component = node.CreateComponent<AnimatedModel>();
-                component.Model = ResourceCache.GetModel("Models/Tree1Trunk.mdl");
-                component.SetMaterial(Material.FromImage("Textures/Tree1Bark.jpg"));               
+                component.Model = ResourceCache.GetModel("Models/tree2.mdl");
+                component.SetMaterial(Material.FromImage("Textures/branch.png"));               
 
 
                 Node Leaves = node.CreateChild("TreeType1Leaves", 1);
                 var component2 = Leaves.CreateComponent<AnimatedModel>();
-                component2.Model = ResourceCache.GetModel("Models/Tree1Leaves.mdl");
-                component2.SetMaterial(Material.FromImage("Textures/Tree1Leaves.png"));
+                component2.Model = ResourceCache.GetModel("Models/tree2trunk.mdl");
+                component2.SetMaterial(Material.FromImage("Textures/bark.jpg"));
                 node.SetScale(0.2f);
             }
             if (nodeSelect == 5)
@@ -1020,15 +1020,15 @@ namespace CC_X
 
             Trunk.Rotation = new Quaternion(90, 0, 0);
             var component = Trunk.CreateComponent<AnimatedModel>();
-            component.Model = ResourceCache.GetModel("Models/Tree1Trunk.mdl");
-            component.SetMaterial(Material.FromImage("Textures/Tree1Bark.jpg"));
+            component.Model = ResourceCache.GetModel("Models/tree2.mdl");
+            component.SetMaterial(Material.FromImage("Textures/branch.png"));
             Trunk.CreateComponent<AnimationController>();
 
 
             Node Leaves = Trunk.CreateChild("TreeType1Leaves", 1);
             var component2 = Leaves.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/Tree1Leaves.mdl");
-            component2.SetMaterial(Material.FromImage("Textures/Tree1Leaves.png"));
+            component2.Model = ResourceCache.GetModel("Models/tree2trunk.mdl");
+            component2.SetMaterial(Material.FromImage("Textures/bark.jpg"));
 
             Trunk.Position = position;
             Trunk.SetScale(0.2f);
@@ -1217,7 +1217,7 @@ namespace CC_X
             Volks.CarSpeed = speed;
             game.GameObjCollection[Volks.ID] = Volks;
 
-            //Stores the node ID of the Audi body
+            //Stores the node ID of the volks car
             Car2ID = Convert.ToInt32(Volks.ID);
         }
 
@@ -1296,30 +1296,44 @@ namespace CC_X
         //Create forest for level 1
         public void CreateForestLevel1()
         {
-            for (float zpos = 0; zpos < 135; zpos+=5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
+            for(float xpos = 46; xpos < 103; xpos += 5)
             {
-                Vector3 LeftLeftTreePos = new Vector3(73f, -2f, zpos);
-                //Vector3 LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
-                //Vector3 RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
-                Vector3 RightRightTreePos = new Vector3(77f, -2f, zpos);
-                //if (zpos <= 101 | zpos >= 106)
-                //{
-                //    CreateTree1(LeftLeftTreePos);
-                    //CreateTree1(LeftMiddleTreePos);
-                    //CreateTree1(RightMiddleTreePos);
-                //    CreateTree1(RightRightTreePos);
-                //}
-                if (zpos == 130)
+                for (float zpos = 0; zpos < 135; zpos += 5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
                 {
-                    Vector3 LeftMiddleMiddleTreePos = new Vector3(74.4f, -2f, zpos);
-                    Vector3 RightMiddleMiddleTreePos = new Vector3(75.6f, -2f, zpos);
-                    CreateTree1(LeftLeftTreePos);
-                    //CreateTree1(LeftMiddleTreePos);
-                    //CreateTree1(RightMiddleTreePos);
-                    CreateTree1(RightRightTreePos);
-                    CreateTree1(RightMiddleMiddleTreePos);
-                    CreateTree1(LeftMiddleMiddleTreePos);
+                    Vector3 LeftLeftTreePos = new Vector3(xpos, -.5f, 2.5f + zpos);
+                    Vector3 LeftMiddleTreePos = new Vector3(xpos +1, -.5f, zpos);
+                    Vector3 RightMiddleTreePos = new Vector3(xpos +2, -.5f, zpos);
+                    Vector3 RightRightTreePos = new Vector3(xpos +3, -.5f, 2.5f + zpos);
+
+                    if ((zpos <= 101 | zpos >= 106) && xpos == 75)
+                    {
+                        LeftLeftTreePos = new Vector3(73f, -.5f, 2.5f + zpos);
+                        LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
+                        RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
+                        RightRightTreePos = new Vector3(77f, -.5f, 2.5f + zpos);
+                        CreateTree1(LeftLeftTreePos);
+                        CreateTree1(LeftMiddleTreePos);
+                        CreateTree1(RightMiddleTreePos);
+                        CreateTree1(RightRightTreePos);
+                    }
+                    else
+                    {
+                        //LeftLeftTreePos = new Vector3(73f, -.5f, 2.5f + zpos);
+                        //LeftMiddleTreePos = new Vector3(74f, -.5f, zpos);
+                        //RightMiddleTreePos = new Vector3(76f, -.5f, zpos);
+                        //RightRightTreePos = new Vector3(77f, -.5f, 2.5f + zpos);
+
+                        //Vector3 LeftMiddleMiddleTreePos = new Vector3(74.4f, -2f, zpos);
+                        //Vector3 RightMiddleMiddleTreePos = new Vector3(75.6f, -2f, zpos);
+                        CreateTree1(LeftLeftTreePos);
+                        CreateTree1(LeftMiddleTreePos);
+                        CreateTree1(RightMiddleTreePos);
+                        CreateTree1(RightRightTreePos);
+                        //CreateTree1(RightMiddleMiddleTreePos);
+                        //CreateTree1(LeftMiddleMiddleTreePos);
+                    }
                 }
+
             }
         }
         //Moves the cars
@@ -1336,8 +1350,8 @@ namespace CC_X
                         {
                             if (node.Position.X >= 148)
                             {
-                                obj.Position = new Vector3(0, -0.4327534f, 104.3f);
-                                node.Position = new Vector3(0, -0.4327534f, 104.3f);
+                                obj.Position = new Vector3(0, -0.4327534f, 103.4266f);
+                                node.Position = new Vector3(0, -0.4327534f, 103.4266f);
                             }
                             else
                             {
@@ -1366,7 +1380,7 @@ namespace CC_X
         public void CreateCarsLevel1()
         {
             Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);            
-            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.5f); //X = 74f is temperary. Normally 64f
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.4266f); //X = 74f is temperary. Normally 64f
             //Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
             //Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
 
@@ -1375,11 +1389,11 @@ namespace CC_X
             CreateVolks(FarLaneAudiInitialPlacement,90,Enemy.CarDir.Left);
             CreateVolks(CloseLaneAudiInitialPlacement);
             CreateVolks(new Vector3(148, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left,18);
-            CreateVolks(new Vector3(70, -0.4327534f, 103.5f), speed: 18);
+            CreateVolks(new Vector3(70, -0.4327534f, 103.4266f), speed: 18);
             CreateVolks(new Vector3(28, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 5);
-            CreateVolks(new Vector3(129, -0.4327534f, 103.5f), speed: 5);
+            CreateVolks(new Vector3(129, -0.4327534f, 103.4266f), speed: 5);
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
-            CreateVolks(new Vector3(55, -0.4327534f, 103.5f), speed: 10);
+            CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
         }
 
         public void SetUpLevel1(Difficulty difficulty)
