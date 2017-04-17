@@ -765,7 +765,6 @@ namespace CC_X
         void LoadLevel1(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
             game.SetUpLevel(Level.One);
             GameStart = true;
         }
@@ -773,7 +772,6 @@ namespace CC_X
         void LoadLevel2(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
             game.SetUpLevel(Level.Two);
             GameStart = true;
         }
@@ -781,7 +779,6 @@ namespace CC_X
         void LoadLevel3(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
             game.SetUpLevel(Level.Three);
             GameStart = true;
         }
@@ -1416,7 +1413,7 @@ namespace CC_X
         public void SetUpLevel1(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
+            for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
             game.GameOver = false;
             CreateGround();
             CreateForestLevel1();
@@ -1429,7 +1426,7 @@ namespace CC_X
         public void SetUpLevel2(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
+            for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
 
             //Start timer
             timer.Start();
@@ -1438,7 +1435,7 @@ namespace CC_X
         public void SetUpLevel3(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
-            game.ResetLevel();
+            for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
 
             //Start timer
             timer.Start();
