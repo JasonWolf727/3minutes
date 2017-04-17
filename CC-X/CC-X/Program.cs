@@ -50,6 +50,9 @@ namespace CC_X
         Button hard;
         Button submitCharName;
         Button cheatMode;
+        Button level1Btn;
+        Button level2Btn;
+        Button level3Btn;
 
         Text menuBtnText;
         Text helpBtnText;
@@ -77,6 +80,9 @@ namespace CC_X
         Text health;
         Text messageHelper;
         Text gameOverText;
+        Text level1Txt;
+        Text level2Txt;
+        Text level3Txt;
 
         LineEdit xSet;
         LineEdit ySet;
@@ -111,6 +117,8 @@ namespace CC_X
         public string TimeDisplay { get; set; }
         public int CurrentTime { get; set; }
         public int LastLevelTime { get; set; }
+        public uint LightID { get; set; }
+        public int SelectedChar { get; set; }
         
 
         //Create an instance of GameController
@@ -162,6 +170,7 @@ namespace CC_X
             //Generate scene light and shadow effects
             lightNode = Scene.CreateChild("DirectionalLight");
             lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
+            LightID = lightNode.ID;
             var light = lightNode.CreateComponent<Light>();
             light.LightType = LightType.Directional;
             light.CastShadows = true;
@@ -349,6 +358,23 @@ namespace CC_X
             aboutBtn.SetStyleAuto(null);
             aboutBtn.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Bottom);
 
+            level1Btn = gameOverWind.CreateButton("Level1Btn", 1);
+            level1Btn.SetMinSize(230, 40);
+            level1Btn.SetStyleAuto(null);
+            level1Btn.Position = new IntVector2(35, 250);
+
+            level2Btn = gameOverWind.CreateButton("Level2Btn", 2);
+            level2Btn.SetMinSize(230, 40);
+            level2Btn.SetStyleAuto(null);
+            level2Btn.Position = new IntVector2(35, 295);
+            level2Btn.Visible = false;
+
+            level3Btn = gameOverWind.CreateButton("Level3Btn", 3);
+            level3Btn.SetMinSize(230, 40);
+            level3Btn.SetStyleAuto(null);
+            level3Btn.Position = new IntVector2(35, 340);
+            level3Btn.Visible = false;
+
             //Add text to the buttons
             newGameText = newGameBtn.CreateText("newGameText", 1);
             newGameText.SetFont(font, 16);
@@ -378,7 +404,23 @@ namespace CC_X
             aboutBtnText = aboutBtn.CreateText("aboutBtnText", 1);
             aboutBtnText.SetFont(font, 12);
             aboutBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            aboutBtnText.Value = "About";            
+            aboutBtnText.Value = "About";
+
+            level1Txt = level1Btn.CreateText("aboutBtnText", 1);
+            level1Txt.SetFont(font, 16);
+            level1Txt.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            level1Txt.Value = "Level 1";
+
+            level2Txt = level2Btn.CreateText("aboutBtnText", 1);
+            level2Txt.SetFont(font, 16);
+            level2Txt.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            level2Txt.Value = "Level 2";
+
+            level3Txt = level3Btn.CreateText("aboutBtnText", 1);
+            level3Txt.SetFont(font, 16);
+            level3Txt.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            level3Txt.Value = "Level 3";
+
 
             //Subscribe buttons to event handlers
             newGameBtn.SubscribeToReleased(NewGameClick);
@@ -387,6 +429,9 @@ namespace CC_X
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
             hallOfFameBtn.SubscribeToReleased(HallOfFameClick);
+            level1Btn.SubscribeToReleased(LoadLevel1);
+            level2Btn.SubscribeToReleased(LoadLevel2);
+            level3Btn.SubscribeToReleased(LoadLevel3);
         }
 
         protected void SetupDeveloperMode()
@@ -571,8 +616,9 @@ namespace CC_X
                 GameStart = false;
                 LastLevelTime = timeTotal;
                 ResetTime();
-                gameOverText.Value = "Your time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime();
-                gameOverWind.Visible = true;
+                gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus();
+                LevelAdvanceAssess();
+                gameOverWind.Visible = true;                
 
             }
             else
@@ -646,9 +692,6 @@ namespace CC_X
         void NewGameClick(ReleasedEventArgs args)
         {
             menu.Visible = false;
-
-            //Create level 1
-            game.SetUpLevel(Level.One, Difficulty.Easy);
             
             //Set up Character selection
             charOptn1 = uiRoot.CreateButton("Select1",10);
@@ -719,6 +762,29 @@ namespace CC_X
             mutant.CreateComponent<AnimationController>();
             mutant.SetScale(0.2f);
             PlayAnimation(mutant, "Mutant/Mutant_Idle1.ani");
+        }
+        void LoadLevel1(ReleasedEventArgs args)
+        {
+            gameOverWind.Visible = false;
+            game.ResetLevel();
+            game.SetUpLevel(Level.One);
+            GameStart = true;
+        }
+
+        void LoadLevel2(ReleasedEventArgs args)
+        {
+            gameOverWind.Visible = false;
+            game.ResetLevel();
+            game.SetUpLevel(Level.Two);
+            GameStart = true;
+        }
+
+        void LoadLevel3(ReleasedEventArgs args)
+        {
+            gameOverWind.Visible = false;
+            game.ResetLevel();
+            game.SetUpLevel(Level.Three);
+            GameStart = true;
         }
         //Event handler for load game button
         void LoadGameClick(ReleasedEventArgs args)
@@ -801,105 +867,57 @@ namespace CC_X
             swat.Remove();
             ninja.Remove();
             mutant.Remove();
+            
 
             charOptn1.Visible = false;
             charOptn2.Visible = false;
             charOptn3.Visible = false;
 
-            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Swat;
-
-            MainChar = Scene.CreateChild("Swat" + numNodes);
-            MainChar.Position = new Vector3(75,-0.50523f,1.62f);
-            MainChar.Yaw(180,TransformSpace.Local);
-            
-            var component2 = MainChar.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
-            MainChar.CreateComponent<AnimationController>();
-            MainChar.SetScale(0.2f);
-
-            ForwardAniFile = "Swat/Swat_SprintFwd.ani";
-            BackwardAniFile = "Swat/Swat_SprintBwd.ani";
-            LeftAniFile = "Swat/Swat_SprintLeft.ani";
-            RightAniFile = "Swat/Swat_SprintRight.ani";
-            IdleAniFile = "Swat/Swat_Idle.ani";
-            DeathAniFile = "Swat/Swat_DeathFromBack.ani";
+            CreateMainChar(1);
 
             GameStart = true;
             DeveloperMode = false;
 
-            timer.Start();
-        }
+            //Create level 1
+            game.SetUpLevel(Level.One);
+        }        
         //Event handler for character selection option 2
         void CharOptn2Click(ReleasedEventArgs args)
         {
             swat.Remove();
             ninja.Remove();
-            mutant.Remove();
+            mutant.Remove();            
 
             charOptn1.Visible = false;
             charOptn2.Visible = false;
             charOptn3.Visible = false;
 
-            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Ninja;
-
-            MainChar = Scene.CreateChild("Ninja" + numNodes);
-            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
-
-            var component2 = MainChar.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
-            MainChar.CreateComponent<AnimationController>();
-            MainChar.SetScale(0.2f);
-
-            ForwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
-            BackwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
-            LeftAniFile = "NinjaSnowWar/Ninja_Walk.ani";
-            RightAniFile = "NinjaSnowWar/Ninja_Walk.ani";
-            IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
-            DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
+            CreateMainChar(2);
 
             GameStart = true;
             DeveloperMode = false;
 
-            timer.Start();
+            //Create level 1
+            game.SetUpLevel(Level.One);
         }
         //Event handler for character selection option 3
         void CharOptn3Click(ReleasedEventArgs args)
         {
             swat.Remove();
             ninja.Remove();
-            mutant.Remove();
+            mutant.Remove();            
 
             charOptn1.Visible = false;
             charOptn2.Visible = false;
             charOptn3.Visible = false;
 
-            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Mutant;
-
-            MainChar = Scene.CreateChild("Mutant" + numNodes);
-            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
-            MainChar.Yaw(180, TransformSpace.Local);
-
-            var component2 = MainChar.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
-            MainChar.CreateComponent<AnimationController>();
-            MainChar.SetScale(0.2f);
-
-            ForwardAniFile = "Mutant/Mutant_Run.ani";
-            BackwardAniFile = "Mutant/Mutant_Run.ani";
-            LeftAniFile = "Mutant/Mutant_Run.ani";
-            RightAniFile = "Mutant/Mutant_Run.ani";
-            IdleAniFile = "Mutant/Mutant_Idle0.ani";
-            DeathAniFile = "Mutant/Mutant_Death.ani";
+            CreateMainChar(3);
 
             GameStart = true;
             DeveloperMode = false;
 
-            timer.Start();
-
+            //Create level 1
+            game.SetUpLevel(Level.One);
         }
         //Event handler for developer button
         void DeveloperClick(ReleasedEventArgs args)
@@ -1398,21 +1416,33 @@ namespace CC_X
 
         public void SetUpLevel1(Difficulty difficulty)
         {
-            ResetLevel();
+            gameOverWind.Visible = false;
+            game.ResetLevel();
             game.GameOver = false;
             CreateGround();
             CreateForestLevel1();
-            CreateCarsLevel1();
+            CreateCarsLevel1();  
+                      
+            //Start timer
+            timer.Start();
         }
 
         public void SetUpLevel2(Difficulty difficulty)
         {
-            ResetLevel();
+            gameOverWind.Visible = false;
+            game.ResetLevel();
+
+            //Start timer
+            timer.Start();
         }
 
         public void SetUpLevel3(Difficulty difficulty)
         {
-            ResetLevel();
+            gameOverWind.Visible = false;
+            game.ResetLevel();
+
+            //Start timer
+            timer.Start();
         }
 
         public void SetUpLevel(Level level, Difficulty difficulty)
@@ -1436,16 +1466,166 @@ namespace CC_X
                     }
             }
         }
+        public void CreateMainChar1()
+        {
+            SelectedChar = 1;
 
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Swat;
+
+            MainChar = Scene.CreateChild("Swat" + numNodes);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            MainChar.Yaw(180, TransformSpace.Local);
+
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            ForwardAniFile = "Swat/Swat_SprintFwd.ani";
+            BackwardAniFile = "Swat/Swat_SprintBwd.ani";
+            LeftAniFile = "Swat/Swat_SprintLeft.ani";
+            RightAniFile = "Swat/Swat_SprintRight.ani";
+            IdleAniFile = "Swat/Swat_Idle.ani";
+            DeathAniFile = "Swat/Swat_DeathFromBack.ani";
+        }
+        public void CreateMainChar2()
+        {
+            SelectedChar = 2;
+
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Ninja;
+
+            MainChar = Scene.CreateChild("Ninja" + numNodes);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            ForwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            BackwardAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            LeftAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            RightAniFile = "NinjaSnowWar/Ninja_Walk.ani";
+            IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
+            DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
+        }
+        public void CreateMainChar3()
+        {
+            SelectedChar = 3;
+
+            game.MainChar.SelectedCharType = MainCharacter.MainCharOptn.Mutant;
+
+            MainChar = Scene.CreateChild("Mutant" + numNodes);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            MainChar.Yaw(180, TransformSpace.Local);
+
+            var component2 = MainChar.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            MainChar.CreateComponent<AnimationController>();
+            MainChar.SetScale(0.2f);
+
+            ForwardAniFile = "Mutant/Mutant_Run.ani";
+            BackwardAniFile = "Mutant/Mutant_Run.ani";
+            LeftAniFile = "Mutant/Mutant_Run.ani";
+            RightAniFile = "Mutant/Mutant_Run.ani";
+            IdleAniFile = "Mutant/Mutant_Idle0.ani";
+            DeathAniFile = "Mutant/Mutant_Death.ani";
+
+        }
+
+        public void CreateMainChar(int num)
+        {
+            switch (num)
+            {
+                case 1:
+                    {
+                        CreateMainChar1();
+                        break;
+                    }
+                case 2:
+                    {
+                        CreateMainChar2();
+                        break;
+                    }
+                case 3:
+                    {
+                        CreateMainChar3();
+                        break;
+                    }
+            }
+        }
         public void ResetLevel()
         {
-            foreach(uint id in game.GameObjCollection.Keys)
+            //foreach(uint id in game.GameObjCollection.Keys)
+            //{
+            //    if(id != null)
+            //    {
+            //        Node node = Scene.GetNode(id);
+            //        node.RemoveAllChildren();
+            //        Scene.RemoveChild(node);
+            //    }                
+            //}            
+            // Reset camera
+            CameraNode.Position = new Vector3(75, 0, 0);
+            CameraNode.Rotation = new Quaternion(-0.2f, 0, 0);
+            uint mainCharID;
+
+            ////Reset timer and scene
+            //Node node2 = Scene.GetNode(LightID);
+            //node2.RemoveAllChildren();
+            //Scene.RemoveChild(node2);
+            //SetupScene();            
+            //timeTotal = 0;
+            //timer.Start();            
+            uint camID = CameraNode.ID;
+            uint lightID = LightNode.ID;            
+            foreach (Node node in Scene.Children)
             {
-                if(id != null)
+                if (node.ID != camID && node.ID != lightID)
+                {                 
+                    if(MainChar != null)
+                    {
+                        mainCharID = MainChar.ID;
+                        if(node.ID != mainCharID)
+                        {                            
+                            node.RemoveAllChildren();
+                            Scene.RemoveChild(node);
+                        }                        
+                    }                   
+                }
+            }
+            //CreateMainChar(SelectedChar);
+            
+            
+
+            //Reset Main Character and scene
+            if (MainChar != null)
+            {
+                //Reset Main Character
+                MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+                PlayAnimation(MainChar, IdleAniFile);
+
+                //Reset scene
+                SetupScene();
+            }
+        }
+
+        public void LevelAdvanceAssess()
+        {
+            if (game.PassLevel())
+            {
+                if(game.CurrentLevel == Level.One)
                 {
-                    Node node = Scene.GetNode(id);
-                    Scene.RemoveChild(node);
-                }                
+                    level2Btn.Visible = true;
+                }
+                else if (game.CurrentLevel == Level.Two)
+                {
+                    level3Btn.Visible = true;
+                }
             }
         }
 

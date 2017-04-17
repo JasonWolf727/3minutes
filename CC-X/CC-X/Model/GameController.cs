@@ -40,6 +40,7 @@ namespace CC_X.Model
         {
             GameOver = false;
             GameObjCollection = new Dictionary<uint, GameObj>();
+            DifficutlySelected = difficulty;
         }
 
         //Returns true when level is over
@@ -54,6 +55,22 @@ namespace CC_X.Model
             {
                 return false;
             }
+        }
+
+        public bool PassLevel()
+        {
+            int QualTime = 0;
+            if(CurrentLevel == Level.One) { QualTime = Level1QualTime; }
+            else if (CurrentLevel == Level.Two) { QualTime = Level2QualTime; }
+            else if (CurrentLevel == Level.Three) { QualTime = Level3QualTime; }
+            if (CurrentTime <= QualTime && MainChar.IsDead == false) { return true; }
+            else { return false; }
+        }
+
+        public string GetLevelStatus()
+        {
+            if (PassLevel()) { return "Completed"; }
+            else { return "Failed"; }
         }
         //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
         public List<object> DetectCollision()
@@ -111,7 +128,7 @@ namespace CC_X.Model
         {
             gui.UpdateCurrentTime();
         }
-
+        
         public int GetQualTime()
         {
             if(CurrentLevel == Level.One) { return Level1QualTime; }
@@ -132,12 +149,13 @@ namespace CC_X.Model
 
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
-        private void SetUpLevel1(Difficulty difficulty)
+        public void SetUpLevel1(Difficulty difficulty)
         {
             EndGameZone = new Vector3(75, 0, 124);
             MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
             SetUpDifficulty(difficulty, Level.One);
             gui.SetUpLevel(Level.One, difficulty);
+            
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
@@ -155,26 +173,41 @@ namespace CC_X.Model
         }
 
         //Populate WorldCollection according to level and difficulty.
-        public void SetUpLevel(Level level, Difficulty difficulty)
+        public void SetUpLevel(Level level)
         {
             switch(level)
             {
                 case Level.One:
                     {
-                        SetUpLevel1(difficulty);
+                        SetUpLevel1(DifficutlySelected);
                         break;
                     }
                 case Level.Two:
                     {
-                        SetUpLevel2(difficulty);
+                        SetUpLevel2(DifficutlySelected);
                         break;
                     }
                 case Level.Three:
                     {
-                        SetUpLevel3(difficulty);
+                        SetUpLevel3(DifficutlySelected);
                         break;
                     }
             }
+        }
+
+        public void ResetLevel()
+        {
+            GameObjCollection = new Dictionary<uint, GameObj>();
+
+            //Reset Main Character
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+
+            GameOver = false;
+            MainChar.Health = 100;
+            MainChar.IsDead = false;
+            CurrentTime = 0;
+
+            gui.ResetLevel();
         }
         public void SetUpDifficultyEasy(Level level)
         {
