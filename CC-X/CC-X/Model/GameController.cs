@@ -20,6 +20,11 @@ namespace CC_X.Model
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
         public int CurrentTime { get; set; }
+        public int Level1QualTime { get; set; }
+        public int Level2QualTime { get; set; }
+
+        public int Level3QualTime { get; set; }
+
 
         public Level CurrentLevel = Level.One;
         public HighScore highscore = new HighScore();
@@ -106,6 +111,14 @@ namespace CC_X.Model
         {
             gui.UpdateCurrentTime();
         }
+
+        public int GetQualTime()
+        {
+            if(CurrentLevel == Level.One) { return Level1QualTime; }
+            if (CurrentLevel == Level.Two) { return Level2QualTime; }
+            if (CurrentLevel == Level.Three) { return Level3QualTime; }
+            else { return -1; }
+        }
         //Calculates player's experience
         public void CalcExperience(int points)
         {
@@ -123,19 +136,22 @@ namespace CC_X.Model
         {
             EndGameZone = new Vector3(75, 0, 124);
             MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            SetUpDifficulty(difficulty, Level.One);
             gui.SetUpLevel(Level.One, difficulty);
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
         private void SetUpLevel2(Difficulty difficulty)
         {
-
+            CurrentLevel = Level.Two;
+            SetUpDifficulty(difficulty, Level.Two);
         }
 
         //Populate WorldCollection with level 3 world objects/coordinates according to difficutly
         private void SetUpLevel3(Difficulty difficulty)
         {
-
+            CurrentLevel = Level.Three;
+            SetUpDifficulty(difficulty, Level.Three);
         }
 
         //Populate WorldCollection according to level and difficulty.
@@ -156,6 +172,45 @@ namespace CC_X.Model
                 case Level.Three:
                     {
                         SetUpLevel3(difficulty);
+                        break;
+                    }
+            }
+        }
+        public void SetUpDifficultyEasy(Level level)
+        {
+            if(level == Level.One) { Level1QualTime = 90; }
+            if(level == Level.Two) { Level2QualTime = 100; }
+            if(level == Level.Three) { Level3QualTime = 110; }
+        }
+        public void SetUpDifficultyMedium(Level level)
+        {
+            if (level == Level.One) { Level1QualTime = 70; }
+            if (level == Level.Two) { Level2QualTime = 80; }
+            if (level == Level.Three) { Level3QualTime = 90; }
+        }
+        public void SetUpDifficultyHard(Level level)
+        {
+            if (level == Level.One) { Level1QualTime = 62; }
+            if (level == Level.Two) { Level2QualTime = 72; }
+            if (level == Level.Three) { Level3QualTime = 82; }
+        }
+        public void SetUpDifficulty(Difficulty difficulty, Level level)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    {
+                        SetUpDifficultyEasy(level);
+                        break;
+                    }
+                case Difficulty.Medium:
+                    {
+                        SetUpDifficultyMedium(level);
+                        break;
+                    }
+                case Difficulty.Hard:
+                    {
+                        SetUpDifficultyHard(level);
                         break;
                     }
             }

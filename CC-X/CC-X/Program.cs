@@ -571,7 +571,7 @@ namespace CC_X
                 GameStart = false;
                 LastLevelTime = timeTotal;
                 ResetTime();
-                gameOverText.Value = "Your time: " + LastLevelTime + " seconds";
+                gameOverText.Value = "Your time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime();
                 gameOverWind.Visible = true;
 
             }
@@ -1398,6 +1398,7 @@ namespace CC_X
 
         public void SetUpLevel1(Difficulty difficulty)
         {
+            ResetLevel();
             game.GameOver = false;
             CreateGround();
             CreateForestLevel1();
@@ -1406,12 +1407,12 @@ namespace CC_X
 
         public void SetUpLevel2(Difficulty difficulty)
         {
-            throw new NotImplementedException();
+            ResetLevel();
         }
 
         public void SetUpLevel3(Difficulty difficulty)
         {
-            throw new NotImplementedException();
+            ResetLevel();
         }
 
         public void SetUpLevel(Level level, Difficulty difficulty)
@@ -1433,6 +1434,18 @@ namespace CC_X
                         SetUpLevel3(difficulty);
                         break;
                     }
+            }
+        }
+
+        public void ResetLevel()
+        {
+            foreach(uint id in game.GameObjCollection.Keys)
+            {
+                if(id != null)
+                {
+                    Node node = Scene.GetNode(id);
+                    Scene.RemoveChild(node);
+                }                
             }
         }
 
