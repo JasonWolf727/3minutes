@@ -118,8 +118,7 @@ namespace CC_X
         public int CurrentTime { get; set; }
         public int LastLevelTime { get; set; }
         public uint LightID { get; set; }
-        public int SelectedChar { get; set; }
-        
+        public int SelectedChar { get; set; }       
 
         //Create an instance of GameController
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
@@ -179,7 +178,7 @@ namespace CC_X
             light.SpecularIntensity = 0.05f;
             light.Color = new Color(1.2f, 1.2f, 1.2f);
             light.Brightness = 0.75f;
-
+           
             //Set up camera pos
             CameraNode.Position = new Vector3(75, 0, 0);
 
@@ -1582,10 +1581,13 @@ namespace CC_X
             //timeTotal = 0;
             //timer.Start();            
             uint camID = CameraNode.ID;
-            uint lightID = LightNode.ID;            
+            uint lightID = LightNode.ID;
+            uint lightID2 = lightNode.ID;
+            //lightNode.RemoveAllChildren();
+            //Scene.RemoveChild(lightNode);        
             foreach (Node node in Scene.Children)
             {
-                if (node.ID != camID && node.ID != lightID)
+                if (node.ID != camID && node.ID != lightID && node.ID != lightID2)
                 {                 
                     if(MainChar != null)
                     {
@@ -1609,8 +1611,8 @@ namespace CC_X
                 MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
                 PlayAnimation(MainChar, IdleAniFile);
 
-                //Reset scene
-                SetupScene();
+                //Reset light
+                //SetupScene();
             }
         }
 
