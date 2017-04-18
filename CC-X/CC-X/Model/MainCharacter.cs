@@ -20,8 +20,9 @@ namespace CC_X.Model
         public int Experience { get; set; }
         public int Points { get; set; }
         public Rectangle persnlBubble;
-        public MainCharacter()
+        public MainCharacter(Vector3 position)
         {
+            Position = position;
             IsDead = false;
             Health = 100;
             persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
@@ -29,7 +30,7 @@ namespace CC_X.Model
         
         public void ReceiveDamage(int damagePow)
         {
-            Health = Health - damagePow;
+            Health = Health - damagePow / (Experience * (1/1000));
             if(Health <= 0)
             {
                 IsDead = true;

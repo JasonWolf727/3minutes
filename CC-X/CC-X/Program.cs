@@ -219,6 +219,12 @@ namespace CC_X
             CurrentTime = 0;
             timer.Stop();
         }
+
+        public void UpdateLastLevelTime()
+        {
+            LastLevelTime = timeTotal;
+            game.LastLevelTime = LastLevelTime;
+        }
         public void UpdateCurrentTime()
         {
             CurrentTime = timeTotal;
@@ -613,9 +619,9 @@ namespace CC_X
 
                 game.GameOver = false;
                 GameStart = false;
-                LastLevelTime = timeTotal;
+                UpdateLastLevelTime();
                 ResetTime();
-                gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus();
+                gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus() + "\nTotal Experience: " + game.MainChar.Experience;
                 LevelAdvanceAssess();
                 gameOverWind.Visible = true;                
 
@@ -1223,7 +1229,7 @@ namespace CC_X
             body.Position = position;
 
             //Add to GameController Dictionary
-            Enemy Audi = new Enemy();
+            Enemy Audi = new Enemy(body.Position);
             Audi.ObjType = Enemy.EnemyType.Car;
             Audi.ID = body.ID;
             Audi.Strength = 100;
@@ -1246,7 +1252,7 @@ namespace CC_X
             volks.Position = position;
 
             //Add to GameController Dictionary
-            Enemy Volks = new Enemy();
+            Enemy Volks = new Enemy(volks.Position);
             Volks.ObjType = Enemy.EnemyType.Car;
             Volks.ID = volks.ID;
             Volks.Strength = 100;

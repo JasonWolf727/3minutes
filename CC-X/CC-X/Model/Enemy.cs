@@ -20,8 +20,9 @@ namespace CC_X.Model
         public CarDir CarMovingDirection { get; set; }
         public float CarSpeed { get; set; }
         public Rectangle persnlBubble;
-        public Enemy()
+        public Enemy(Vector3 position)
         {
+            Position = position;
             persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
         }
         //If not dead, sets Enemies.Position to position
