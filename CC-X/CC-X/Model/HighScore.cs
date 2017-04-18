@@ -21,10 +21,10 @@ namespace CC_X.Model
         {
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
-                string dataToWrite = "";
+                string dataToWrite = "Player 0" + Environment.NewLine;
                 for (int i = 0; i < collectionScoreObj.Count; i++)
                 {
-                    dataToWrite = dataToWrite + collectionScoreObj[i].ToString() + "/n";   
+                    dataToWrite = dataToWrite + collectionScoreObj[i].ToString() + Environment.NewLine;   
                 }
                 writer.WriteLine(dataToWrite);
             }
@@ -35,21 +35,29 @@ namespace CC_X.Model
         //Add the data to a list containing all the highscores. 
         public void ReadFromFile()
         {
-            using (StreamReader reader = new StreamReader(highScoreFile))
+            try
             {
-                collectionScoreObj.Clear();
-                string line = reader.ReadLine();
-                while (line != null)
+                using (StreamReader reader = new StreamReader(highScoreFile))
                 {
-                    string[] contents = new string[2];
-                    contents = line.Split(' ');
-                    Score scoreObj = new Score();
-                    scoreObj.Name = contents[0];
-                    scoreObj.PlayerScore = Convert.ToInt32(contents[1]);
-                    collectionScoreObj.Add(scoreObj);
-                    line = reader.ReadLine();
+                    collectionScoreObj.Clear();
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        string[] contents = new string[2];
+                        contents = line.Split(' ');
+                        Score scoreObj = new Score();
+                        scoreObj.Name = contents[0];
+                        scoreObj.PlayerScore = Convert.ToInt32(contents[1]);
+                        collectionScoreObj.Add(scoreObj);
+                        line = reader.ReadLine();
+                    }
+
                 }
-                
+            }
+            catch(FileNotFoundException e)
+            {
+                WriteToFile();
+                ReadFromFile();
             }
         }
 
