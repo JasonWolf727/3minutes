@@ -10,21 +10,22 @@ namespace CC_X.Model
     [TestClass]
     class SerializationTest
     {
-        // Serialization logic has not been written yet, so these might fail.
+        /* Tests for the conversion to string of a character's:
+         * Position
+         * ID
+         * SelectedCharType
+         * Strength
+         * Health
+         * TimeSinceLastCollide
+         * IsDead
+        */
         [TestMethod]
-        public void Load_Success()
+        public void MainCharSerializer()
         {
-            try
-            {
-                GameController c = new GameController(Difficulty.Easy);
-                string filepath = "C:\\Users\\csant714\\Desktop\\3minutes\\CC - X\\CC - X\\Model\\LoadSaveTest.csv";
-                c.Save(filepath);
-                c.Load(filepath);
-            }
-            catch
-            {
-                throw new AssertFailedException();
-            }
+            throw new NotImplementedException();
+            //MainCharacter chara = new MainCharacter();
+            //chara.Position = new Urho.Vector3(1,2,4);
+            //chara.Health = 90;
         }
     }
 }

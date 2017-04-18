@@ -158,104 +158,118 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="CC_XClassDiagram1.cd" />
-    <None Include="Data\Models\Audi\AudiBody.mdl">
+    <Content Include="Data\Models\Audi\AudiBody.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiBrakeLights.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiBrakeLights.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiDoorHandles.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiDoorHandles.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiEmblem.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiEmblem.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiEmblemBack.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiEmblemBack.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiExhaust.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiExhaust.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiFrontGrill.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiFrontGrill.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiFrontHeadL.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiFrontHeadL.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiFrontMudFlap.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiFrontMudFlap.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiFrontTipGrill.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiFrontTipGrill.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiFrontWinsh.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiFrontWinsh.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiInsideBackGrill.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiInsideBackGrill.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiInsideFrontGill.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiInsideFrontGill.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiInsideGrillply.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiInsideGrillply.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiLicensePlate.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiLicensePlate.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiRearMudFlap.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiRearMudFlap.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiRearViews.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiRearViews.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiRearWinshield.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiRearWinshield.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiSideBackWinsh.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiSideBackWinsh.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiSideWind.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiSideWind.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiTailFin.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiTailFin.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiWheels.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiWheels.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Audi\AudiTires.mdl">
+    </Content>
+    <Content Include="Data\Models\Audi\AudiTires.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Layer\Mutant_Block_LY.ani" />
-    <None Include="Data\Models\Mutant\Layer\Mutant_HitHead_LY.ani" />
-    <None Include="Data\Models\Mutant\Layer\Mutant_Throw_LY.ani" />
-    <None Include="Data\Models\Mutant\Layer\Mutant_Wave_LY.ani" />
-    <None Include="Data\Models\Mutant\Mutant.mdl">
+    </Content>
+    <Content Include="Data\Models\Mutant\Layer\Mutant_Block_LY.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Death.ani" />
-    <None Include="Data\Models\Mutant\Mutant_HipHop1.ani" />
-    <None Include="Data\Models\Mutant\Mutant_Idle0.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Layer\Mutant_HitHead_LY.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Idle1.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Layer\Mutant_Throw_LY.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Run.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Layer\Mutant_Wave_LY.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Walk.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\RootMotion\Mutant_JumpAttack_RM.ani" />
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Death.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_HipHop1.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Idle0.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Idle1.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Run.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Walk.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\RootMotion\Mutant_JumpAttack_RM.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Data\Models\Mutant\Skeleton\Mutant_Skeleton.fbx" />
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Stealth.xml">
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Stealth.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Walk.xml">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Walk.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Data\Models\Swat\Skeleton\Swat_Skeleton.fbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -265,132 +279,132 @@
     <Content Include="Data\Models\Swat\Swat_DeathFromBack.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Data\Models\NinjaSnowWar\Ninja.mdl">
+    <Content Include="Data\Models\NinjaSnowWar\Ninja.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Attack1.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Attack1.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Attack2.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Attack2.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Attack3.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Attack3.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Backflip.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Backflip.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Block.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Block.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Climb.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Climb.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Crouch.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Crouch.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Death1.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Death1.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Death2.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Death2.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_HighJump.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_HighJump.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Idle1.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Idle1.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Idle2.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Idle2.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Idle3.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Idle3.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Jump.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Jump.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_JumpNoHeight.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_JumpNoHeight.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Kick.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Kick.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_SideKick.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_SideKick.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Spin.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Spin.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Stealth.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Stealth.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\NinjaSnowWar\Ninja_Walk.ani">
+    </Content>
+    <Content Include="Data\Models\NinjaSnowWar\Ninja_Walk.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Rock1.mdl">
+    </Content>
+    <Content Include="Data\Models\Rock1.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Rock2.mdl">
+    </Content>
+    <Content Include="Data\Models\Rock2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Rock3.mdl">
+    </Content>
+    <Content Include="Data\Models\Rock3.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_SprintBwd.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_SprintBwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_SprintFwd.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_SprintFwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_SprintLeft.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_SprintLeft.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_SprintRight.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_SprintRight.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_WalkFwd.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_WalkFwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Data\Models\ThreeTreesWithBackground.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Data\Models\Swat\Swat_Idle.ani">
+    <Content Include="Data\Models\Swat\Swat_Idle.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_RunBwd.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_RunBwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_RunFwd.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_RunFwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_RunLeft.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_RunLeft.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Swat\Swat_RunRight.ani">
+    </Content>
+    <Content Include="Data\Models\Swat\Swat_RunRight.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Tree1Leaves.mdl">
+    </Content>
+    <Content Include="Data\Models\Tree1Leaves.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Tree1Trunk.mdl">
+    </Content>
+    <Content Include="Data\Models\Tree1Trunk.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\tree2.mdl">
+    </Content>
+    <Content Include="Data\Models\tree2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\tree2trunk.mdl">
+    </Content>
+    <Content Include="Data\Models\tree2trunk.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\volks.mdl">
+    </Content>
+    <Content Include="Data\Models\volks.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\volks2.mdl">
+    </Content>
+    <Content Include="Data\Models\volks2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Textures\Tire.tga">
+    </Content>
+    <Content Include="Data\Textures\Tire.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Model\LoadSaveTest.csv" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -419,8 +433,12 @@
     <Content Include="Data\Materials\Soldier_head6.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Models\Mutant\Image\mutant.png" />
-    <Content Include="Data\Models\Mutant\Materials\mutant_M.xml" />
+    <Content Include="Data\Models\Mutant\Image\mutant.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Materials\mutant_M.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Models\Swat\Image\swat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
