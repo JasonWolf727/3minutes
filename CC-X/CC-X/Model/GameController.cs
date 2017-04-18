@@ -20,6 +20,11 @@ namespace CC_X.Model
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
         public int CurrentTime { get; set; }
+        public int Level1QualTime { get; set; }
+        public int Level2QualTime { get; set; }
+
+        public int Level3QualTime { get; set; }
+
 
         public Level CurrentLevel = Level.One;
         public HighScore highscore = new HighScore();
@@ -35,6 +40,7 @@ namespace CC_X.Model
         {
             GameOver = false;
             GameObjCollection = new Dictionary<uint, GameObj>();
+            DifficutlySelected = difficulty;
         }
 
         //Returns true when level is over
@@ -49,6 +55,22 @@ namespace CC_X.Model
             {
                 return false;
             }
+        }
+
+        public bool PassLevel()
+        {
+            int QualTime = 0;
+            if(CurrentLevel == Level.One) { QualTime = Level1QualTime; }
+            else if (CurrentLevel == Level.Two) { QualTime = Level2QualTime; }
+            else if (CurrentLevel == Level.Three) { QualTime = Level3QualTime; }
+            if (CurrentTime <= QualTime && MainChar.IsDead == false) { return true; }
+            else { return false; }
+        }
+
+        public string GetLevelStatus()
+        {
+            if (PassLevel()) { return "Completed"; }
+            else { return "Failed"; }
         }
         //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
         public List<object> DetectCollision()
@@ -106,6 +128,14 @@ namespace CC_X.Model
         {
             gui.UpdateCurrentTime();
         }
+        
+        public int GetQualTime()
+        {
+            if(CurrentLevel == Level.One) { return Level1QualTime; }
+            if (CurrentLevel == Level.Two) { return Level2QualTime; }
+            if (CurrentLevel == Level.Three) { return Level3QualTime; }
+            else { return -1; }
+        }
         //Calculates player's experience
         public void CalcExperience(int points)
         {
@@ -119,43 +149,107 @@ namespace CC_X.Model
 
 
         //Populate WorldCollection with level 1 world objects/coordinates according to difficutly
-        private void SetUpLevel1(Difficulty difficulty)
+        public void SetUpLevel1(Difficulty difficulty)
         {
             EndGameZone = new Vector3(75, 0, 124);
             MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            SetUpDifficulty(difficulty, Level.One);
             gui.SetUpLevel(Level.One, difficulty);
+            
         }
 
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
         private void SetUpLevel2(Difficulty difficulty)
         {
-
+            EndGameZone = new Vector3(75, 0, 124);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            CurrentLevel = Level.Two;
+            SetUpDifficulty(difficulty, Level.Two);
+            gui.SetUpLevel(Level.Two, difficulty);
         }
 
         //Populate WorldCollection with level 3 world objects/coordinates according to difficutly
         private void SetUpLevel3(Difficulty difficulty)
         {
-
+            EndGameZone = new Vector3(75, 0, 124);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+            CurrentLevel = Level.Three;
+            SetUpDifficulty(difficulty, Level.Three);
+            gui.SetUpLevel(Level.Three, difficulty);
         }
 
         //Populate WorldCollection according to level and difficulty.
-        public void SetUpLevel(Level level, Difficulty difficulty)
+        public void SetUpLevel(Level level)
         {
             switch(level)
             {
                 case Level.One:
                     {
-                        SetUpLevel1(difficulty);
+                        SetUpLevel1(DifficutlySelected);
                         break;
                     }
                 case Level.Two:
                     {
-                        SetUpLevel2(difficulty);
+                        SetUpLevel2(DifficutlySelected);
                         break;
                     }
                 case Level.Three:
                     {
-                        SetUpLevel3(difficulty);
+                        SetUpLevel3(DifficutlySelected);
+                        break;
+                    }
+            }
+        }
+
+        public void ResetLevel()
+        {
+            GameObjCollection = new Dictionary<uint, GameObj>();
+
+            //Reset Main Character
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
+
+            GameOver = false;
+            MainChar.Health = 100;
+            MainChar.IsDead = false;
+            CurrentTime = 0;
+
+            gui.ResetLevel();
+        }
+        public void SetUpDifficultyEasy(Level level)
+        {
+            if(level == Level.One) { Level1QualTime = 90; }
+            if(level == Level.Two) { Level2QualTime = 100; }
+            if(level == Level.Three) { Level3QualTime = 110; }
+        }
+        public void SetUpDifficultyMedium(Level level)
+        {
+            if (level == Level.One) { Level1QualTime = 70; }
+            if (level == Level.Two) { Level2QualTime = 80; }
+            if (level == Level.Three) { Level3QualTime = 90; }
+        }
+        public void SetUpDifficultyHard(Level level)
+        {
+            if (level == Level.One) { Level1QualTime = 62; }
+            if (level == Level.Two) { Level2QualTime = 72; }
+            if (level == Level.Three) { Level3QualTime = 82; }
+        }
+        public void SetUpDifficulty(Difficulty difficulty, Level level)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    {
+                        SetUpDifficultyEasy(level);
+                        break;
+                    }
+                case Difficulty.Medium:
+                    {
+                        SetUpDifficultyMedium(level);
+                        break;
+                    }
+                case Difficulty.Hard:
+                    {
+                        SetUpDifficultyHard(level);
                         break;
                     }
             }

@@ -25,13 +25,7 @@ namespace CC_X.Model
             IsDead = false;
             Health = 100;
             persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
-        }
-        
-        //If not dead, sets MainCharacter.Position to position
-        public void UpdatePos(Vector3 position)
-        {
-            throw new NotImplementedException();
-        }
+        }               
         
         public void ReceiveDamage(int damagePow)
         {
@@ -40,6 +34,10 @@ namespace CC_X.Model
             {
                 IsDead = true;
             }
+        }
+        public void UpdatePos(Vector3 pos)
+        {            
+            Position = pos;
         }
         public void MoveLeft(float howMuch)
         {
@@ -62,9 +60,10 @@ namespace CC_X.Model
             var newPos = new Vector3(Position.X, Position.Y, -howMuch);
             Position += newPos;
         }
-        public bool IsMainCharDead()
+        public string GetStatus()
         {
-            throw new NotImplementedException();
+            if (IsDead) { return "Dead"; }
+            else { return "Living"; }
         }
 
         // Store information concerning the Main Character

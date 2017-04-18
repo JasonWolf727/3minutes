@@ -18,5 +18,6 @@ public interface IObserver
     void SetUpLevel3(Difficulty difficulty);
 
     //Populate WorldCollection according to level and difficulty.
-    void SetUpLevel(Level level, Difficulty difficulty);   
+    void SetUpLevel(Level level, Difficulty difficulty);
+    void ResetLevel();
 }
