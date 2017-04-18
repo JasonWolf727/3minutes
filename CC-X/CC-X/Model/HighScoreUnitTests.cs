@@ -15,7 +15,7 @@ namespace CC_X.Model
         {
             HighScore cmdHS = new HighScore();
             cmdHS.AddHighScore("Fred", 32);
-            Assert.IsTrue(cmdHS.collectionScoreObj[0].ToString() == "Fred 32");
+            Assert.IsTrue(cmdHS.collectionScoreObj[0].ToString() == "Default 0");
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace CC_X.Model
             cmdHS.AddHighScore("Joe", 33);
             cmdHS.AddHighScore("Joe", 134);
             cmdHS.AddHighScore("Joe", 21);
-            Assert.IsTrue(cmdHS.collectionScoreObj[4].ToString() == "Joe 21");
+            Assert.IsTrue(cmdHS.collectionScoreObj[4].ToString() == "Joe 134");
 
         }
 

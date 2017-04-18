@@ -21,7 +21,7 @@ namespace CC_X.Model
         {
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
-                string dataToWrite = "Player 0" + Environment.NewLine;
+                string dataToWrite = "Default 0" + Environment.NewLine;
                 for (int i = 0; i < collectionScoreObj.Count; i++)
                 {
                     dataToWrite = dataToWrite + collectionScoreObj[i].ToString() + Environment.NewLine;   
@@ -41,14 +41,18 @@ namespace CC_X.Model
                 {
                     collectionScoreObj.Clear();
                     string line = reader.ReadLine();
-                    while (line != null)
+                    while ((line != null)) //& (line != ""))
                     {
                         string[] contents = new string[2];
                         contents = line.Split(' ');
                         Score scoreObj = new Score();
-                        scoreObj.Name = contents[0];
-                        scoreObj.PlayerScore = Convert.ToInt32(contents[1]);
-                        collectionScoreObj.Add(scoreObj);
+                        if (contents.Length == 2)
+                        {
+                            scoreObj.Name = contents[0];
+                            scoreObj.PlayerScore = Convert.ToInt32(contents[1]);
+                            collectionScoreObj.Add(scoreObj);
+                        }
+                        
                         line = reader.ReadLine();
                     }
 
@@ -73,7 +77,7 @@ namespace CC_X.Model
                 int loc = -1;
                 for (int i = 0; i < collectionScoreObj.Count(); i++)
                 {
-                    if (newScore > collectionScoreObj[i].PlayerScore)
+                    if (newScore < collectionScoreObj[i].PlayerScore)
                     {
                         loc = i;
                     }
