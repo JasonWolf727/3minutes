@@ -36,8 +36,8 @@ namespace CC_X.Model
             }
         }
         public void UpdatePos(Vector3 pos)
-        {
-
+        {            
+            Position = pos;
         }
         public void MoveLeft(float howMuch)
         {

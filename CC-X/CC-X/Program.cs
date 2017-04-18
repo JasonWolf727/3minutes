@@ -1029,7 +1029,7 @@ namespace CC_X
         //Create tree of style 1
         public void CreateTree1(Vector3 position)
         {
-            Node Trunk = Scene.CreateChild("TreeType1");
+            Node Trunk = Scene.CreateChild("TreeType1",34);
 
 
             Trunk.Rotation = new Quaternion(90, 0, 0);
@@ -1051,8 +1051,31 @@ namespace CC_X
             Nature Tree = new Nature(Nature.NatureType.Tree, Trunk.Position);
             Tree.ID = Trunk.ID;
             game.GameObjCollection[Tree.ID] = Tree;
-        }
 
+            Nature TreePt2 = new Nature(Nature.NatureType.Tree, Leaves.Position);
+            TreePt2.ID = Leaves.ID;
+            game.GameObjCollection[TreePt2.ID] = TreePt2;
+        }
+        public void CreateRock(Vector3 position)
+        {            
+            Node RockNode = Scene.CreateChild("Rock");
+
+
+            RockNode.Rotation = new Quaternion(90, 0, 0);
+            RockNode.Roll(90, TransformSpace.World);
+            var component = RockNode.CreateComponent<AnimatedModel>();
+            component.Model = ResourceCache.GetModel(("Models/Rock3.mdl"));
+            component.SetMaterial(Material.FromImage("Textures/Rock-Texture-Surface.jpg"));
+            RockNode.CreateComponent<AnimationController>();            
+
+            RockNode.Position = position;
+            RockNode.SetScale(0.2f);
+
+            //Add to GameController Dictionary
+            Nature gameRock = new Nature(Nature.NatureType.Rock, RockNode.Position);
+            gameRock.ID = RockNode.ID;
+            game.GameObjCollection[gameRock.ID] = gameRock;
+        }
         //Creates car, with body as parent node
         public void CreateAudi(Vector3 position)
         {
@@ -1235,8 +1258,8 @@ namespace CC_X
             Car2ID = Convert.ToInt32(Volks.ID);
         }
 
-        //Create Ground
-        public void CreateGround()
+        //Create Ground for first level
+        public void CreateGroundLevel1()
         {
             ++numNodes;
             Node node = Scene.CreateChild("Plane" + numNodes);
@@ -1394,12 +1417,7 @@ namespace CC_X
         public void CreateCarsLevel1()
         {
             Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);            
-            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.4266f); //X = 74f is temperary. Normally 64f
-            //Vector3 FarLaneAudiInitialPlacement = new Vector3(65f, -.5f, 104.3f);
-            //Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -.5f, 103.5f); //X = 74f is temperary. Normally 64f
-
-            //CreateAudi(FarLaneAudiInitialPlacement);
-            //CreateAudi(CloseLaneAudiInitialPlacement);
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.4266f); 
             CreateVolks(FarLaneAudiInitialPlacement,90,Enemy.CarDir.Left);
             CreateVolks(CloseLaneAudiInitialPlacement);
             CreateVolks(new Vector3(148, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left,18);
@@ -1409,13 +1427,113 @@ namespace CC_X
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
         }
+        //Create Ground for first level
+        public void CreateGroundLevel2()
+        {
+            ++numNodes;
+            Node node = Scene.CreateChild("Plane" + numNodes);
 
+            var component2 = node.CreateComponent<Urho.Shapes.Plane>();
+            component2.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+
+            //node.Pitch(-20,TransformSpace.Local);
+
+            for (int row = 0; row < 50; ++row)
+            {
+                var node2 = node.CreateChild("Plane" + numNodes);
+                var component3 = node2.CreateComponent<Urho.Shapes.Plane>();
+                if (row != 34)
+                {
+                    component3.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                }
+                //Road
+                else
+                {
+                    component3.SetMaterial(Material.FromImage("Textures/RoadDry.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                    node2.Yaw(90, TransformSpace.Local);
+                }
+                Nature plane2 = new Nature(Nature.NatureType.Plane, node2.Position);
+                plane2.ID = node2.ID;
+                game.GameObjCollection[plane2.ID] = plane2;
+
+                for (int col = 0; col < 50; ++col)
+                {
+                    var node3 = node.CreateChild("Plane" + numNodes);
+                    //node2.Pitch(-20, TransformSpace.Local);
+                    var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
+                    if (row != 34 && (row != 41 | (col < 23 | col > 26)))
+                    {
+                        component4.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                    }
+
+                    else if (row == 41 && col >= 23 && col <= 26)
+                    {
+                        component4.Color = Color.White;
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                    }
+
+                    //Road
+                    else if (row == 34)
+                    {
+                        component4.SetMaterial(Material.FromImage("Textures/RoadDry.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                        node3.Yaw(90, TransformSpace.Local);
+                    }
+                    Nature plane3 = new Nature(Nature.NatureType.Plane, node3.Position);
+                    plane3.ID = node3.ID;
+                    game.GameObjCollection[plane3.ID] = plane3;
+                }
+            }
+
+            node.Position = new Vector3(-0.7f, -0.5f, 2);
+            node.SetScale(3f);
+
+            Nature plane = new Nature(Nature.NatureType.Plane, node.Position);
+            plane.ID = node.ID;
+            game.GameObjCollection[plane.ID] = plane;
+        }
+        public void CreateRocksLevel2()
+        {
+            for (float xpos = 46; xpos < 103; xpos += 5)
+            {
+                for (float zpos = 0; zpos < 135; zpos += 5)  //Syntax for counting by 2 from http://stackoverflow.com/questions/14413404/c-sharp-for-loop-increment-by-2-trouble
+                {
+                    Vector3 LeftLeftRockPos = new Vector3(xpos, -.40f, 2.5f + zpos);
+                    Vector3 LeftMiddleRockPos = new Vector3(xpos + 1, -.40f, zpos);
+                    Vector3 RightMiddleRockPos = new Vector3(xpos + 2, -.40f, zpos);
+                    Vector3 RightRightRockPos = new Vector3(xpos + 3, -.40f, 2.5f + zpos);
+
+                    if ((zpos <= 101 | zpos >= 106) && xpos == 75)
+                    {
+                        LeftLeftRockPos = new Vector3(73f, -.40f, 2.5f + zpos);
+                        LeftMiddleRockPos = new Vector3(74f, -.40f, zpos);
+                        RightMiddleRockPos = new Vector3(76f, -.40f, zpos);
+                        RightRightRockPos = new Vector3(77f, -.40f, 2.5f + zpos);
+                        CreateRock(LeftLeftRockPos);
+                        CreateRock(LeftMiddleRockPos);
+                        CreateRock(RightMiddleRockPos);
+                        CreateRock(RightRightRockPos);
+                    }
+                    else
+                    {
+                        CreateRock(LeftLeftRockPos);
+                        CreateRock(LeftMiddleRockPos);
+                        CreateRock(RightMiddleRockPos);
+                        CreateRock(RightRightRockPos);                        
+                    }
+                }
+
+            }
+        }
         public void SetUpLevel1(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
             for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
             game.GameOver = false;
-            CreateGround();
+            CreateGroundLevel1();
             CreateForestLevel1();
             CreateCarsLevel1();  
                       
@@ -1427,6 +1545,9 @@ namespace CC_X
         {
             gameOverWind.Visible = false;
             for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
+
+            CreateGroundLevel2();
+            CreateRocksLevel2();
 
             //Start timer
             timer.Start();
@@ -1556,15 +1677,15 @@ namespace CC_X
         }
         public void ResetLevel()
         {
-            //foreach(uint id in game.GameObjCollection.Keys)
-            //{
-            //    if(id != null)
-            //    {
-            //        Node node = Scene.GetNode(id);
-            //        node.RemoveAllChildren();
-            //        Scene.RemoveChild(node);
-            //    }                
-            //}            
+            foreach (uint id in game.GameObjCollection.Keys)
+            {
+                if (id != null)
+                {
+                    Node node = Scene.GetNode(id);
+                    node.RemoveAllChildren();
+                    Scene.RemoveChild(node);
+                }
+            }
             // Reset camera
             CameraNode.Position = new Vector3(75, 0, 0);
             CameraNode.Rotation = new Quaternion(-0.2f, 0, 0);

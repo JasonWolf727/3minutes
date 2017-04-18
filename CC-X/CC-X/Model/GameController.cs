@@ -161,15 +161,21 @@ namespace CC_X.Model
         //Populate WorldCollection with level 2 world objects/coordinates according to difficutly
         private void SetUpLevel2(Difficulty difficulty)
         {
+            EndGameZone = new Vector3(75, 0, 124);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
             CurrentLevel = Level.Two;
             SetUpDifficulty(difficulty, Level.Two);
+            gui.SetUpLevel(Level.Two, difficulty);
         }
 
         //Populate WorldCollection with level 3 world objects/coordinates according to difficutly
         private void SetUpLevel3(Difficulty difficulty)
         {
+            EndGameZone = new Vector3(75, 0, 124);
+            MainChar.Position = new Vector3(75, -0.50523f, 1.62f);
             CurrentLevel = Level.Three;
             SetUpDifficulty(difficulty, Level.Three);
+            gui.SetUpLevel(Level.Three, difficulty);
         }
 
         //Populate WorldCollection according to level and difficulty.
