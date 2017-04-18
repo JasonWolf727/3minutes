@@ -231,23 +231,27 @@
     <None Include="Data\Models\Mutant\Layer\Mutant_HitHead_LY.ani" />
     <None Include="Data\Models\Mutant\Layer\Mutant_Throw_LY.ani" />
     <None Include="Data\Models\Mutant\Layer\Mutant_Wave_LY.ani" />
-    <None Include="Data\Models\Mutant\Mutant.mdl">
+    <Content Include="Data\Models\Mutant\Mutant.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Death.ani" />
-    <None Include="Data\Models\Mutant\Mutant_HipHop1.ani" />
-    <None Include="Data\Models\Mutant\Mutant_Idle0.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Death.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Idle1.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_HipHop1.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Run.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Idle0.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Mutant\Mutant_Walk.ani">
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Idle1.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Run.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Models\Mutant\Mutant_Walk.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Data\Models\Mutant\RootMotion\Mutant_JumpAttack_RM.ani" />
     <None Include="Data\Models\Mutant\Skeleton\Mutant_Skeleton.fbx" />
     <None Include="Data\Models\NinjaSnowWar\Ninja_Stealth.xml">
@@ -328,15 +332,15 @@
     <None Include="Data\Models\NinjaSnowWar\Ninja_Walk.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Models\Rock1.mdl">
+    <Content Include="Data\Models\Rock1.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Rock2.mdl">
+    </Content>
+    <Content Include="Data\Models\Rock2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Rock3.mdl">
+    </Content>
+    <Content Include="Data\Models\Rock3.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Data\Models\Swat\Swat_SprintBwd.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -370,24 +374,24 @@
     <None Include="Data\Models\Swat\Swat_RunRight.ani">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Models\Tree1Leaves.mdl">
+    <Content Include="Data\Models\Tree1Leaves.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\Tree1Trunk.mdl">
+    </Content>
+    <Content Include="Data\Models\Tree1Trunk.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\tree2.mdl">
+    </Content>
+    <Content Include="Data\Models\tree2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\tree2trunk.mdl">
+    </Content>
+    <Content Include="Data\Models\tree2trunk.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\volks.mdl">
+    </Content>
+    <Content Include="Data\Models\volks.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Models\volks2.mdl">
+    </Content>
+    <Content Include="Data\Models\volks2.mdl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Data\Textures\Tire.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
