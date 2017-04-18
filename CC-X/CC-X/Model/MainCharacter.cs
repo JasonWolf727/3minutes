@@ -70,7 +70,7 @@ namespace CC_X.Model
         // Store information concerning the Main Character
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}", this.Position, this.ID, this.SelectedCharType, this.Strength, this.Health, this.TimeSinceLastCollide, this.IsDead);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}", this.Position.X, this.Position.Y, this.Position.Z, this.ID, this.SelectedCharType, this.Strength, this.Health, this.TimeSinceLastCollide, this.IsDead, this.persnlBubble.X, this.persnlBubble.Y, this.persnlBubble.Width, this.persnlBubble.Height);
             return info;
         }
 
@@ -78,45 +78,27 @@ namespace CC_X.Model
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
-            string[] tempnums1 = info[0].Split(',');
-            int[] nums1 = new int[3];
-            for (int i = 0; i < 3; ++i)
-                nums1[i] = Convert.ToInt32(tempnums1[i]);
-            this.Position = new Vector3(nums1[0], nums1[1], nums1[2]);
-            this.ID = Convert.ToUInt32(info[1]);
-            string tempChar = info[2].ToString();
-            switch (tempChar)
-            {
-                case "Swat":
-                    this.SelectedCharType = MainCharOptn.Swat;
-                    break;
-                case "Mutant":
-                    this.SelectedCharType = MainCharOptn.Mutant;
-                    break;
-                default:
-                    this.SelectedCharType = MainCharOptn.Swat;
-                    break;
-            }
-            this.Strength = Convert.ToInt32(info[3]);
-            this.Health = Convert.ToInt32(info[4]);
-            string[] tempnums2 = info[5].Split(',');
-            int[] nums2 = new int[3];
-            for (int j = 0; j < 3; ++j)
-                nums2[j] = Convert.ToInt32(tempnums2[j]);
-            //this.TimeSinceLastCollide = new Vector3(nums2[0], nums2[1], nums2[2]);
-            string tempBool = info[6];
-            switch (tempBool)
-            {
-                case "true":
-                    this.IsDead = true;
-                    break;
-                case "false":
-                    this.IsDead = false;
-                    break;
-                default:
-                    this.IsDead = false;
-                    break;
-            }
+            this.Position = new Vector3(Convert.ToInt32(info[0]), Convert.ToInt32(info[1]), Convert.ToInt32(info[2]));
+            this.ID = Convert.ToUInt32(info[3]);
+            string tempChar = info[4].ToString();
+
+            // For some reason, Mutant is stored with leading white space; adding the white space passes the unit test.
+            if (tempChar == " Mutant")
+                this.SelectedCharType = MainCharOptn.Mutant;
+            else if (tempChar == " Ninja")
+                this.SelectedCharType = MainCharOptn.Ninja;
+            else
+                this.SelectedCharType = MainCharOptn.Swat;
+
+            this.Strength = Convert.ToInt32(info[5]);
+            this.Health = Convert.ToInt32(info[6]);
+            this.TimeSinceLastCollide = Convert.ToInt32(info[7]);
+            string tempBool = info[8].ToLower();
+            if (tempBool == " true")
+                this.IsDead = true;
+            else
+                this.IsDead = false;
+            this.persnlBubble = new Rectangle(Convert.ToInt32(info[9]), Convert.ToInt32(info[10]), Convert.ToInt32(info[11]), Convert.ToInt32(info[12]));
         }
     }
 }
