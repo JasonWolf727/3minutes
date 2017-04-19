@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Urho;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CC_X.Model
 {
@@ -14,8 +15,8 @@ namespace CC_X.Model
     class GameController
     {
         public Dictionary<uint, GameObj> GameObjCollection { get; set; } // Contains Nature and Enemy objects      
-        public MainCharacter MainChar = new MainCharacter();
-        public Enemy foe = new Enemy();
+        public MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f));
+        public Enemy foe = new Enemy(new Vector3(0,0,0));
         public Difficulty DifficutlySelected { get; set; }
         public Vector3 EndGameZone { get; set; }
         public bool GameOver { get; set; }
@@ -24,6 +25,10 @@ namespace CC_X.Model
         public int Level2QualTime { get; set; }
 
         public int Level3QualTime { get; set; }
+        public int LastLevelTime { get; set; }
+        public bool Level1Complete { get; set; }
+        public bool Level2Complete { get; set; }
+        public bool Level3Complete { get; set; }
 
 
         public Level CurrentLevel = Level.One;
@@ -41,6 +46,9 @@ namespace CC_X.Model
             GameOver = false;
             GameObjCollection = new Dictionary<uint, GameObj>();
             DifficutlySelected = difficulty;
+            Level1Complete = false;
+            Level2Complete = false;
+            Level3Complete = false;
         }
 
         //Returns true when level is over
@@ -60,10 +68,18 @@ namespace CC_X.Model
         public bool PassLevel()
         {
             int QualTime = 0;
+            Level currLevel = Level.One;
             if(CurrentLevel == Level.One) { QualTime = Level1QualTime; }
-            else if (CurrentLevel == Level.Two) { QualTime = Level2QualTime; }
-            else if (CurrentLevel == Level.Three) { QualTime = Level3QualTime; }
-            if (CurrentTime <= QualTime && MainChar.IsDead == false) { return true; }
+            else if (CurrentLevel == Level.Two) { currLevel = Level.Two; QualTime = Level2QualTime; }
+            else if (CurrentLevel == Level.Three) { currLevel = Level.Three; QualTime = Level3QualTime; }
+            if (CurrentTime <= QualTime && MainChar.IsDead == false)
+            {
+                CalcExperience();
+                if (currLevel == Level.One) { Level1Complete = true; }
+                if (currLevel == Level.Two) { Level2Complete = true; }
+                if (currLevel == Level.Three) { Level3Complete = true; }
+                return true;
+            }
             else { return false; }
         }
 
@@ -75,29 +91,6 @@ namespace CC_X.Model
         //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
         public List<object> DetectCollision()
         {
-            //if(MainChar != null)
-            //{
-            //    foreach (GameObj obj in GameObjCollection.Values)
-            //    {
-            //        if(obj is Enemy)
-            //        {
-            //            if (Math.Abs(MainChar.Position.X - obj.Position.X) <= 0.05f && Math.Abs(MainChar.Position.Z - obj.Position.Z) <= 0.05f)
-            //            {
-            //                MainChar.ReceiveDamage(((Enemy)obj).Strength);                            
-            //                return new List<object>(){ true,obj.Position };
-            //            }
-            //        }   
-            //        if(obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
-            //        {
-            //            return new List<object>() { true, obj.Position };
-            //        }
-            //    }
-            //    return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
-            //}
-            //else
-            //{
-            //    return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
-            //}
             if (MainChar != null)
             {
                 UpdateCurrentTime();
@@ -137,9 +130,21 @@ namespace CC_X.Model
             else { return -1; }
         }
         //Calculates player's experience
-        public void CalcExperience(int points)
+        public void CalcExperience()
         {
-            throw new NotImplementedException();
+            int QualTime = 0;
+            bool currLevelPass = false;
+            if (CurrentLevel == Level.One) { currLevelPass = Level1Complete; QualTime = Level1QualTime; }
+            if (CurrentLevel == Level.Two) { currLevelPass = Level2Complete; QualTime = Level2QualTime; }
+            if (CurrentLevel == Level.Three) { currLevelPass = Level3Complete; QualTime = Level3QualTime; }
+            if (LastLevelTime != null)
+            {
+                if(CurrentTime <= QualTime && MainChar.IsDead == false && currLevelPass == false)
+                {                   
+                    int experience = (int)(Math.Round((double)((QualTime - CurrentTime)/10), 0)*1000 + 1000);
+                    MainChar.Experience += experience;
+                }
+            }
         }
 
         public void CalcPoints(Level level, Difficulty difficulty, int time)
@@ -269,13 +274,13 @@ namespace CC_X.Model
                 string TempString = temp[i];
                 if (TempString[0] == '+')
                 {
-                    var tempEnemy = new Enemy();
-                    tempEnemy.DeSerialize(TempString);
+                    TempString = TempString.Substring(1);
+                    foe.DeSerialize(TempString);
                 }
                 else if (TempString[0] == '-')
                 {
-                    Nature.NatureType tempType = new Nature.NatureType();
-                    tempType = Nature.NatureType.Plane;
+                    TempString = TempString.Substring(1);
+                    Nature.NatureType tempType = Nature.NatureType.Plane;
                     Vector3 num = new Vector3(0, 0, 0);
                     var tempNature = new Nature(tempType, num);
                     tempNature.DeSerialize(TempString);

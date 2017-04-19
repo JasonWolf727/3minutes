@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Urho;
 
 namespace CC_X.Model
 {
@@ -13,10 +14,8 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_zombieMainChar_NoCollision()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 2, 1);
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(5, 4, 1);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 2, 1));
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(5, 4, 1));
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
             
@@ -28,10 +27,8 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_zombieMainCharClosePos_Collision()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 2, 3);
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.96f, 4, 3);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 2, 3));
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(0.96f, 4, 3));
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
 
@@ -43,10 +40,8 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_zombieMainCharEqualPosX_Collision()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 2, 8);
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(1, 4, 8);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 2, 8));
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(1, 4, 8));
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
             
@@ -58,10 +53,8 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_zombieMainCharEqualPosY_Collision()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 4, 8);
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(1.05f, 4, 8);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 4, 8));
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(1.05f, 4, 8));
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
             
@@ -72,12 +65,10 @@ namespace CC_X.Model
 
         [TestMethod]
         public void DetectCollision_AssessDamage_DamageTaken()
-        {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 4, 8);
+        {            
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 4, 8));
             zombie.Strength = 20;
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.96f, 4, 8);
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(0.96f, 4, 8));
             MainChar.Health = 100;
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
@@ -91,11 +82,9 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_AssessDamage_NoDamageTaken()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 4, 8);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 4, 8));
             zombie.Strength = 20;
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(3, 2, 8);
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(3, 2, 8));
             MainChar.Health = 100;
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
@@ -110,11 +99,9 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_AssessDamageClosePos_DamageTaken()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 4, 8);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 4, 8));
             zombie.Strength = 20;
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.96f, 3.95f, 8);
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(0.96f, 3.95f, 8));
             MainChar.Health = 100;
             GameController game = new GameController(Difficulty.Easy);
             game.MainChar = MainChar;
@@ -128,11 +115,9 @@ namespace CC_X.Model
         [TestMethod]
         public void DetectCollision_AssessDamageAndDeath_NoException()
         {
-            Enemy zombie = new Enemy();
-            zombie.Position = new Urho.Vector3(1, 4, 8);
+            Enemy zombie = new Enemy(new Urho.Vector3(1, 4, 8));
             zombie.Strength = 20;
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.96f, 4, 8);
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(0.96f, 4, 8));
             MainChar.Health = 100;
 
             GameController game = new GameController(Difficulty.Easy);
@@ -168,8 +153,7 @@ namespace CC_X.Model
         [TestMethod]
         public void UpdatePos_MainChar_NoException()
         {
-            MainCharacter MainChar = new MainCharacter();
-            MainChar.Position = new Urho.Vector3(0.95f, 3.95f, 8);
+            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(0.95f, 3.95f, 8));
             Urho.Vector3 pos = new Urho.Vector3(1, 2, 3);
             MainChar.UpdatePos(pos);
 
@@ -187,8 +171,7 @@ namespace CC_X.Model
         [TestMethod]
         public void UpdatePos_Enemies_NoException()
         {
-            Enemy enemy = new Enemy();
-            enemy.Position = new Urho.Vector3(0.95f, 3.95f, 8);
+            Enemy enemy = new Enemy(new Urho.Vector3(0.95f, 3.95f, 8));
             Urho.Vector3 pos = new Urho.Vector3(1, 2, 3);
             enemy.UpdatePos(pos);
 

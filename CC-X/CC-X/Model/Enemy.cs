@@ -20,8 +20,9 @@ namespace CC_X.Model
         public CarDir CarMovingDirection { get; set; }
         public float CarSpeed { get; set; }
         public Rectangle persnlBubble;
-        public Enemy()
+        public Enemy(Vector3 position)
         {
+            Position = position;
             persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
         }
         //If not dead, sets Enemies.Position to position
@@ -33,7 +34,7 @@ namespace CC_X.Model
         // Store information concerning enemies
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}", this.Position, this.ID, this.ObjType, this.Strength, this.Health, this.IsDead);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}", this.Position.X, this.Position.Y, this.Position.Z, this.ID, this.ObjType, this.Strength, this.Health, this.IsDead, this.persnlBubble.X, this.persnlBubble.Y, this.persnlBubble.Width, this.persnlBubble.Height, this.CarMovingDirection);
             return info;
         }
 
@@ -41,43 +42,53 @@ namespace CC_X.Model
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
-            string[] tempnums = info[0].Split(',');
-            int[] nums = new int[3];
-            for (int i = 0; i < 3; ++i)
-                nums[i] = Convert.ToInt32(tempnums[i]);
-            this.Position = new Vector3(nums[0], nums[1], nums[2]);
-            this.ID = Convert.ToUInt32(info[1]);
-            string tempChar = info[3].ToString();
+            this.Position = new Vector3(Convert.ToInt32(info[0]), Convert.ToInt32(info[1]), Convert.ToInt32(info[2]));
+            this.ID = Convert.ToUInt32(info[3]);
+            string tempChar = info[4].ToString();
             switch (tempChar)
             {
-                case "Zombie":
+                case " Zombie":
                     this.ObjType = EnemyType.Zombie;
                     break;
-                case "Car":
+                case " Car":
                     this.ObjType = EnemyType.Car;
                     break;
-                case "None":
+                case " None":
                     this.ObjType = EnemyType.None;
                     break;
                 default:
                     this.ObjType = EnemyType.None;
                     break;
             }
-            this.Strength = Convert.ToInt32(info[3]);
-            this.Health = Convert.ToInt32(info[4]);
-            string tempBool = info[5];
+            this.Strength = Convert.ToInt32(info[5]);
+            this.Health = Convert.ToInt32(info[6]);
+            string tempBool = info[7];
             switch (tempBool)
             {
-                case "true":
+                case " true":
                     this.IsDead = true;
                     break;
-                case "false":
+                case " false":
                     this.IsDead = false;
                     break;
                 default:
                     this.IsDead = false;
                     break;
             }
-        }        
+            this.persnlBubble = new Rectangle(Convert.ToInt32(info[8]), Convert.ToInt32(info[9]), Convert.ToInt32(info[10]), Convert.ToInt32(info[11]));
+            string tempDir = info[12].ToLower();
+            switch (tempDir)
+            {
+                case " left":
+                    this.CarMovingDirection = CarDir.Left;
+                    break;
+                case " right":
+                    this.CarMovingDirection = CarDir.Right;
+                    break;
+                default:
+                    this.CarMovingDirection = CarDir.Left;
+                    break;
+            }
+        }
     }
 }
