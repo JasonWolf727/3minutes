@@ -274,13 +274,13 @@ namespace CC_X.Model
                 string TempString = temp[i];
                 if (TempString[0] == '+')
                 {
-                    var tempEnemy = new Enemy(new Vector3(0,0,0));
-                    tempEnemy.DeSerialize(TempString);
+                    TempString = TempString.Substring(1);
+                    foe.DeSerialize(TempString);
                 }
                 else if (TempString[0] == '-')
                 {
-                    Nature.NatureType tempType = new Nature.NatureType();
-                    tempType = Nature.NatureType.Plane;
+                    TempString = TempString.Substring(1);
+                    Nature.NatureType tempType = Nature.NatureType.Plane;
                     Vector3 num = new Vector3(0, 0, 0);
                     var tempNature = new Nature(tempType, num);
                     tempNature.DeSerialize(TempString);

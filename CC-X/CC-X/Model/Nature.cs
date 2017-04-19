@@ -12,12 +12,12 @@ namespace CC_X.Model
     {
         public enum NatureType { Plane, Tree, Rock, Grass, None }
         public NatureType SelectedNatureType { get; set; }
-        public Nature(NatureType natureObj, Vector3 position) { } 
-                       
+        public Nature(NatureType natureObj, Vector3 position) { }
+
         // Store information concerning the environment
         public string Serialize()
         {
-            string info = string.Format("{0}, {1}, {2}", this.Position, this.ID, this.SelectedNatureType);
+            string info = string.Format("{0}, {1}, {2}, {3}, {4}", this.Position.X, this.Position.Y, this.Position.Z, this.ID, this.SelectedNatureType);
             return info;
         }
 
@@ -26,28 +26,24 @@ namespace CC_X.Model
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
-            string[] tempnums = info[0].Split(',');
-            int[] nums = new int[3];
-            for (int i = 0; i < 3; ++i)
-                nums[i] = Convert.ToInt32(tempnums[i]);
-            this.Position = new Vector3(nums[0], nums[1], nums[2]);
-            this.ID = Convert.ToUInt32(info[1]);
-            string tempType = info[2];
+            this.Position = new Vector3(Convert.ToInt32(info[0]), Convert.ToInt32(info[1]), Convert.ToInt32(info[2]));
+            this.ID = Convert.ToUInt32(info[3]);
+            string tempType = info[4];
             switch (tempType)
             {
-                case "Plane":
+                case " Plane":
                     this.SelectedNatureType = NatureType.Plane;
                     break;
-                case "Tree":
+                case " Tree":
                     this.SelectedNatureType = NatureType.Tree;
                     break;
-                case "Rock":
+                case " Rock":
                     this.SelectedNatureType = NatureType.Rock;
                     break;
-                case "Grass":
+                case " Grass":
                     this.SelectedNatureType = NatureType.Grass;
                     break;
-                case "None":
+                case " None":
                     this.SelectedNatureType = NatureType.None;
                     break;
                 default:
