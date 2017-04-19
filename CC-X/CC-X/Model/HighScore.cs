@@ -63,6 +63,30 @@ namespace CC_X.Model
                     }
 
                 }
+                //sort collectionScoreObj
+                for (int secondScore = 1; secondScore < collectionScoreObj.Count(); secondScore++)
+                {
+                    for (int repeat = 0; repeat < 5; repeat++)
+                    {
+                        if (collectionScoreObj[secondScore].PlayerScore > collectionScoreObj[secondScore - 1].PlayerScore)
+                        {
+                            Score storedScoreFirst = collectionScoreObj[secondScore];
+                            collectionScoreObj[secondScore] = collectionScoreObj[secondScore + 1];
+                            collectionScoreObj[secondScore + 1] = storedScoreFirst;
+                        }
+                    }
+                }
+
+                //for (int thisItem = 0; thisItem < collectionScoreObj.Count() - 1; thisItem++)
+                //{
+                //    for (int otherItem = 0; otherItem < collectionScoreObj.Count(); otherItem++)
+                //    {
+                //        if (collectionScoreObj[thisItem].PlayerScore > collectionScoreObj[otherItem].PlayerScore)
+                //        {
+                //            collectionScoreObj.Reverse(thisItem, 2);
+                //        }
+                //    }
+                //}
             }
             catch(FileNotFoundException e)
             {
