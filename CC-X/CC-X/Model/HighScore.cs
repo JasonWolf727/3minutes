@@ -19,14 +19,20 @@ namespace CC_X.Model
         //player_name " " score
         public void WriteToFile()
         {
+            if (File.Exists(@"C:highScore.txt"))   //How to delete a file referenced StackOverflow 
+                                                   //http://stackoverflow.com/questions/6391711/how-to-delete-a-file-after-checking-whether-it-exists
+            {
+                File.Delete(@"C:highScore.txt");
+            }
             using (StreamWriter writer = new StreamWriter(highScoreFile))
             {
-                string dataToWrite = "Default 0" + Environment.NewLine;
+                string dataToWrite;
                 for (int i = 0; i < collectionScoreObj.Count; i++)
                 {
-                    dataToWrite = dataToWrite + collectionScoreObj[i].ToString() + Environment.NewLine;   
+                    dataToWrite = collectionScoreObj[i].ToString();
+                    writer.WriteLine(dataToWrite);
                 }
-                writer.WriteLine(dataToWrite);
+                
             }
 
         }
@@ -90,6 +96,10 @@ namespace CC_X.Model
                         collectionScoreObj.RemoveAt(collectionScoreObj.Count() - 1);
                     }
                     
+                }
+                else
+                {
+                    collectionScoreObj.Add(newScoreData);
                 }
             }
             else
