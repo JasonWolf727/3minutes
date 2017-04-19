@@ -53,6 +53,7 @@ namespace CC_X
         Button level1Btn;
         Button level2Btn;
         Button level3Btn;
+        Button easyBtn;
 
         Text menuBtnText;
         Text helpBtnText;
@@ -84,10 +85,11 @@ namespace CC_X
         Text level2Txt;
         Text level3Txt;
 
+
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
-        LineEdit charName;
+        LineEdit enterCharName;
 
         Timer timer;
         Dispatcher Dispatcher = Dispatcher.CurrentDispatcher;
@@ -118,10 +120,10 @@ namespace CC_X
         public int CurrentTime { get; set; }
         public int LastLevelTime { get; set; }
         public uint LightID { get; set; }
-        public int SelectedChar { get; set; }       
+        public int SelectedChar { get; set; }
 
         //Create an instance of GameController
-        GameController game = new GameController(Difficulty.Easy); //Temp difficulty
+        GameController game = new GameController(Difficulty.Easy); //Temporary Difficulty
 
         //Store scene nodes, but keep main character separate
         public Dictionary<int, Node> NodesInScene;
@@ -149,7 +151,7 @@ namespace CC_X
             uiRoot.SetStyleAuto(style);
 
             //Setup the menu
-            SetupMenu();
+            SetupWindows();
 
             //Add buttons to main menu
             SetupButtons();
@@ -230,7 +232,7 @@ namespace CC_X
             CurrentTime = timeTotal;
             game.CurrentTime = timeTotal;
         }
-        protected void SetupMenu()
+        protected void SetupWindows()
         {
             //Setup main menu/title screen
             menu = uiRoot.CreateWindow();
@@ -280,6 +282,27 @@ namespace CC_X
             help.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             help.Opacity = 0.85f;
             help.Visible = false;
+
+            //Setup Name Char Window
+            giveCharName = uiRoot.CreateWindow("LocationWindow", 8);
+            giveCharName.SetStyleAuto(null);
+            giveCharName.SetMinSize(300, 165);
+            giveCharName.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            giveCharName.Opacity = 0.85f;
+            giveCharName.Visible = false;
+
+            submitCharNameText = giveCharName.CreateText();
+            submitCharNameText.SetFont(font, 18);
+            submitCharNameText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
+            submitCharNameText.Value = "\r\r\r\rEnter a name: ";            
+
+            //Add text input to Name Main Char window
+            enterCharName = giveCharName.CreateLineEdit("EnterCharName", 2);
+
+            enterCharName.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            enterCharName.SetMinSize(280, 30);
+            enterCharName.SetMaxSize(280, 30);
+            enterCharName.SetStyleAuto(null);            
 
             //Add Help message
             helpMsg = help.CreateText();
@@ -363,6 +386,14 @@ namespace CC_X
             aboutBtn.SetStyleAuto(null);
             aboutBtn.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Bottom);
 
+            //Add set button to Name Main Char window
+            submitCharName = giveCharName.CreateButton("SubmitCharNameBtn", 1);
+            submitCharName.SetStyleAuto(null);
+            submitCharName.SetMinSize(100, 30);
+            submitCharName.SetMaxSize(100, 30);
+            submitCharName.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            submitCharName.SubscribeToReleased(SubmitCharNameClick);            
+
             level1Btn = gameOverWind.CreateButton("Level1Btn", 1);
             level1Btn.SetMinSize(230, 40);
             level1Btn.SetStyleAuto(null);
@@ -379,6 +410,24 @@ namespace CC_X
             level3Btn.SetStyleAuto(null);
             level3Btn.Position = new IntVector2(35, 340);
             level3Btn.Visible = false;
+
+            easy = menu.CreateButton("EasyBtn", 12);
+            easy.SetMinSize(230, 40);
+            easy.SetStyleAuto(null);
+            easy.Position = new IntVector2(35, 235);
+            easy.Visible = false;
+
+            medium = menu.CreateButton("EasyBtn", 12);
+            medium.SetMinSize(230, 40);
+            medium.SetStyleAuto(null);
+            medium.Position = new IntVector2(35, 280);
+            medium.Visible = false;
+
+            hard = menu.CreateButton("EasyBtn", 12);
+            hard.SetMinSize(230, 40);
+            hard.SetStyleAuto(null);
+            hard.Position = new IntVector2(35, 325);
+            hard.Visible = false;
 
             //Add text to the buttons
             newGameText = newGameBtn.CreateText("newGameText", 1);
@@ -411,6 +460,11 @@ namespace CC_X
             aboutBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             aboutBtnText.Value = "About";
 
+            Text nameText = submitCharName.CreateText("NameText", 1);
+            nameText.SetFont(font, 12);
+            nameText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            nameText.Value = "Submit";
+
             level1Txt = level1Btn.CreateText("aboutBtnText", 1);
             level1Txt.SetFont(font, 16);
             level1Txt.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
@@ -426,6 +480,20 @@ namespace CC_X
             level3Txt.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             level3Txt.Value = "Level 3";
 
+            easyText = easy.CreateText("EasyText", 1);
+            easyText.SetFont(font, 16);
+            easyText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            easyText.Value = "Easy";
+
+            mediumText = medium.CreateText("MediumText", 1);
+            mediumText.SetFont(font, 16);
+            mediumText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            mediumText.Value = "Medium";
+
+            hardText = hard.CreateText("HardText", 1);
+            hardText.SetFont(font, 16);
+            hardText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            hardText.Value = "Hard";
 
             //Subscribe buttons to event handlers
             newGameBtn.SubscribeToReleased(NewGameClick);
@@ -433,10 +501,14 @@ namespace CC_X
             exitBtn.SubscribeToReleased(_ => Exit());
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
+            submitCharName.SubscribeToReleased(SubmitCharNameClick);
             hallOfFameBtn.SubscribeToReleased(HallOfFameClick);
             level1Btn.SubscribeToReleased(LoadLevel1);
             level2Btn.SubscribeToReleased(LoadLevel2);
             level3Btn.SubscribeToReleased(LoadLevel3);
+            easy.SubscribeToReleased(EasyClick);
+            medium.SubscribeToReleased(MediumClick);
+            hard.SubscribeToReleased(HardClick);
         }
 
         protected void SetupDeveloperMode()
@@ -507,8 +579,8 @@ namespace CC_X
 
         protected override void OnUpdate(float timeStep)
         {
-            base.OnUpdate(timeStep);                        
-            if (Input.GetKeyPress(Key.M))
+            base.OnUpdate(timeStep);
+            if (Input.GetKeyPress(Key.M) && (menu.Visible == true | timeTotal > 2))
             {
                 DeveloperMode = !DeveloperMode;
                 coordinates.Visible = !coordinates.Visible;
@@ -621,7 +693,7 @@ namespace CC_X
                 GameStart = false;
                 UpdateLastLevelTime();
                 ResetTime();
-                gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus() + "\nTotal Experience: " + game.MainChar.Experience;
+                gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nUser Name: " + game.MainCharName + "\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus() + "\nTotal Experience: " + game.MainChar.Experience;
                 LevelAdvanceAssess();
                 gameOverWind.Visible = true;                
 
@@ -696,77 +768,16 @@ namespace CC_X
         //Event handler for new game button
         void NewGameClick(ReleasedEventArgs args)
         {
-            menu.Visible = false;
-            
-            //Set up Character selection
-            charOptn1 = uiRoot.CreateButton("Select1",10);
-            charOptn1.SetMinSize(100, 30);
-            charOptn1.SetStyleAuto(null);
-            charOptn1.SetAlignment(HorizontalAlignment.Left,VerticalAlignment.Center);
-            charOptn1.SubscribeToReleased(CharOptn1Click);
+            newGameBtn.Visible = false;
+            loadGameBtn.Visible = false;
+            hallOfFameBtn.Visible = false;
+            aboutBtn.Visible = false;
+            helpBtn.Visible = false;
+            exitBtn.Visible = false;
 
-            charOptn1Text = charOptn1.CreateText();
-            charOptn1Text.SetFont(font, 16);
-            charOptn1Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            charOptn1Text.Value = "Select";
-
-            charOptn2 = uiRoot.CreateButton("Select2", 11);
-            charOptn2.SetMinSize(100, 30);
-            charOptn2.SetStyleAuto(null);
-            charOptn2.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            charOptn2.SubscribeToReleased(CharOptn2Click);
-
-            charOptn2Text = charOptn2.CreateText();
-            charOptn2Text.SetFont(font, 16);
-            charOptn2Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            charOptn2Text.Value = "Select";
-
-            charOptn3 = uiRoot.CreateButton("Select3", 12);
-            charOptn3.SetMinSize(100, 30);
-            charOptn3.SetStyleAuto(null);
-            charOptn3.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Center);
-            charOptn3.SubscribeToReleased(CharOptn3Click);
-
-            charOptn3Text = charOptn3.CreateText();
-            charOptn3Text.SetFont(font, 16);
-            charOptn3Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-            charOptn3Text.Value = "Select";
-
-            //Display characters to choose from
-            //Swat
-            swat = Scene.CreateChild("Swat" + numNodes);
-            swat.Position = new Vector3(74.20757f, -0.50523f, 1.62f);
-
-            var component2 = swat.CreateComponent<AnimatedModel>();
-            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
-            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
-            swat.CreateComponent<AnimationController>();
-            swat.SetScale(0.2f);
-            PlayAnimation(swat, "Swat/Swat_Idle.ani");
-
-            //Ninja
-            ninja = Scene.CreateChild("Ninja" + numNodes);
-            ninja.Position = new Vector3(75, -0.50523f, 1.62f);
-            ninja.Yaw(180, TransformSpace.Local);
-
-            var component3 = ninja.CreateComponent<AnimatedModel>();
-            component3.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
-            component3.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
-            ninja.CreateComponent<AnimationController>();
-            ninja.SetScale(0.2f);
-            PlayAnimation(ninja, "NinjaSnowWar/Ninja_Idle1.ani");
-
-            //Mutant
-            mutant = Scene.CreateChild("Mutant" + numNodes);
-            mutant.Position = new Vector3(75.79312f, -0.50523f, 1.62f);
-
-            var component4 = mutant.CreateComponent<AnimatedModel>();
-            component4.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
-            component4.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
-            mutant.CreateComponent<AnimationController>();
-            mutant.SetScale(0.2f);
-            PlayAnimation(mutant, "Mutant/Mutant_Idle1.ani");
+            easy.Visible = true;
+            medium.Visible = true;
+            hard.Visible = true;
         }
         void LoadLevel1(ReleasedEventArgs args)
         {
@@ -951,25 +962,146 @@ namespace CC_X
             locWindow.Visible = false;
             MoveCamera = true;
         }
+        public void SetUpCharSelection()
+        {
+            menu.Visible = false;
+
+            //Set up Character selection
+            charOptn1 = uiRoot.CreateButton("Select1", 10);
+            charOptn1.SetMinSize(100, 30);
+            charOptn1.SetStyleAuto(null);
+            charOptn1.SetAlignment(HorizontalAlignment.Left, VerticalAlignment.Center);
+            charOptn1.SubscribeToReleased(CharOptn1Click);
+
+            charOptn1Text = charOptn1.CreateText();
+            charOptn1Text.SetFont(font, 16);
+            charOptn1Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn1Text.Value = "Select";
+
+            charOptn2 = uiRoot.CreateButton("Select2", 11);
+            charOptn2.SetMinSize(100, 30);
+            charOptn2.SetStyleAuto(null);
+            charOptn2.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn2.SubscribeToReleased(CharOptn2Click);
+
+            charOptn2Text = charOptn2.CreateText();
+            charOptn2Text.SetFont(font, 16);
+            charOptn2Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn2Text.Value = "Select";
+
+            charOptn3 = uiRoot.CreateButton("Select3", 12);
+            charOptn3.SetMinSize(100, 30);
+            charOptn3.SetStyleAuto(null);
+            charOptn3.SetAlignment(HorizontalAlignment.Right, VerticalAlignment.Center);
+            charOptn3.SubscribeToReleased(CharOptn3Click);
+
+            charOptn3Text = charOptn3.CreateText();
+            charOptn3Text.SetFont(font, 16);
+            charOptn3Text.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            charOptn3Text.Value = "Select";
+
+            //Display characters to choose from
+            //Swat
+            swat = Scene.CreateChild("Swat" + numNodes);
+            swat.Position = new Vector3(74.20757f, -0.50523f, 1.62f);
+
+            var component2 = swat.CreateComponent<AnimatedModel>();
+            component2.Model = ResourceCache.GetModel("Models/Swat/Swat.mdl");
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_body1.xml"));
+            component2.SetMaterial(ResourceCache.GetMaterial("Materials/Soldier_head6.xml"));
+            swat.CreateComponent<AnimationController>();
+            swat.SetScale(0.2f);
+            PlayAnimation(swat, "Swat/Swat_Idle.ani");
+
+            //Ninja
+            ninja = Scene.CreateChild("Ninja" + numNodes);
+            ninja.Position = new Vector3(75, -0.50523f, 1.62f);
+            ninja.Yaw(180, TransformSpace.Local);
+
+            var component3 = ninja.CreateComponent<AnimatedModel>();
+            component3.Model = ResourceCache.GetModel("Models/NinjaSnowWar/Ninja.mdl");
+            component3.SetMaterial(ResourceCache.GetMaterial("Materials/Ninja.xml"));
+            ninja.CreateComponent<AnimationController>();
+            ninja.SetScale(0.2f);
+            PlayAnimation(ninja, "NinjaSnowWar/Ninja_Idle1.ani");
+
+            //Mutant
+            mutant = Scene.CreateChild("Mutant" + numNodes);
+            mutant.Position = new Vector3(75.79312f, -0.50523f, 1.62f);
+
+            var component4 = mutant.CreateComponent<AnimatedModel>();
+            component4.Model = ResourceCache.GetModel("Models/Mutant/Mutant.mdl");
+            component4.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            mutant.CreateComponent<AnimationController>();
+            mutant.SetScale(0.2f);
+            PlayAnimation(mutant, "Mutant/Mutant_Idle1.ani");
+        }
         //Event handler for easy difficulty button
         void EasyClick(ReleasedEventArgs args)
         {
+            game.DifficutlySelected = Difficulty.Easy;
+            menu.Visible = false;
 
+            newGameBtn.Visible = true;
+            loadGameBtn.Visible = true;
+            hallOfFameBtn.Visible = true;
+            aboutBtn.Visible = true;
+            helpBtn.Visible = true;
+            exitBtn.Visible = true;
+
+            easy.Visible = false;
+            medium.Visible = false;
+            hard.Visible = false;
+
+
+            giveCharName.Visible = true;
         }
         //Event handler for medium difficulty button
         void MediumClick(ReleasedEventArgs args)
         {
+            game.DifficutlySelected = Difficulty.Medium;
+            menu.Visible = false;
 
+            newGameBtn.Visible = true;
+            loadGameBtn.Visible = true;
+            hallOfFameBtn.Visible = true;
+            aboutBtn.Visible = true;
+            helpBtn.Visible = true;
+            exitBtn.Visible = true;
+
+            easy.Visible = false;
+            medium.Visible = false;
+            hard.Visible = false;
+
+            giveCharName.Visible = true;
         }
         //Event handler for hard difficulty button
         void HardClick(ReleasedEventArgs args)
         {
+            game.DifficutlySelected = Difficulty.Hard;
+            menu.Visible = false;
 
+            newGameBtn.Visible = true;
+            loadGameBtn.Visible = true;
+            hallOfFameBtn.Visible = true;
+            aboutBtn.Visible = true;
+            helpBtn.Visible = true;
+            exitBtn.Visible = true;
+
+            easy.Visible = false;
+            medium.Visible = false;
+            hard.Visible = false;
+
+            giveCharName.Visible = true;
         }
         //Event handler for submitCharName button
         void SubmitCharNameClick(ReleasedEventArgs args)
         {
+            giveCharName.Visible = false;
+            string name = enterCharName.Text;
+            game.MainCharName = name;
 
+            SetUpCharSelection();
         }
         //Event handler for cheat mode button
         void CheatModeClick(ReleasedEventArgs args)
