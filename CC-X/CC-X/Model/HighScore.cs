@@ -63,30 +63,6 @@ namespace CC_X.Model
                     }
 
                 }
-                //sort collectionScoreObj
-                for (int secondScore = 1; secondScore < collectionScoreObj.Count(); secondScore++)
-                {
-                    for (int repeat = 0; repeat < 5; repeat++)
-                    {
-                        if (collectionScoreObj[secondScore].PlayerScore > collectionScoreObj[secondScore - 1].PlayerScore)
-                        {
-                            Score storedScoreFirst = collectionScoreObj[secondScore];
-                            collectionScoreObj[secondScore] = collectionScoreObj[secondScore + 1];
-                            collectionScoreObj[secondScore + 1] = storedScoreFirst;
-                        }
-                    }
-                }
-
-                //for (int thisItem = 0; thisItem < collectionScoreObj.Count() - 1; thisItem++)
-                //{
-                //    for (int otherItem = 0; otherItem < collectionScoreObj.Count(); otherItem++)
-                //    {
-                //        if (collectionScoreObj[thisItem].PlayerScore > collectionScoreObj[otherItem].PlayerScore)
-                //        {
-                //            collectionScoreObj.Reverse(thisItem, 2);
-                //        }
-                //    }
-                //}
             }
             catch(FileNotFoundException e)
             {
@@ -102,33 +78,11 @@ namespace CC_X.Model
             Score newScoreData = new Score();
             newScoreData.Name = playerName;
             newScoreData.PlayerScore = newScore;
-            if (collectionScoreObj.Count() != 0)
+            collectionScoreObj.Add(newScoreData);
+            collectionScoreObj.Sort((Score S1, Score S2) => { if (S1.PlayerScore < S2.PlayerScore) return -1; else if (S1.PlayerScore > S2.PlayerScore) return 1; else return 0; });
+            if (collectionScoreObj.Count() > 10)
             {
-                int loc = -1;
-                for (int i = 0; i < collectionScoreObj.Count(); i++)
-                {
-                    if (newScore < collectionScoreObj[i].PlayerScore)
-                    {
-                        loc = i;
-                    }
-                }
-                if (loc != -1)
-                {
-                    collectionScoreObj.Insert(loc, newScoreData);
-                    if (collectionScoreObj.Count() > 10)
-                    {
-                        collectionScoreObj.RemoveAt(collectionScoreObj.Count() - 1);
-                    }
-                    
-                }
-                else
-                {
-                    collectionScoreObj.Add(newScoreData);
-                }
-            }
-            else
-            {
-                collectionScoreObj.Add(newScoreData);
+                collectionScoreObj.RemoveAt(collectionScoreObj.Count() - 1);
             }
             WriteToFile();       
             
