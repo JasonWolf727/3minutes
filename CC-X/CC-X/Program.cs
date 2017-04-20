@@ -1748,6 +1748,78 @@ namespace CC_X
 
             }
         }
+
+        //Create Level 3 
+        //Create ground level 3
+        public void CreateGroundLevel3()
+        {
+            ++numNodes;
+            Node node = Scene.CreateChild("Plane" + numNodes);
+
+            var component2 = node.CreateComponent<Urho.Shapes.Plane>();
+            component2.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+
+            //node.Pitch(-20,TransformSpace.Local);
+
+            for (int row = 0; row < 50; ++row)
+            {
+                var node2 = node.CreateChild("Plane" + numNodes);
+                var component3 = node2.CreateComponent<Urho.Shapes.Plane>();
+                if (row != 34)
+                {
+                    component3.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                }
+                //Road
+                else
+                {
+                    component3.SetMaterial(Material.FromImage("Textures/RoadDry.jpg"));
+                    node2.Position = new Vector3(node.Position.X, node.Position.Y, 1f * row);
+                    node2.Yaw(90, TransformSpace.Local);
+                }
+                Nature plane2 = new Nature(Nature.NatureType.Plane, node2.Position);
+                plane2.ID = node2.ID;
+                game.GameObjCollection[plane2.ID] = plane2;
+
+                for (int col = 0; col < 50; ++col)
+                {
+                    var node3 = node.CreateChild("Plane" + numNodes);
+                    //node2.Pitch(-20, TransformSpace.Local);
+                    var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
+                    if (row != 34 && (row != 41 | (col < 23 | col > 26)))
+                    {
+                        component4.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                    }
+
+                    else if (row == 41 && col >= 23 && col <= 26)
+                    {
+                        component4.Color = Color.White;
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                    }
+
+                    //Road
+                    else if (row == 34)
+                    {
+                        component4.SetMaterial(Material.FromImage("Textures/RoadDry.jpg"));
+                        node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
+                        node3.Yaw(90, TransformSpace.Local);
+                    }
+                    Nature plane3 = new Nature(Nature.NatureType.Plane, node3.Position);
+                    plane3.ID = node3.ID;
+                    game.GameObjCollection[plane3.ID] = plane3;
+                }
+            }
+
+            node.Position = new Vector3(-0.7f, -0.5f, 2);
+            node.SetScale(3f);
+
+            Nature plane = new Nature(Nature.NatureType.Plane, node.Position);
+            plane.ID = node.ID;
+            game.GameObjCollection[plane.ID] = plane;
+
+        }
+
         public void SetUpLevel1(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
