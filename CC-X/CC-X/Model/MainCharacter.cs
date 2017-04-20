@@ -19,11 +19,11 @@ namespace CC_X.Model
         public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
         public int Experience { get; set; }
         public int Points { get; set; }
-        public bool Invisible = false;
+        public bool Invinsible = false;
         public Rectangle persnlBubble;
         public MainCharacter(Vector3 position)
         {
-            Experience = 1;
+            Experience = 1000;
             Position = position;
             IsDead = false;
             Health = 100;
@@ -32,9 +32,9 @@ namespace CC_X.Model
         
         public void ReceiveDamage(int damagePow)
         {
-            if(!Invisible)
+            if(!Invinsible)
             {
-                Health = Health - damagePow / (Experience * (1 / 1000));
+                Health = Health - (damagePow / (Experience/1000));
             }
             if (Health <= 0)
             {

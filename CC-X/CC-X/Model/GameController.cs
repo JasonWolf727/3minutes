@@ -69,7 +69,7 @@ namespace CC_X.Model
         public void EnableCheat()
         {
             CheatModeEn = !CheatModeEn;
-            MainChar.Invisible = !MainChar.Invisible;
+            MainChar.Invinsible = !MainChar.Invinsible;
         }
 
         public bool PassLevel()
