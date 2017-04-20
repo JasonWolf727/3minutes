@@ -62,7 +62,6 @@ Known Issues:
 [Link to Beta Recording](https://youtu.be/n0qHjYO-3Fk)
 
 ## Expenses as of Beta Tag:
-Note: Johannes and Case may require updating.
 | Developer | Hours invested | Hours left | Link to Journal | 
 | ---------- | --------- | ---------- | ------ |
 | Case | 28.92 | 21.08 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
