@@ -1462,7 +1462,7 @@ namespace CC_X
             //Stores the node ID of the Audi body
             Car2ID = Convert.ToInt32(Audi.ID);
         }
-        public void CreateVolks(Vector3 position, float yaw = -90, Enemy.CarDir direction = Enemy.CarDir.Right, float speed = 20)
+        public void CreateVolks(Vector3 position, float yaw = -90, Enemy.CarDir direction = Enemy.CarDir.Right, float speed = 20, int strength = 100)
         {
             Node volks = Scene.CreateChild();
             volks.Rotation = new Quaternion(90, 0, 0);
@@ -1479,7 +1479,7 @@ namespace CC_X
             Enemy Volks = new Enemy(volks.Position);
             Volks.ObjType = Enemy.EnemyType.Car;
             Volks.ID = volks.ID;
-            Volks.Strength = 100;
+            Volks.Strength = strength;
             Volks.CarMovingDirection = direction;
             Volks.CarSpeed = speed;
             game.GameObjCollection[Volks.ID] = Volks;
@@ -1656,6 +1656,29 @@ namespace CC_X
             CreateVolks(new Vector3(129, -0.4327534f, 103.4266f), speed: 5);
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
+        }
+        public void CreateCarsLevel2()
+        {
+            Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);
+            Vector3 CloseLaneAudiInitialPlacement = new Vector3(74f, -0.4327534f, 103.4266f);
+            CreateVolks(FarLaneAudiInitialPlacement, 90, Enemy.CarDir.Left, strength: 200);
+            CreateVolks(CloseLaneAudiInitialPlacement, strength: 200);
+            CreateVolks(new Vector3(148, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 18, strength: 200);
+            CreateVolks(new Vector3(70, -0.4327534f, 103.4266f), speed: 18, strength: 200);
+            CreateVolks(new Vector3(28, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 5, strength: 200);
+            CreateVolks(new Vector3(129, -0.4327534f, 103.4266f), speed: 5, strength: 200);
+            CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10, strength: 200);
+            CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10, strength: 200);
+            //for (int i = 0; i < 10; ++i)
+            //{
+            //    CreateVolks(new Vector3(148, -0.4327534f, 104.3f - 6 * i), 90, Enemy.CarDir.Left, 18);
+            //    CreateVolks(new Vector3(70, -0.4327534f, 103.4266f - 6 * i), speed: 18);
+            //    CreateVolks(new Vector3(28, -0.4327534f, 104.3f - 6 * i), 90, Enemy.CarDir.Left, 5);
+            //    CreateVolks(new Vector3(129, -0.4327534f, 103.4266f - 6 * i), speed: 5);
+            //    CreateVolks(new Vector3(120, -0.4327534f, 104.3f - 6 * i), 90, Enemy.CarDir.Left, 10);
+            //    CreateVolks(new Vector3(55, -0.4327534f, 103.4266f - 6 * i), speed: 10);
+            //}
+
         }
         //Create Ground for first level
         public void CreateGroundLevel2()
@@ -1850,6 +1873,7 @@ namespace CC_X
 
             CreateGroundLevel2();
             CreateRocksLevel2();
+            CreateCarsLevel2();
 
             //Start timer
             timer.Start();
