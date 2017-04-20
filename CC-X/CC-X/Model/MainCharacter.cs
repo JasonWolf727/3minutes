@@ -23,7 +23,6 @@ namespace CC_X.Model
         public Rectangle persnlBubble;
         public MainCharacter(Vector3 position)
         {
-            Experience = 1000;
             Position = position;
             IsDead = false;
             Health = 100;
@@ -34,7 +33,7 @@ namespace CC_X.Model
         {
             if(!Invinsible)
             {
-                Health = Health - (damagePow / (Experience/1000));
+                Health = Health - (damagePow / ((Experience + 1000)/1000));
             }
             if (Health <= 0)
             {
