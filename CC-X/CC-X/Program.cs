@@ -815,7 +815,8 @@ namespace CC_X
         private void UpdateHealth()
         {
             game.DetectCollision();
-            health.Value = "Health: " + game.MainChar.Health.ToString();                        
+            if (game.MainChar.Health < 0) { health.Value = "Health: 0"; }
+            else { health.Value = "Health: " + game.MainChar.Health.ToString(); }
         }
                 
         //Event handler for new game button
@@ -869,9 +870,10 @@ namespace CC_X
             //        string path = Directory.GetCurrentDirectory();
             //    [GameControllerInstance].Save(path);
             //}
-            //loadGameWind.Visible = true;
             string filepath = "C:\\Users\\csant714\\Desktop\\3minutes\\CC-X\\CC-X\\Model\\LoadSaveTest.csv";
             //Console.WriteLine(filepath);
+
+            loadGameWind.Visible = true;
 
         }
         void SubmitFileClick(ReleasedEventArgs args)
