@@ -858,6 +858,8 @@ namespace CC_X
         {
             menu.Visible = false;
             loadGameWind.Visible = true;
+            string filepath = "C:\\Users\\csant714\\Desktop\\3minutes\\CC-X\\CC-X\\Model\\LoadSaveTest.csv";
+            //Console.WriteLine(filepath);
 
         }
         void SubmitFileClick(ReleasedEventArgs args)
