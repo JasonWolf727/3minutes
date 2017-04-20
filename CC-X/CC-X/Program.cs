@@ -697,7 +697,7 @@ namespace CC_X
                 gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nUser Name: " + game.MainCharName + "\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus() + "\nTotal Experience: " + game.MainChar.Experience;
                 LevelAdvanceAssess();
                 gameOverWind.Visible = true;
-                //HS.AddHighScore(  , LastLevelTime);              
+                HS.AddHighScore(game.MainCharName, LastLevelTime);              
 
             }
             else
