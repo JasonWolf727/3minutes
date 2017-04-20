@@ -32,14 +32,15 @@ namespace CC_X
         Window giveCharName;
         Window locWindow;
         Window gameOverWind;
+        Window loadGameWind;
 
         Button mainMenu;
         Button helpBtn;
         Button aboutBtn;
         Button hallOfFameBtn;
-        Button developerBtn;
         Button backBtn;
         Button exitBtn;
+        Button continueBtn;
         Button newGameBtn;
         Button loadGameBtn;
         Button charOptn1;
@@ -53,16 +54,17 @@ namespace CC_X
         Button level1Btn;
         Button level2Btn;
         Button level3Btn;
-        Button easyBtn;
+        Button SaveBtn;
+        Button LoadBtn;
 
         Text menuBtnText;
         Text helpBtnText;
         Text aboutBtnText;
         Text hallOfFameBtnText;
         Text hallOfFameMsg;
-        Text developerBtnText;
         Text backBtnText;
         Text exitBtnText;
+        Text continueBtnText;
         Text welcomeMsg;
         Text aboutMsg;
         Text helpMsg;
@@ -84,12 +86,15 @@ namespace CC_X
         Text level1Txt;
         Text level2Txt;
         Text level3Txt;
+        Text saveText;
+        Text loadBtnText;
 
 
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
         LineEdit enterCharName;
+        LineEdit enterFileName;
 
         Timer timer;
         Dispatcher Dispatcher = Dispatcher.CurrentDispatcher;
@@ -352,6 +357,14 @@ namespace CC_X
             menuBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             menuBtnText.Value = "Menu";
             mainMenu.SubscribeToReleased(EndLevelClick);
+
+            //Load game window
+            loadGameWind = uiRoot.CreateWindow();
+            loadGameWind.SetStyleAuto(null);
+            loadGameWind.SetMinSize(300, 600);
+            loadGameWind.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            loadGameWind.Opacity = 0.85f;
+            loadGameWind.Visible = false;
         }
 
         protected void SetupButtons()
@@ -370,12 +383,17 @@ namespace CC_X
             hallOfFameBtn = menu.CreateButton("HallOfFameBtn", 6);
             hallOfFameBtn.SetMinSize(230, 40);
             hallOfFameBtn.SetStyleAuto(null);
-            hallOfFameBtn.Position = new IntVector2(35, 325);
+            hallOfFameBtn.Position = new IntVector2(35, 325);            
+
+            continueBtn = menu.CreateButton("ExitBtn", 3);
+            continueBtn.SetMinSize(230, 40);
+            continueBtn.SetStyleAuto(null);
+            continueBtn.Position = new IntVector2(35, 370);
 
             exitBtn = menu.CreateButton("ExitBtn", 3);
             exitBtn.SetMinSize(230, 40);
             exitBtn.SetStyleAuto(null);
-            exitBtn.Position = new IntVector2(35, 370);
+            exitBtn.Position = new IntVector2(35, 415);
 
             helpBtn = menu.CreateButton("HelpBtn", 4);
             helpBtn.SetMinSize(100, 30);
@@ -399,6 +417,7 @@ namespace CC_X
             level1Btn.SetMinSize(230, 40);
             level1Btn.SetStyleAuto(null);
             level1Btn.Position = new IntVector2(35, 250);
+            level1Btn.Visible = false;
 
             level2Btn = gameOverWind.CreateButton("Level2Btn", 2);
             level2Btn.SetMinSize(230, 40);
@@ -430,6 +449,18 @@ namespace CC_X
             hard.Position = new IntVector2(35, 325);
             hard.Visible = false;
 
+            LoadBtn = loadGameWind.CreateButton("EasyBtn", 12);
+            LoadBtn.SetMinSize(100,30);
+            LoadBtn.SetStyleAuto(null);
+            LoadBtn.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
+
+            enterFileName = loadGameWind.CreateLineEdit("XSet", 2);
+
+            enterFileName.Position = new IntVector2(10, 535);
+            enterFileName.SetMinSize(280, 30);
+            enterFileName.SetMaxSize(280, 30);
+            enterFileName.SetStyleAuto(null);
+
             //Add text to the buttons
             newGameText = newGameBtn.CreateText("newGameText", 1);
             newGameText.SetFont(font, 16);
@@ -445,6 +476,11 @@ namespace CC_X
             hallOfFameBtnText.SetFont(font, 16);
             hallOfFameBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             hallOfFameBtnText.Value = "High Scores";
+
+            continueBtnText = continueBtn.CreateText("ContinueBtnText", 1);
+            continueBtnText.SetFont(font, 16);
+            continueBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            continueBtnText.Value = "Cont. Progress";
 
             exitBtnText = exitBtn.CreateText("exitBtnText", 1);
             exitBtnText.SetFont(font, 16);
@@ -496,9 +532,16 @@ namespace CC_X
             hardText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             hardText.Value = "Hard";
 
+            loadBtnText = LoadBtn.CreateText("LoadGAmeText", 1);
+            loadBtnText.SetFont(font, 12);
+            loadBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
+            loadBtnText.Value = "Load";
+
             //Subscribe buttons to event handlers
             newGameBtn.SubscribeToReleased(NewGameClick);
             loadGameBtn.SubscribeToReleased(LoadGameClick);
+            LoadBtn.SubscribeToReleased(SubmitFileClick);
+            continueBtn.SubscribeToReleased(ContinueClick);
             exitBtn.SubscribeToReleased(_ => Exit());
             helpBtn.SubscribeToReleased(HelpClick);
             aboutBtn.SubscribeToReleased(AboutClick);
@@ -685,6 +728,7 @@ namespace CC_X
             game.EndLevel();
             UpdateGameObjPos();
             MoveCars(timeStep);
+            level1Btn.Visible = true;
             if (game.MainChar.Health <= 0 |(game.GameOver && timeTotal > 10))
             {
                 if (game.MainChar.Health <= 0) PlayAnimation(MainChar, DeathAniFile);
@@ -776,6 +820,7 @@ namespace CC_X
             aboutBtn.Visible = false;
             helpBtn.Visible = false;
             exitBtn.Visible = false;
+            continueBtn.Visible = false;
 
             easy.Visible = true;
             medium.Visible = true;
@@ -804,7 +849,31 @@ namespace CC_X
         //Event handler for load game button
         void LoadGameClick(ReleasedEventArgs args)
         {
+            menu.Visible = false;
+            loadGameWind.Visible = true;
+        }
+        void SubmitFileClick(ReleasedEventArgs args)
+        {
+            loadGameWind.Visible = false;
+            menu.Visible = true;
+        }
+        void ContinueClick(ReleasedEventArgs args)
+        {
+            menu.Visible = false;
+            if(game.MainCharName != "")
+            {
+                string diff = "";
+                if(game.DifficutlySelected == Difficulty.Easy) { diff = "Easy"; }
+                else if (game.DifficutlySelected == Difficulty.Medium) { diff = "Medium"; }
+                else if (game.DifficutlySelected == Difficulty.Hard) { diff = "Hard"; }
+                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: " + game.MainChar.Experience + "\nDifficulty: " + diff;                
+            }
+            else
+            {
+                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: " + game.MainChar.Experience + "\nDifficulty: ";
 
+            }
+            gameOverWind.Visible = true;
         }
         //Event handler for main menu button
         void MenuClick(ReleasedEventArgs args)
@@ -1058,6 +1127,7 @@ namespace CC_X
             aboutBtn.Visible = true;
             helpBtn.Visible = true;
             exitBtn.Visible = true;
+            continueBtn.Visible = true;
 
             easy.Visible = false;
             medium.Visible = false;
@@ -1078,6 +1148,7 @@ namespace CC_X
             aboutBtn.Visible = true;
             helpBtn.Visible = true;
             exitBtn.Visible = true;
+            continueBtn.Visible = true;
 
             easy.Visible = false;
             medium.Visible = false;
@@ -1097,6 +1168,7 @@ namespace CC_X
             aboutBtn.Visible = true;
             helpBtn.Visible = true;
             exitBtn.Visible = true;
+            continueBtn.Visible = true;
 
             easy.Visible = false;
             medium.Visible = false;
