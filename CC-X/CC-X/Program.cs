@@ -122,6 +122,7 @@ namespace CC_X
 
         //Create an instance of GameController
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
+        HighScore HS = new HighScore();
 
         //Store scene nodes, but keep main character separate
         public Dictionary<int, Node> NodesInScene;
@@ -270,8 +271,8 @@ namespace CC_X
             //Add About message
             aboutMsg = about.CreateText();
             aboutMsg.SetFont(font, 18);
-            aboutMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
-            aboutMsg.Value = "About"; //\n This program was created by\n Joshua Case\n Michael Johannes\n Carlos Santana\n Please enjoy responsibly!\n";
+            aboutMsg.SetAlignment(HorizontalAlignment.Left, VerticalAlignment.Top);
+            aboutMsg.Value = "         About\n\n\n\n   This program was\n       created by\n\n     Joshua Case\n     Michael Johannes\n     Carlos Santana\n\n     March 14, 2017\n           to\n     April 24, 2017\n\n     Please enjoy\n     responsibly!\n \n\n    Models used by\n      permission\n";
 
             //Setup Help screen
             help = uiRoot.CreateWindow();
@@ -285,7 +286,7 @@ namespace CC_X
             helpMsg = help.CreateText();
             helpMsg.SetFont(font, 18);
             helpMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
-            helpMsg.Value = "Help\n";
+            helpMsg.Value = "      Help\n\n\n  Use the arrow\n  keys to move\n\n       /\\ \n       || \n   <=      =>\n       ||\n       \\/ \n\n  Click and move\n  the mouse to\n  pan the screen\n  left and right\n\n   ----------\n   |        |\n   | <    > |\n   |        |\n   ----------\n ";
 
             //Set up timer for game
             time = uiRoot.CreateText("Time", 13);
@@ -623,7 +624,8 @@ namespace CC_X
                 ResetTime();
                 gameOverText.Value = "Level " + game.GetLevelStatus() + "!\nYour time: " + LastLevelTime + " seconds\nQualifying time: " + game.GetQualTime() + "\nStatus: " + game.MainChar.GetStatus() + "\nTotal Experience: " + game.MainChar.Experience;
                 LevelAdvanceAssess();
-                gameOverWind.Visible = true;                
+                gameOverWind.Visible = true;
+                //HS.AddHighScore(  , LastLevelTime);              
 
             }
             else
@@ -854,6 +856,14 @@ namespace CC_X
             backBtnText.SetFont(font, 12);
             backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             backBtnText.Value = "Back";
+
+            string finalScoreMsg = "\n  High Scores\n Fastest Times\n" + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine;
+            List<string> scoresToDisplay = HS.GetHighScores();
+            for (int pos = 0; pos < scoresToDisplay.Count(); pos++)
+            {
+                finalScoreMsg += "   " + scoresToDisplay[pos].ToString() + Environment.NewLine;
+            }
+            hallOfFameMsg.Value = finalScoreMsg;
         }
         //Event handler for for back button
         void BackClick(ReleasedEventArgs args)
