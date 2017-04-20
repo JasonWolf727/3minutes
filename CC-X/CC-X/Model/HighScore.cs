@@ -31,11 +31,10 @@ namespace CC_X.Model
                 {
                     dataToWrite = collectionScoreObj[i].ToString();
                     writer.WriteLine(dataToWrite);
-                }
-                
-            }
+                } //for  
+            } //using
 
-        }
+        } //method
 
         //Read the data from "highScore.txt"
         //Add the data to a list containing all the highscores. 
@@ -85,7 +84,6 @@ namespace CC_X.Model
                 collectionScoreObj.RemoveAt(collectionScoreObj.Count() - 1);
             }
             WriteToFile();       
-            
         }
 
         //Returns the list of highscores
