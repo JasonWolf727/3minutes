@@ -29,6 +29,7 @@ namespace CC_X.Model
         public bool Level1Complete { get; set; }
         public bool Level2Complete { get; set; }
         public bool Level3Complete { get; set; }
+        public bool CheatModeEn = false;
 
 
         public Level CurrentLevel = Level.One;
@@ -63,6 +64,12 @@ namespace CC_X.Model
             {
                 return false;
             }
+        }
+
+        public void EnableCheat()
+        {
+            CheatModeEn = !CheatModeEn;
+            MainChar.Invisible = !MainChar.Invisible;
         }
 
         public bool PassLevel()
