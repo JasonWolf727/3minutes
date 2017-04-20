@@ -61,6 +61,8 @@ Known Issues:
 
 [Link to Beta Recording](https://youtu.be/n0qHjYO-3Fk)
 
+[Link to ReleaseCandidat](https://youtu.be/C0ve-RSEgY0)
+
 ## Expenses as of Beta Tag:
 | Developer | Hours invested | Hours left | Link to Journal | 
 | ---------- | --------- | ---------- | ------ |
