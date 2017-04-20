@@ -729,6 +729,13 @@ namespace CC_X
             UpdateGameObjPos();
             MoveCars(timeStep);
             level1Btn.Visible = true;
+
+            if(Input.GetKeyPress(Key.C)) { game.EnableCheat(); }
+
+            float speed;
+            if (game.CheatModeEn) { speed = 10; }
+            else { speed = 1; }
+
             if (game.MainChar.Health <= 0 |(game.GameOver && timeTotal > 10))
             {
                 if (game.MainChar.Health <= 0) PlayAnimation(MainChar, DeathAniFile);
@@ -747,10 +754,10 @@ namespace CC_X
             else
             {
                 List<object> collisionData = game.DetectCollision();
-                if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
-                else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
-                else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, LeftAniFile); }
-                else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitX * timeStep * 2, TransformSpace.World); PlayAnimation(MainChar, RightAniFile); }
+                if (Input.GetKeyDown(Key.Up) && MainChar.Position.Z <= 144 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z < MainChar.Position.Z)*/) { CameraNode.Translate(Vector3.UnitZ * timeStep * speed * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitZ * timeStep * speed * 2, TransformSpace.World); PlayAnimation(MainChar, ForwardAniFile); }
+                else if (Input.GetKeyDown(Key.Down) && MainChar.Position.Z >= 1.4 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).Z > MainChar.Position.Z)*/) { CameraNode.Translate(-Vector3.UnitZ * timeStep * speed * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitZ * timeStep * speed * 2, TransformSpace.World); PlayAnimation(MainChar, BackwardAniFile); }
+                else if (Input.GetKeyDown(Key.Left) && MainChar.Position.X >= 1.5f /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X > MainChar.Position.X)*/) { CameraNode.Translate(-Vector3.UnitX * timeStep * speed * 2, TransformSpace.World); MainChar.Translate(-Vector3.UnitX * timeStep * speed * 2, TransformSpace.World); PlayAnimation(MainChar, LeftAniFile); }
+                else if (Input.GetKeyDown(Key.Right) && MainChar.Position.X <= 148 /*&& (((bool)(collisionData[0])) != true | ((Vector3)(collisionData[1])).X < MainChar.Position.X)*/) { CameraNode.Translate(Vector3.UnitX * timeStep * speed * 2, TransformSpace.World); MainChar.Translate(Vector3.UnitX * timeStep * speed * 2, TransformSpace.World); PlayAnimation(MainChar, RightAniFile); }
                 else
                 {
                     PlayAnimation(MainChar, IdleAniFile);                    
@@ -866,11 +873,11 @@ namespace CC_X
                 if(game.DifficutlySelected == Difficulty.Easy) { diff = "Easy"; }
                 else if (game.DifficutlySelected == Difficulty.Medium) { diff = "Medium"; }
                 else if (game.DifficutlySelected == Difficulty.Hard) { diff = "Hard"; }
-                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: " + game.MainChar.Experience + "\nDifficulty: " + diff;                
+                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: 0" + game.MainChar.Experience + "\nDifficulty: " + diff;                
             }
             else
             {
-                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: " + game.MainChar.Experience + "\nDifficulty: ";
+                gameOverText.Value = "\nUser Name: " + game.MainCharName + "\nTotal Experience: 0\nDifficulty: ";
 
             }
             gameOverWind.Visible = true;

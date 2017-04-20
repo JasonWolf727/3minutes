@@ -22,6 +22,7 @@ namespace CC_X.Model
         public Rectangle persnlBubble;
         public Enemy(Vector3 position)
         {
+            Strength = 1;
             Position = position;
             persnlBubble = new Rectangle(Convert.ToInt32(Position.X), Convert.ToInt32(Position.Z), Convert.ToInt32(0.6), Convert.ToInt32(0.6));
         }
