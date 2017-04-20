@@ -858,6 +858,7 @@ namespace CC_X
         {
             menu.Visible = false;
             loadGameWind.Visible = true;
+
         }
         void SubmitFileClick(ReleasedEventArgs args)
         {
@@ -1793,7 +1794,7 @@ namespace CC_X
                     var node3 = node.CreateChild("Plane" + numNodes);
                     //node2.Pitch(-20, TransformSpace.Local);
                     var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
-                    if (row != 34 && (row != 41 | (col < 23 | col > 26)))
+                    if (row != 18 && row != 34 && (row != 41 | (col < 23 | col > 26)))
                     {
                         component4.SetMaterial(Material.FromImage("Textures/Soil_Cracked.jpg"));
                         node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
@@ -1806,7 +1807,7 @@ namespace CC_X
                     }
 
                     //Road
-                    else if (row == 34)
+                    else if (row == 34 | row == 18)
                     {
                         component4.SetMaterial(Material.FromImage("Textures/RoadDry.jpg"));
                         node3.Position = new Vector3(1f + col, node.Position.Y, 1f * row);
@@ -1857,6 +1858,7 @@ namespace CC_X
             gameOverWind.Visible = false;
             for (int i = 0; i < 6; ++i) { game.ResetLevel(); }
 
+            CreateGroundLevel3();
             //Start timer
             timer.Start();
         }
