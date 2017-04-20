@@ -857,7 +857,19 @@ namespace CC_X
         void LoadGameClick(ReleasedEventArgs args)
         {
             menu.Visible = false;
-            loadGameWind.Visible = true;
+            //LoadGame()
+            //{
+            //                string path = Directory.GetCurrentDirectory(); // returns the current working directory the game is in
+            //    [GameControllerInstance].Load(path); // will set the game’s current values to whatever is in the csv
+
+            //    }
+
+            //SaveGame()
+            //    {
+            //        string path = Directory.GetCurrentDirectory();
+            //    [GameControllerInstance].Save(path);
+            //}
+            //loadGameWind.Visible = true;
             string filepath = "C:\\Users\\csant714\\Desktop\\3minutes\\CC-X\\CC-X\\Model\\LoadSaveTest.csv";
             //Console.WriteLine(filepath);
 
