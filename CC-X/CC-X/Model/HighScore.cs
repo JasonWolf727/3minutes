@@ -31,7 +31,7 @@ namespace CC_X.Model
                 {
                     dataToWrite = collectionScoreObj[i].ToString();
                     writer.WriteLine(dataToWrite);
-                } //for
+                } //for  
             } //using
 
         } //method
