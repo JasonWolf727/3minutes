@@ -64,7 +64,7 @@ Known Issues:
 ## Expenses as of Beta Tag:
 Note: Johannes and Case may require updating.
 | Developer | Hours invested | Hours left | Link to Journal | 
-|----------|---------|----------|------|
+| ---------- | --------- | ---------- | ------ |
 | Case | 28.92 | 21.08 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
 | Johannes | 35.9 | 15.1 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
 | Santana | 18.5 | 31.5 | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
