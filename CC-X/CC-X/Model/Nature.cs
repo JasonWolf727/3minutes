@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File: Nature.cs
+ * Author: Michael Johannes
+ * Desc: Contains attributes for the surrounding environment
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +16,9 @@ namespace CC_X.Model
     //Class for harmless objects that populate the scenery
     class Nature : GameObj, Serializer
     {
-        public enum NatureType { Plane, Tree, Rock, Grass, None }
-        public NatureType SelectedNatureType { get; set; }
-        public Nature(NatureType natureObj, Vector3 position) { }
+        public enum NatureType { Plane, Tree, Rock, Grass, None } // Lists the possible entities for environment. This includes the ground the character runs on
+        public NatureType SelectedNatureType { get; set; } // Retrieves & sets the kind of nature selected
+        public Nature(NatureType natureObj, Vector3 position) { } // Empty instantiator.
 
         // Store information concerning the environment
         public string Serialize()
@@ -21,8 +27,7 @@ namespace CC_X.Model
             return info;
         }
 
-        // Load the environment
-        // NOT EDITED YET
+        // Load information concerning each piece of environment
         public void DeSerialize(string fileinfo)
         {
             string[] info = fileinfo.Split(',');
