@@ -138,18 +138,17 @@ namespace CC_X
         public string IdleAniFile { get; set; }
         public string DeathAniFile { get; set; }
 
-        // More GUI properties
-        public int timeTotal { get; set; }
-        public int seconds { get; set; }
-        public int secondsTen { get; set; }
-        public int minutes { get; set; }
-        public string TimeDisplay { get; set; }
-        public int CurrentTime { get; set; }
-        public int LastLevelTime { get; set; }
-        public uint LightID { get; set; }
-        public int SelectedChar { get; set; }
+        public int timeTotal { get; set; } // Total time elapsed
+        public int seconds { get; set; } // Retrieves and sets seconds
+        public int secondsTen { get; set; } // Retrieves and sets seconds by tens
+        public int minutes { get; set; } // Retrieves and sets minutes
+        public string TimeDisplay { get; set; } // Displays the time
+        public int CurrentTime { get; set; } // Updates the current time
+        public int LastLevelTime { get; set; } // Time completed of the previous level
+        public uint LightID { get; set; } // ID of the light node
+        public int SelectedChar { get; set; } // Retrieves the character the player has selected
 
-        //Create an instance of GameController
+        //Create an instance of GameController and high score
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
         HighScore HS = new HighScore();
 
@@ -158,8 +157,10 @@ namespace CC_X
         Node MainChar;
         int Car2ID;
 
+        // Some program stuff
         public Program(ApplicationOptions options) : base(options) { }
 
+        // Main starting program
         protected override void Start()
         {
             base.Start();
@@ -193,6 +194,7 @@ namespace CC_X
             //Turn off game controls
             GameStart = false;
         }
+
         //Initial lighting for game
         protected void SetupScene()
         {
@@ -218,6 +220,7 @@ namespace CC_X
             timer.Interval = 1000;
             timer.Elapsed += Elapsed_Interval;            
         }
+
         //Event handler for timer
         private void Elapsed_Interval(object sender, ElapsedEventArgs e)
         {
@@ -240,6 +243,7 @@ namespace CC_X
             }
             TimeDisplay = minutes + ":" + secondsTen + seconds;
         }
+
         //Resets time vars for gui and GameController
         public void ResetTime()
         {
@@ -250,18 +254,21 @@ namespace CC_X
             CurrentTime = 0;
             timer.Stop();
         }
+
         //Updates time for last level
         public void UpdateLastLevelTime()
         {
             LastLevelTime = timeTotal;
             game.LastLevelTime = LastLevelTime;
         }
+
         //Updates current time
         public void UpdateCurrentTime()
         {
             CurrentTime = timeTotal;
             game.CurrentTime = timeTotal;
         }
+
         //Setup windows for menu/start game
         protected void SetupWindows()
         {
@@ -391,6 +398,7 @@ namespace CC_X
             loadGameWind.Opacity = 0.85f;
             loadGameWind.Visible = false;
         }
+
         //Create buttons for gui menu/begin game
         protected void SetupButtons()
         {
@@ -579,6 +587,7 @@ namespace CC_X
             medium.SubscribeToReleased(MediumClick);
             hard.SubscribeToReleased(HardClick);
         }
+
         //Setup Developer Mode
         protected void SetupDeveloperMode()
         {
@@ -647,6 +656,7 @@ namespace CC_X
             zSet.Text = "Z: ";
         }
 
+        // Updates everything
         protected override void OnUpdate(float timeStep)
         {
             base.OnUpdate(timeStep);
