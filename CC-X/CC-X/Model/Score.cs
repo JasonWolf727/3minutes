@@ -14,6 +14,7 @@ namespace CC_X.Model
         //The value of the score to save
         public int PlayerScore { get; set; }
 
+        //Converts the contents of a Score Object into a string.
         public string ToString()
         {
             string toReturn = this.Name + " " + this.PlayerScore;

@@ -10,7 +10,10 @@ namespace CC_X.Model
     //Only the top 10 highscores will be saved.
     class HighScore
     {
+        //This is the name of the file that the highscores will be written to. 
         const string highScoreFile = "highScore.txt";
+
+        //Holds a list of Score Objects 
         public List<Score> collectionScoreObj = new List<Score>();
 
         //This method will write all of the high scores to the "highScore.txt" file. 
