@@ -25,11 +25,13 @@ namespace CC_X
     //Main gui program
     class Program : SimpleApplication, IObserver
     {
+        // Various GUI components
         UIElement uiRoot;
         ResourceCache cache;
         XmlFile style;
         Font font;
 
+        // Windows for the menus
         Window menu;
         Window hallOfFame;
         Window help;
@@ -42,6 +44,7 @@ namespace CC_X
         Window gameOverWind;
         Window loadGameWind;
 
+        // Buttons that link to the menus
         Button mainMenu;
         Button helpBtn;
         Button aboutBtn;
@@ -65,66 +68,77 @@ namespace CC_X
         Button SaveBtn;
         Button LoadBtn;
 
-        Text menuBtnText;
-        Text helpBtnText;
-        Text aboutBtnText;
-        Text hallOfFameBtnText;
-        Text hallOfFameMsg;
-        Text backBtnText;
-        Text exitBtnText;
-        Text continueBtnText;
-        Text welcomeMsg;
-        Text aboutMsg;
-        Text helpMsg;
-        Text loadGameText;
-        Text newGameText;
-        Text charOptn1Text;
-        Text charOptn2Text;
-        Text charOptn3Text;
-        Text easyText;
-        Text mediumText;
-        Text hardText;
-        Text submitCharNameText;
-        Text cheatModeText;
-        Text coordinates;
-        Text time;
-        Text health;
-        Text messageHelper;
-        Text gameOverText;
-        Text level1Txt;
-        Text level2Txt;
-        Text level3Txt;
-        Text saveText;
-        Text loadBtnText;
+        // Text that populates the buttons (marked with a B)
+        // Some text will populate the windows (marked with a W)
+        // Other test will populate the game screen (marked with a G)
+        Text menuBtnText; // B
+        Text helpBtnText; // B
+        Text aboutBtnText; // B
+        Text hallOfFameBtnText; // B
+        Text hallOfFameMsg; // W
+        Text backBtnText; // B
+        Text exitBtnText; // B
+        Text continueBtnText; // B
+        Text welcomeMsg; // W
+        Text aboutMsg; // W
+        Text helpMsg; // W
+        Text loadGameText; // W
+        Text newGameText; // W
+        Text charOptn1Text; // W
+        Text charOptn2Text; // W
+        Text charOptn3Text; // W
+        Text easyText; // W
+        Text mediumText; // W
+        Text hardText; // W
+        Text submitCharNameText; // W
+        Text cheatModeText; // W
+        Text coordinates; // G
+        Text time; // G
+        Text health; // G
+        Text messageHelper; // W
+        Text gameOverText; // W
+        Text level1Txt; // W
+        Text level2Txt; // W
+        Text level3Txt; // W
+        Text saveText; // W
+        Text loadBtnText; // B
 
-
+        // Used for developer mode
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
+
+        // Text the user can enter
         LineEdit enterCharName;
         LineEdit enterFileName;
 
+        // Timing components
         Timer timer;
         Dispatcher Dispatcher = Dispatcher.CurrentDispatcher;
 
+        // Gameplay components
         Node currentNode;
         Node swat;
         Node ninja;
         Node mutant;
         int numNodes;
         int nodeSelect = 1;
-        public bool DeveloperMode { get; set; }
-        public bool GameStart { get; set; }
+        public bool DeveloperMode { get; set; } // Determines whether or not developer mode is active
+        public bool GameStart { get; set; } // Determines if a game has started
 
-        public Node lightNode { get; private set; }
+        public Node lightNode { get; private set; } // Retrieves the light angle
 
-        public Light light { get; private set; }
+        public Light light { get; private set; } // Retrieves the light feature
+
+        // Animation files for the characters' forward, backward, left, right, idle, and death
         public string ForwardAniFile { get; set; }
         public string BackwardAniFile { get; set; }
         public string LeftAniFile { get; set; }
         public string RightAniFile { get; set; }
         public string IdleAniFile { get; set; }
         public string DeathAniFile { get; set; }
+
+        // More GUI properties
         public int timeTotal { get; set; }
         public int seconds { get; set; }
         public int secondsTen { get; set; }
