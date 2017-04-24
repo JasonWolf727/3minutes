@@ -11,6 +11,7 @@ namespace CC_X.Model
     [TestClass]
     public class HighScoreUnitTests
     {
+        //Test the HighScore logic when the first Score is added.
         [TestMethod]
         public void AddHighScore_FirstScoreAdded_Success()
         {
@@ -23,6 +24,7 @@ namespace CC_X.Model
             Assert.IsTrue(cmdHS.collectionScoreObj[0].ToString() == "Fred 32");
         }
 
+        //Test the HighScore logic when the 5th Score is added.
         [TestMethod]
         public void AddHighScore_5thScoreAdded_Success()
         {
@@ -38,12 +40,14 @@ namespace CC_X.Model
             cmdHS.AddHighScore("Joe", 21);
             Assert.IsTrue(cmdHS.collectionScoreObj[4].ToString() == "Joe 134");
 
-            //commiting
 
         }
 
+        //Test the HighScore logic when the 11th score is added.  
+        //Validates that the 11th score will be deleted.
+        //Validates that only ten scores will be displayed.   
         [TestMethod]
-        public void AddHighScore_10thScoreAdded_Success()
+        public void AddHighScore_11thScoreAdded_Success()
         {
             if (File.Exists(@"C:highScore.txt"))
             {
