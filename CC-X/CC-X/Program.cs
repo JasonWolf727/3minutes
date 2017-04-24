@@ -1518,6 +1518,7 @@ namespace CC_X
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
         }
+        //Create cars for level 2
         public void CreateCarsLevel2()
         {
             Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);
@@ -1599,6 +1600,7 @@ namespace CC_X
             plane.ID = node.ID;
             game.GameObjCollection[plane.ID] = plane;
         }
+        //Create rocks for level 2
         public void CreateRocksLevel2()
         {
             for (float xpos = 46; xpos < 103; xpos += 5)
@@ -1701,7 +1703,7 @@ namespace CC_X
             game.GameObjCollection[plane.ID] = plane;
 
         }
-
+        //Create level 1
         public void SetUpLevel1(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1714,7 +1716,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        //Create level 2
         public void SetUpLevel2(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1727,7 +1729,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        //Create level 3
         public void SetUpLevel3(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1737,7 +1739,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        //Factory method for creating level
         public void SetUpLevel(Level level, Difficulty difficulty)
         {
             switch (level)
@@ -1759,6 +1761,7 @@ namespace CC_X
                     }
             }
         }
+        //Creates main character option 1
         public void CreateMainChar1()
         {
             SelectedChar = 1;
@@ -1783,6 +1786,7 @@ namespace CC_X
             IdleAniFile = "Swat/Swat_Idle.ani";
             DeathAniFile = "Swat/Swat_DeathFromBack.ani";
         }
+        //Creates main character option 2
         public void CreateMainChar2()
         {
             SelectedChar = 2;
@@ -1805,6 +1809,7 @@ namespace CC_X
             IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
             DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
         }
+        //Creates main character option 3
         public void CreateMainChar3()
         {
             SelectedChar = 3;
@@ -1829,7 +1834,7 @@ namespace CC_X
             DeathAniFile = "Mutant/Mutant_Death.ani";
 
         }
-
+        //Factory method for creating main character
         public void CreateMainChar(int num)
         {
             switch (num)
@@ -1851,6 +1856,7 @@ namespace CC_X
                     }
             }
         }
+        //Resets level
         public void ResetLevel()
         {
             foreach (uint id in game.GameObjCollection.Keys)
@@ -1893,7 +1899,7 @@ namespace CC_X
                 PlayAnimation(MainChar, IdleAniFile);
             }
         }
-
+        //If alive and within qualifying time, unlocks next level
         public void LevelAdvanceAssess()
         {
             if (game.PassLevel())
