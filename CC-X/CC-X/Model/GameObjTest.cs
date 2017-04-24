@@ -11,6 +11,31 @@ namespace CC_X.Model
     [TestClass]
     public class GameObjTest
     {
+        Dictionary<uint, GameObj> GameObjCollection { get; set; } // Contains Nature and Enemy objects      
+        MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f));
+
+        List<object> DetectCollision()
+        {
+            if (MainChar != null)
+            {
+                foreach (GameObj obj in GameObjCollection.Values)
+                {
+                    if (obj is Enemy)
+                    {
+                        if (MainChar.persnlBubble.IntersectsWith(((Enemy)(obj)).persnlBubble))
+                        {
+                            MainChar.ReceiveDamage(((Enemy)obj).Strength);
+                            return new List<object>() { true, obj.Position };
+                        }
+                    }
+                }
+                return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
+            }
+            else
+            {
+                return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
+            }
+        }
         [TestMethod]
         public void DetectCollision_zombieMainChar_NoCollision()
         {
@@ -34,20 +59,18 @@ namespace CC_X.Model
 
             game.GameObjCollection[0] = zombie;
 
-            Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
+            Assert.IsTrue((bool)(DetectCollision()[0]) == true);
         }
 
         [TestMethod]
         public void DetectCollision_zombieMainCharEqualPosX_Collision()
         {
             Enemy zombie = new Enemy(new Urho.Vector3(1, 2, 8));
-            MainCharacter MainChar = new MainCharacter(new Urho.Vector3(1, 4, 8));
-            GameController game = new GameController(Difficulty.Easy);
-            game.MainChar = MainChar;
+            MainChar = new MainCharacter(new Urho.Vector3(1, 4, 8));
             
-            game.GameObjCollection[0] = zombie;
+            GameObjCollection[0] = zombie;
 
-            Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
+            Assert.IsTrue((bool)(DetectCollision()[0]) == true);
         }
 
         [TestMethod]
