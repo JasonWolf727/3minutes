@@ -839,20 +839,21 @@ namespace CC_X
             medium.Visible = true;
             hard.Visible = true;
         }
+        //Loads Level 1
         void LoadLevel1(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
             game.SetUpLevel(Level.One);
             GameStart = true;
         }
-
+        //Loads Level 2
         void LoadLevel2(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
             game.SetUpLevel(Level.Two);
             GameStart = true;
         }
-
+        //Loads Level 3
         void LoadLevel3(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
@@ -881,11 +882,14 @@ namespace CC_X
             loadGameWind.Visible = true;
 
         }
+        //Event handler that fires when Submit File is click to load a game.
         void SubmitFileClick(ReleasedEventArgs args)
         {
             loadGameWind.Visible = false;
             menu.Visible = true;
         }
+        //Event handler for the continue button. 
+        //Displays the Player's name and experience and the level difficulty.
         void ContinueClick(ReleasedEventArgs args)
         {
             menu.Visible = false;
@@ -926,6 +930,7 @@ namespace CC_X
             backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             backBtnText.Value = "Back";
         }
+        //Closes end of level window and brings up main menu.
         void EndLevelClick(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
@@ -1070,6 +1075,7 @@ namespace CC_X
             locWindow.Visible = false;
             MoveCamera = true;
         }
+        //Sets up the character selection for the player to pick from.
         public void SetUpCharSelection()
         {
             menu.Visible = false;
@@ -1214,11 +1220,7 @@ namespace CC_X
 
             SetUpCharSelection();
         }
-        //Event handler for cheat mode button
-        void CheatModeClick(ReleasedEventArgs args)
-        {
-
-        }        
+        //Creates a new Urho node when using Developer mode 
         public void CreateNode()
         {
             ++numNodes;
@@ -1305,6 +1307,7 @@ namespace CC_X
             TreePt2.ID = Leaves.ID;
             game.GameObjCollection[TreePt2.ID] = TreePt2;
         }
+        //Method for creating rock nodes and adding them to the GameObjCollection
         public void CreateRock(Vector3 position)
         {            
             Node RockNode = Scene.CreateChild("Rock");
@@ -1325,6 +1328,7 @@ namespace CC_X
             gameRock.ID = RockNode.ID;
             game.GameObjCollection[gameRock.ID] = gameRock;
         }        
+        //Creates a car node and adds it to the GameObjCollection
         public void CreateVolks(Vector3 position, float yaw = -90, Enemy.CarDir direction = Enemy.CarDir.Right, float speed = 20, int strength = 100)
         {
             Node volks = Scene.CreateChild();
@@ -1361,8 +1365,6 @@ namespace CC_X
             component2.SetMaterial(Material.FromImage("Textures/grassPt1.jpg"));
             component2.SetMaterial(Material.FromImage("Textures/grassPt2.jpg"));
 
-            //node.Pitch(-20,TransformSpace.Local);
-
             for (int row = 0; row < 50; ++row)
             {
                 var node2 = node.CreateChild("Plane" + numNodes);
@@ -1387,7 +1389,6 @@ namespace CC_X
                 for (int col = 0; col < 50; ++col)
                 {
                     var node3 = node.CreateChild("Plane" + numNodes);
-                    //node2.Pitch(-20, TransformSpace.Local);
                     var component4 = node3.CreateComponent<Urho.Shapes.Plane>();
                     if (row != 34 && (row != 41 | (col < 23 | col > 26)))
                     {                        
@@ -1592,6 +1593,7 @@ namespace CC_X
             plane.ID = node.ID;
             game.GameObjCollection[plane.ID] = plane;
         }
+        //Creates the rock pattern for Level 2
         public void CreateRocksLevel2()
         {
             for (float xpos = 46; xpos < 103; xpos += 5)
@@ -1694,7 +1696,7 @@ namespace CC_X
             game.GameObjCollection[plane.ID] = plane;
 
         }
-
+        //Sets up Level 1 with all the associated components
         public void SetUpLevel1(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1707,7 +1709,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        //Sets up Level 2 with all the associated components
         public void SetUpLevel2(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1720,7 +1722,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        //Sets up Level 3 with all the associated components
         public void SetUpLevel3(Difficulty difficulty)
         {
             gameOverWind.Visible = false;
@@ -1730,7 +1732,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-
+        
         public void SetUpLevel(Level level, Difficulty difficulty)
         {
             switch (level)
