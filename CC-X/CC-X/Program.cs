@@ -318,7 +318,7 @@ namespace CC_X
             helpMsg = help.CreateText();
             helpMsg.SetFont(font, 18);
             helpMsg.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Top);
-            helpMsg.Value = "      Help\n\n\n  Use the arrow\n  keys to move\n\n       /\\ \n       || \n   <=      =>\n       ||\n       \\/ \n\n  Click and move\n  the mouse to\n  pan the screen\n  left and right\n\n   ----------\n   |        |\n   | <    > |\n   |        |\n   ----------\n ";
+            helpMsg.Value = "        Help\n    Use the arrow\n    keys to move\n\n         /\\ \n         || \n     <=      =>\n         ||\n         \\/ \n\n    Click and move\n    the mouse to\n    pan the screen\n    left and right\n\n     ----------\n     |        |\n     | <    > |\n     |        |\n     ----------\n\n   C--Cheat Mode\n   M--Developer Mode";
 
             //Set up timer for game
             time = uiRoot.CreateText("Time", 13);
