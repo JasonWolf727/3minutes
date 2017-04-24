@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File: Program.cs
+ * Author: Michael Johannes
+ * Refactored: Carlos Santana
+ * Desc: 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
