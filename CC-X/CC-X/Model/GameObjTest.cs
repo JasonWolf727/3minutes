@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File: GameObjTest.cs
+ * Author: Michael Johannes
+ * Desc: Features unit tests for the Game Objects
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +16,14 @@ using Urho;
 
 namespace CC_X.Model
 {
+    // Unit tests using an instance of the Game Object Class
     [TestClass]
     public class GameObjTest
     {
         Dictionary<uint, GameObj> GameObjCollection { get; set; } // Contains Nature and Enemy objects      
-        MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f));
+        MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f)); // Instance of the Main Character class
 
+        // Logic to calculate if a collision has taken place. If so, do the damage thing. If not, reset the object.
         List<object> DetectCollision()
         {
             if (MainChar != null)
@@ -38,6 +46,8 @@ namespace CC_X.Model
                 return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
         }
+
+        // Test to make sure the two objects are not colliding while being rendered.
         [TestMethod]
         public void DetectCollision_zombieMainChar_NoCollision()
         {
@@ -51,6 +61,7 @@ namespace CC_X.Model
             Assert.IsTrue((bool)(game.DetectCollision()[0]) != true);
         }
 
+        // Test to see if the Zombie collided with the Main Character
         [TestMethod]
         public void DetectCollision_zombieMainCharClosePos_Collision()
         {
@@ -64,6 +75,7 @@ namespace CC_X.Model
             Assert.IsTrue((bool)(DetectCollision()[0]) == true);
         }
 
+        // Make sure that two objects with equal X's collide
         [TestMethod]
         public void DetectCollision_zombieMainCharEqualPosX_Collision()
         {
@@ -75,6 +87,7 @@ namespace CC_X.Model
             Assert.IsTrue((bool)(DetectCollision()[0]) == true);
         }
 
+        // Make sure that two objects with equal Y's collide
         [TestMethod]
         public void DetectCollision_zombieMainCharEqualPosY_Collision()
         {
@@ -88,6 +101,7 @@ namespace CC_X.Model
             Assert.IsTrue((bool)(game.DetectCollision()[0]) == true);
         }
 
+        // Make sure the character's health was deducted correctly
         [TestMethod]
         public void DetectCollision_AssessDamage_DamageTaken()
         {            
@@ -104,6 +118,8 @@ namespace CC_X.Model
 
             Assert.IsTrue(MainChar.Health == 80);
         }
+
+        // Make sure the character's health didn't go down when the collision doesn't happen
         [TestMethod]
         public void DetectCollision_AssessDamage_NoDamageTaken()
         {
@@ -121,6 +137,8 @@ namespace CC_X.Model
 
             Assert.IsTrue(MainChar.Health == 100);
         }
+
+        // Make sure the damage deducts correctly in the event of proximity
         [TestMethod]
         public void DetectCollision_AssessDamageClosePos_DamageTaken()
         {
@@ -137,6 +155,8 @@ namespace CC_X.Model
 
             Assert.IsTrue(game.MainChar.Health == 80);
         }
+
+        // Check for continuing damage until death occurs
         [TestMethod]
         public void DetectCollision_AssessDamageAndDeath_NoException()
         {
@@ -175,6 +195,8 @@ namespace CC_X.Model
             Assert.IsTrue(game.MainChar.Health == 0);
             Assert.IsTrue(game.MainChar.IsDead == true);
         }
+
+        // Check for a correct update of position.
         [TestMethod]
         public void UpdatePos_MainChar_NoException()
         {
@@ -193,6 +215,8 @@ namespace CC_X.Model
             Assert.IsTrue(MainChar.Position.Y == 0);
             Assert.IsTrue(MainChar.Position.Z == 0);
         }
+
+        // Check for a correct update of Enemy position
         [TestMethod]
         public void UpdatePos_Enemies_NoException()
         {
