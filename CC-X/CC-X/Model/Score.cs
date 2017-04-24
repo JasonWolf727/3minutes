@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File: Score.cs
+ * Author: Joshua Case
+ * Desc: contains properties for the scoring mechanism
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CC_X.Model
 {
+    // Score class, contains properties for scoring
     class Score
     {
         //The name of the score to save

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File: HighScoreUnitTests.cs
+ * Author: Joshua Case
+ * Desc: Contains unit tests that ensures High Score Functionality
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +14,7 @@ using System.IO;
 
 namespace CC_X.Model
 {
+    // Contains the tests
     [TestClass]
     public class HighScoreUnitTests
     {

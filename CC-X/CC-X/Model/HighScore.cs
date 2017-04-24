@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File: HighScore.cs
+ * Author: Joshua Case
+ * Desc: 
+ */
+
+using System;
 using System.IO; 
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +28,7 @@ namespace CC_X.Model
         //player_name " " score
         public void WriteToFile()
         {
-            if (File.Exists(@"C:highScore.txt"))   //How to delete a file referenced StackOverflow 
-                                                   //http://stackoverflow.com/questions/6391711/how-to-delete-a-file-after-checking-whether-it-exists
+            if (File.Exists(@"C:highScore.txt"))   //How to delete a file referenced StackOverflow: http://stackoverflow.com/questions/6391711/how-to-delete-a-file-after-checking-whether-it-exists
             {
                 File.Delete(@"C:highScore.txt");
             }
@@ -34,10 +39,9 @@ namespace CC_X.Model
                 {
                     dataToWrite = collectionScoreObj[i].ToString();
                     writer.WriteLine(dataToWrite);
-                } //for  
-            } //using
-
-        } //method
+                }
+            }
+        }
 
         //Read the data from "highScore.txt"
         //Add the data to a list containing all the highscores. 
@@ -49,7 +53,7 @@ namespace CC_X.Model
                 {
                     collectionScoreObj.Clear();
                     string line = reader.ReadLine();
-                    while ((line != null)) //& (line != ""))
+                    while ((line != null))
                     {
                         string[] contents = new string[2];
                         contents = line.Split(' ');
