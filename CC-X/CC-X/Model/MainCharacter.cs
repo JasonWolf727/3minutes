@@ -8,16 +8,16 @@ using System.Drawing;
 
 namespace CC_X.Model
 {
-    //Class for the main character in the game
+    // Class that creates the main character in the game. Inherits the GameObj model, and implements the Serialization interface.
     class MainCharacter : GameObj, Serializer
     {                 
-        public enum MainCharOptn { Swat, Mutant, Ninja }
-        public MainCharOptn SelectedCharType { get; set; }
-        public int TimeSinceLastCollide { get; set; }
-        public bool IsDead { get; set; }
-        public int Strength { get; set; }//An integer value of damage can inflict. High number = high damage. If setting obj, set to 101
-        public int Health { get; set; }//Health for MainChar starts at 100. If health <= 0, character dies. If setting obj, set to 101
-        public int Experience { get; set; }
+        public enum MainCharOptn { Swat, Mutant, Ninja } // Lists the possible skins for the main character
+        public MainCharOptn SelectedCharType { get; set; } // Retrieves & sets the skin to each main character option
+        public int TimeSinceLastCollide { get; set; } // Records time elapsed since the character got hit; keeps the character from losing all health with every collision frame
+        public bool IsDead { get; set; } // Identifies the character as dead or alive, for Save/Load purposes
+        public int Strength { get; set; } // An integer value of damage the character can inflict. High number = high damage.
+        public int Health { get; set; } // Health for MainChar starts at 100. If health <= 0, character dies.
+        public int Experience { get; set; } // Number of experience the player has
         public int Points { get; set; }
         public bool Invinsible = false;
         public Rectangle persnlBubble;
