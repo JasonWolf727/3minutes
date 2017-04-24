@@ -15,6 +15,7 @@ using System.Timers;
 
 namespace CC_X
 {
+    //Main gui program
     class Program : SimpleApplication, IObserver
     {
         UIElement uiRoot;
@@ -171,7 +172,7 @@ namespace CC_X
             //Turn off game controls
             GameStart = false;
         }
-
+        //Initial lighting for game
         protected void SetupScene()
         {
             //Generate scene light and shadow effects
@@ -196,7 +197,7 @@ namespace CC_X
             timer.Interval = 1000;
             timer.Elapsed += Elapsed_Interval;            
         }
-
+        //Event handler for timer
         private void Elapsed_Interval(object sender, ElapsedEventArgs e)
         {
             ++timeTotal;
@@ -218,6 +219,7 @@ namespace CC_X
             }
             TimeDisplay = minutes + ":" + secondsTen + seconds;
         }
+        //Resets time vars for gui and GameController
         public void ResetTime()
         {
             timeTotal = 0;
@@ -227,17 +229,19 @@ namespace CC_X
             CurrentTime = 0;
             timer.Stop();
         }
-
+        //Updates time for last level
         public void UpdateLastLevelTime()
         {
             LastLevelTime = timeTotal;
             game.LastLevelTime = LastLevelTime;
         }
+        //Updates current time
         public void UpdateCurrentTime()
         {
             CurrentTime = timeTotal;
             game.CurrentTime = timeTotal;
         }
+        //Setup windows for menu/start game
         protected void SetupWindows()
         {
             //Setup main menu/title screen
@@ -366,7 +370,7 @@ namespace CC_X
             loadGameWind.Opacity = 0.85f;
             loadGameWind.Visible = false;
         }
-
+        //Create buttons for gui menu/begin game
         protected void SetupButtons()
         {
             //Load each button with their respective attributes
@@ -554,7 +558,7 @@ namespace CC_X
             medium.SubscribeToReleased(MediumClick);
             hard.SubscribeToReleased(HardClick);
         }
-
+        //Setup Developer Mode
         protected void SetupDeveloperMode()
         {
             coordinates = uiRoot.CreateText("Coordinates", 6);
@@ -574,6 +578,7 @@ namespace CC_X
             messageHelper.Visible = false;
         }
 
+        //Setup Location Setter
         protected void SetupLSW()
         {
             //Set up location setter window
