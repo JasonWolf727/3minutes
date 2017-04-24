@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File: GameController.cs
+ * Author: Michael Johannes and Carlos Santana
+ * Desc: Contains game logic for manipulating game elements
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,31 +16,32 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CC_X.Model
 {
-    public enum Difficulty { Easy, Medium, Hard }
-    public enum Level { One, Two, Three}
+    public enum Difficulty { Easy, Medium, Hard } // Sets the levels' difficulty
+    public enum Level { One, Two, Three} // Sets the level
+
     //Controls game play
     class GameController
     {
         public Dictionary<uint, GameObj> GameObjCollection { get; set; } // Contains Nature and Enemy objects      
-        public MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f));
-        public Enemy foe = new Enemy(new Vector3(0,0,0));
-        public Difficulty DifficutlySelected { get; set; }
-        public Vector3 EndGameZone { get; set; }
-        public bool GameOver { get; set; }
-        public int CurrentTime { get; set; }
-        public int Level1QualTime { get; set; }
-        public int Level2QualTime { get; set; }
+        public MainCharacter MainChar = new MainCharacter(new Vector3(75, -0.50523f, 1.62f)); // Instance of MainCharacter
+        public Enemy foe = new Enemy(new Vector3(0,0,0)); // Instance of foe
+        public Difficulty DifficutlySelected { get; set; } // Returns Difficulty selected
+        public Vector3 EndGameZone { get; set; } // Location of the finish line
+        public bool GameOver { get; set; } // Ends the game when the character dies (or crosses the final finish line)
+        public int CurrentTime { get; set; } // Time counter for the level
+        public int Level1QualTime { get; set; } // Time the character needs to meet to unlock level 2
+        public int Level2QualTime { get; set; } // Time the character needs to meet to unlock level 3
 
-        public int Level3QualTime { get; set; }
-        public int LastLevelTime { get; set; }
-        public bool Level1Complete { get; set; }
-        public bool Level2Complete { get; set; }
-        public bool Level3Complete { get; set; }
-        public bool CheatModeEn = false;
+        public int Level3QualTime { get; set; } // Time the character needs to meet to win the game
+        public int LastLevelTime { get; set; } // Time the character achieves in the last level
+        public bool Level1Complete { get; set; } // Determines whether Level 1 has been successfully completed
+        public bool Level2Complete { get; set; } // Determines whether Level 2 has been successfully completed
+        public bool Level3Complete { get; set; } // Determines whether Level 3 has been successfully completed
+        public bool CheatModeEn = false; // Determines whether Cheat Mode is active
 
 
-        public Level CurrentLevel = Level.One;
-        public HighScore highscore = new HighScore();
+        public Level CurrentLevel = Level.One; // Retrieves the current level. Default set to 1 for the beginning
+        public HighScore highscore = new HighScore(); // Returns the total points accumulated
 
         //View will set this to user input name
         public string MainCharName = "";
@@ -66,12 +74,15 @@ namespace CC_X.Model
             }
         }
 
+        // Toggles Cheat Mode
         public void EnableCheat()
         {
             CheatModeEn = !CheatModeEn;
             MainChar.Invinsible = !MainChar.Invinsible;
         }
 
+        // Switches the Qualifying Time and Level Number according to the level number
+        // Also, advances the level if the qualifications are met, while calculating experience gained
         public bool PassLevel()
         {
             int QualTime = 0;
@@ -90,12 +101,15 @@ namespace CC_X.Model
             else { return false; }
         }
 
+        // Returns a completed/failed message depending on whether or not qualifications were met
         public string GetLevelStatus()
         {
             if (PassLevel()) { return "Completed"; }
             else { return "Failed"; }
         }
-        //Returns true if collided with other GameObj objects. If GameObj object is Enemy and MainChar.PositionSinceLastCollide != MainChar.Position, subtracts enemy damage from health
+
+        // Returns true if collided with other GameObj objects.
+        // If (GameObj object == Enemy) && (MainChar.PositionSinceLastCollide != MainChar.Position), subtracts enemy damage (power) from health
         public List<object> DetectCollision()
         {
             if (MainChar != null)
@@ -112,10 +126,6 @@ namespace CC_X.Model
                             return new List<object>() { true, obj.Position };
                         }
                     }
-                    //if (obj is Nature && ((Nature)(obj)).SelectedNatureType != Nature.NatureType.Plane)
-                    //{
-                    //    return new List<object>() { true, obj.Position };
-                    //}
                 }
                 return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
@@ -124,11 +134,14 @@ namespace CC_X.Model
                 return new List<object>() { false, new Vector3(-1000000, -1000000, -1000000) };
             }
         }
+
+        // Makes the GUI update the time remotely via the observer
         public void UpdateCurrentTime()
         {
             gui.UpdateCurrentTime();
         }
         
+        // Retrieves the qualifying time necessary for each level
         public int GetQualTime()
         {
             if(CurrentLevel == Level.One) { return Level1QualTime; }
@@ -136,6 +149,7 @@ namespace CC_X.Model
             if (CurrentLevel == Level.Three) { return Level3QualTime; }
             else { return -1; }
         }
+
         //Calculates player's experience
         public void CalcExperience()
         {
@@ -154,6 +168,7 @@ namespace CC_X.Model
             }
         }
 
+        // Calculates the points achieved at the end of the level
         public void CalcPoints(Level level, Difficulty difficulty, int time)
         {
             throw new NotImplementedException();
@@ -190,7 +205,7 @@ namespace CC_X.Model
             gui.SetUpLevel(Level.Three, difficulty);
         }
 
-        //Populate WorldCollection according to level and difficulty.
+        // Calls the above "SetUpLevelX" methods according to which level is active.
         public void SetUpLevel(Level level)
         {
             switch(level)
@@ -213,6 +228,7 @@ namespace CC_X.Model
             }
         }
 
+        // Erase the level, restore original settings
         public void ResetLevel()
         {
             GameObjCollection = new Dictionary<uint, GameObj>();
@@ -227,24 +243,32 @@ namespace CC_X.Model
 
             gui.ResetLevel();
         }
+
+        // Set qualifying time for the three levels under Easy difficulty
         public void SetUpDifficultyEasy(Level level)
         {
             if(level == Level.One) { Level1QualTime = 90; }
             if(level == Level.Two) { Level2QualTime = 100; }
             if(level == Level.Three) { Level3QualTime = 110; }
         }
+
+        // Set qualifying time for the three levels under Medium difficulty
         public void SetUpDifficultyMedium(Level level)
         {
             if (level == Level.One) { Level1QualTime = 70; }
             if (level == Level.Two) { Level2QualTime = 80; }
             if (level == Level.Three) { Level3QualTime = 90; }
         }
+
+        // Set qualifying time for the three levels under Hard difficulty
         public void SetUpDifficultyHard(Level level)
         {
             if (level == Level.One) { Level1QualTime = 62; }
             if (level == Level.Two) { Level2QualTime = 72; }
             if (level == Level.Three) { Level3QualTime = 82; }
         }
+
+        // Calls each of the above "SetUpDifficultyX" methods according to the difficulty setting
         public void SetUpDifficulty(Difficulty difficulty, Level level)
         {
             switch (difficulty)
@@ -268,9 +292,7 @@ namespace CC_X.Model
         }
 
         // Load/save mechanism
-        // Save() writes the game state (previously serialized into a string) to the provided file (CSV).
-        // Load() uploads the file, parsing its contents into a string array for deserialization.
-
+        // Uploads the file, parses its contents into a string array, and deserializes each line.
         public void Load(string filepath)
         {
             string[] temp = File.ReadAllLines(filepath);
@@ -296,6 +318,7 @@ namespace CC_X.Model
             }
         }
 
+        // Serializes the data, adds it as a line to a StringBuilder, and then writes all lines in the csv to the Save Data File
         public void Save(string filepath) // Aid found at: http://stackoverflow.com/questions/18757097/writing-data-into-csv-file
         {
             // Use a StringBuilder
