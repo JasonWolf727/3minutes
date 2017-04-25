@@ -801,6 +801,7 @@ namespace CC_X
             }            
         }
 
+        // Change position for any game object
         private void UpdateGameObjPos()
         {
             foreach(GameObj obj in game.GameObjCollection.Values)
@@ -870,6 +871,8 @@ namespace CC_X
             medium.Visible = true;
             hard.Visible = true;
         }
+
+        // Loads level 1, and starts the game in that level
         void LoadLevel1(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
@@ -877,6 +880,7 @@ namespace CC_X
             GameStart = true;
         }
 
+        // Loads level 2, and starts the game in that level
         void LoadLevel2(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
@@ -884,16 +888,19 @@ namespace CC_X
             GameStart = true;
         }
 
+        // Loads level 3, and starts the game in that level
         void LoadLevel3(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
             game.SetUpLevel(Level.Three);
             GameStart = true;
         }
+
         //Event handler for load game button
         void LoadGameClick(ReleasedEventArgs args)
         {
             menu.Visible = false;
+            // Here lies the failed implementation of LoadGame
             //LoadGame()
             //{
             //                string path = Directory.GetCurrentDirectory(); // returns the current working directory the game is in
@@ -910,13 +917,16 @@ namespace CC_X
             //Console.WriteLine(filepath);
 
             loadGameWind.Visible = true;
-
         }
+
+        // Event Handler for submit file click
         void SubmitFileClick(ReleasedEventArgs args)
         {
             loadGameWind.Visible = false;
             menu.Visible = true;
         }
+
+        // Event Handler for Continue Click
         void ContinueClick(ReleasedEventArgs args)
         {
             menu.Visible = false;
@@ -935,11 +945,13 @@ namespace CC_X
             }
             gameOverWind.Visible = true;
         }
+
         //Event handler for main menu button
         void MenuClick(ReleasedEventArgs args)
         {
             
         }
+
         //Event handler for help button
         void HelpClick(ReleasedEventArgs args)
         {
@@ -957,6 +969,8 @@ namespace CC_X
             backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             backBtnText.Value = "Back";
         }
+
+        // Event handler for end level button
         void EndLevelClick(ReleasedEventArgs args)
         {
             gameOverWind.Visible = false;
@@ -980,6 +994,7 @@ namespace CC_X
             backBtnText.SetAlignment(HorizontalAlignment.Center, VerticalAlignment.Center);
             backBtnText.Value = "Back";
         }
+
         //Event handler for high score/hall of fame button
         void HallOfFameClick(ReleasedEventArgs args)
         {
