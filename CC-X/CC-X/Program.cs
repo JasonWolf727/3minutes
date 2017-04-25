@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File: Program.cs
+ * Author: Michael Johannes
+ * Refactored: Carlos Santana
+ * Desc: 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +25,13 @@ namespace CC_X
     //Main gui program
     class Program : SimpleApplication, IObserver
     {
+        // Various GUI components
         UIElement uiRoot;
         ResourceCache cache;
         XmlFile style;
         Font font;
 
+        // Windows for the menus
         Window menu;
         Window hallOfFame;
         Window help;
@@ -35,6 +44,7 @@ namespace CC_X
         Window gameOverWind;
         Window loadGameWind;
 
+        // Buttons that link to the menus
         Button mainMenu;
         Button helpBtn;
         Button aboutBtn;
@@ -58,77 +68,87 @@ namespace CC_X
         Button SaveBtn;
         Button LoadBtn;
 
-        Text menuBtnText;
-        Text helpBtnText;
-        Text aboutBtnText;
-        Text hallOfFameBtnText;
-        Text hallOfFameMsg;
-        Text backBtnText;
-        Text exitBtnText;
-        Text continueBtnText;
-        Text welcomeMsg;
-        Text aboutMsg;
-        Text helpMsg;
-        Text loadGameText;
-        Text newGameText;
-        Text charOptn1Text;
-        Text charOptn2Text;
-        Text charOptn3Text;
-        Text easyText;
-        Text mediumText;
-        Text hardText;
-        Text submitCharNameText;
-        Text cheatModeText;
-        Text coordinates;
-        Text time;
-        Text health;
-        Text messageHelper;
-        Text gameOverText;
-        Text level1Txt;
-        Text level2Txt;
-        Text level3Txt;
-        Text saveText;
-        Text loadBtnText;
+        // Text that populates the buttons (marked with a B)
+        // Some text will populate the windows (marked with a W)
+        // Other test will populate the game screen (marked with a G)
+        Text menuBtnText; // B
+        Text helpBtnText; // B
+        Text aboutBtnText; // B
+        Text hallOfFameBtnText; // B
+        Text hallOfFameMsg; // W
+        Text backBtnText; // B
+        Text exitBtnText; // B
+        Text continueBtnText; // B
+        Text welcomeMsg; // W
+        Text aboutMsg; // W
+        Text helpMsg; // W
+        Text loadGameText; // W
+        Text newGameText; // W
+        Text charOptn1Text; // W
+        Text charOptn2Text; // W
+        Text charOptn3Text; // W
+        Text easyText; // W
+        Text mediumText; // W
+        Text hardText; // W
+        Text submitCharNameText; // W
+        Text cheatModeText; // W
+        Text coordinates; // G
+        Text time; // G
+        Text health; // G
+        Text messageHelper; // W
+        Text gameOverText; // W
+        Text level1Txt; // W
+        Text level2Txt; // W
+        Text level3Txt; // W
+        Text saveText; // W
+        Text loadBtnText; // B
 
-
+        // Used for developer mode
         LineEdit xSet;
         LineEdit ySet;
         LineEdit zSet;
+
+        // Text the user can enter
         LineEdit enterCharName;
         LineEdit enterFileName;
 
+        // Timing components
         Timer timer;
         Dispatcher Dispatcher = Dispatcher.CurrentDispatcher;
 
+        // Gameplay components
         Node currentNode;
         Node swat;
         Node ninja;
         Node mutant;
         int numNodes;
         int nodeSelect = 1;
-        public bool DeveloperMode { get; set; }
-        public bool GameStart { get; set; }
+        public bool DeveloperMode { get; set; } // Determines whether or not developer mode is active
+        public bool GameStart { get; set; } // Determines if a game has started
 
-        public Node lightNode { get; private set; }
+        public Node lightNode { get; private set; } // Retrieves the light angle
 
-        public Light light { get; private set; }
+        public Light light { get; private set; } // Retrieves the light feature
+
+        // Animation files for the characters' forward, backward, left, right, idle, and death
         public string ForwardAniFile { get; set; }
         public string BackwardAniFile { get; set; }
         public string LeftAniFile { get; set; }
         public string RightAniFile { get; set; }
         public string IdleAniFile { get; set; }
         public string DeathAniFile { get; set; }
-        public int timeTotal { get; set; }
-        public int seconds { get; set; }
-        public int secondsTen { get; set; }
-        public int minutes { get; set; }
-        public string TimeDisplay { get; set; }
-        public int CurrentTime { get; set; }
-        public int LastLevelTime { get; set; }
-        public uint LightID { get; set; }
-        public int SelectedChar { get; set; }
 
-        //Create an instance of GameController
+        public int timeTotal { get; set; } // Total time elapsed
+        public int seconds { get; set; } // Retrieves and sets seconds
+        public int secondsTen { get; set; } // Retrieves and sets seconds by tens
+        public int minutes { get; set; } // Retrieves and sets minutes
+        public string TimeDisplay { get; set; } // Displays the time
+        public int CurrentTime { get; set; } // Updates the current time
+        public int LastLevelTime { get; set; } // Time completed of the previous level
+        public uint LightID { get; set; } // ID of the light node
+        public int SelectedChar { get; set; } // Retrieves the character the player has selected
+
+        //Create an instance of GameController and high score
         GameController game = new GameController(Difficulty.Easy); //Temp difficulty
         HighScore HS = new HighScore();
 
@@ -137,8 +157,10 @@ namespace CC_X
         Node MainChar;
         int Car2ID;
 
+        // Some program stuff
         public Program(ApplicationOptions options) : base(options) { }
 
+        // Main starting program
         protected override void Start()
         {
             base.Start();
@@ -172,6 +194,7 @@ namespace CC_X
             //Turn off game controls
             GameStart = false;
         }
+
         //Initial lighting for game
         protected void SetupScene()
         {
@@ -197,6 +220,7 @@ namespace CC_X
             timer.Interval = 1000;
             timer.Elapsed += Elapsed_Interval;            
         }
+
         //Event handler for timer
         private void Elapsed_Interval(object sender, ElapsedEventArgs e)
         {
@@ -219,6 +243,7 @@ namespace CC_X
             }
             TimeDisplay = minutes + ":" + secondsTen + seconds;
         }
+
         //Resets time vars for gui and GameController
         public void ResetTime()
         {
@@ -229,18 +254,21 @@ namespace CC_X
             CurrentTime = 0;
             timer.Stop();
         }
+
         //Updates time for last level
         public void UpdateLastLevelTime()
         {
             LastLevelTime = timeTotal;
             game.LastLevelTime = LastLevelTime;
         }
+
         //Updates current time
         public void UpdateCurrentTime()
         {
             CurrentTime = timeTotal;
             game.CurrentTime = timeTotal;
         }
+
         //Setup windows for menu/start game
         protected void SetupWindows()
         {
@@ -370,6 +398,7 @@ namespace CC_X
             loadGameWind.Opacity = 0.85f;
             loadGameWind.Visible = false;
         }
+
         //Create buttons for gui menu/begin game
         protected void SetupButtons()
         {
@@ -558,6 +587,7 @@ namespace CC_X
             medium.SubscribeToReleased(MediumClick);
             hard.SubscribeToReleased(HardClick);
         }
+
         //Setup Developer Mode
         protected void SetupDeveloperMode()
         {
@@ -626,6 +656,7 @@ namespace CC_X
             zSet.Text = "Z: ";
         }
 
+        // Updates everything
         protected override void OnUpdate(float timeStep)
         {
             base.OnUpdate(timeStep);
@@ -1512,6 +1543,7 @@ namespace CC_X
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
         }
+        //Create cars for level 2
         public void CreateCarsLevel2()
         {
             Vector3 FarLaneAudiInitialPlacement = new Vector3(140, -0.4327534f, 104.3f);
@@ -1732,7 +1764,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
-        
+        //Factory method for creating level
         public void SetUpLevel(Level level, Difficulty difficulty)
         {
             switch (level)
@@ -1754,6 +1786,7 @@ namespace CC_X
                     }
             }
         }
+        //Creates main character option 1
         public void CreateMainChar1()
         {
             SelectedChar = 1;
@@ -1778,6 +1811,7 @@ namespace CC_X
             IdleAniFile = "Swat/Swat_Idle.ani";
             DeathAniFile = "Swat/Swat_DeathFromBack.ani";
         }
+        //Creates main character option 2
         public void CreateMainChar2()
         {
             SelectedChar = 2;
@@ -1800,6 +1834,7 @@ namespace CC_X
             IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
             DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
         }
+        //Creates main character option 3
         public void CreateMainChar3()
         {
             SelectedChar = 3;
@@ -1824,7 +1859,7 @@ namespace CC_X
             DeathAniFile = "Mutant/Mutant_Death.ani";
 
         }
-
+        //Factory method for creating main character
         public void CreateMainChar(int num)
         {
             switch (num)
@@ -1846,6 +1881,7 @@ namespace CC_X
                     }
             }
         }
+        //Resets level
         public void ResetLevel()
         {
             foreach (uint id in game.GameObjCollection.Keys)
@@ -1888,7 +1924,7 @@ namespace CC_X
                 PlayAnimation(MainChar, IdleAniFile);
             }
         }
-
+        //If alive and within qualifying time, unlocks next level
         public void LevelAdvanceAssess()
         {
             if (game.PassLevel())
