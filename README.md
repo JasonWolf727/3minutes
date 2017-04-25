@@ -7,20 +7,33 @@
 * April 12: Beta Tag
 * April 19: Release Candidate
 * April 24: Final Release
+* April 26: Presentation
 
 ## Instructions as of Alpha Tag:
 When the menu appears:
 * Click `New Game` to start a new game.
-* Click `Load Game` to load a game.
 * Click `Exit` to close the window.
 * Click `Help` to see instructions.
 * Click `About` to see the credits.
+* Click `High Score` to see the high score menu.
+* Click `Continue Progress` to start off from a later level
+* `Load Game` is inactive.
+
+To set up your game:
+* Type in a name.
+* Select a character: Soldier, Ninja, or Mutant.
+* Select a difficulty: Easy, Medium, Hard.
 
 After you start a new game:
 * Use the arrow keys to move.
 * Up arrow and down arrow move your character forward and back respectively.
 * Left arrow and right arrow move your character left and right respectively.
-* Once you get to the end zone, select an option from the menu. 
+* Don't get hit by a car, or you will lose health.
+* If you win, you may proceed to the next level or return to the menu.
+* If you lose, you may repeat the level or return to the menu.
+* Press `M` to enter Developer Mode.
+* Press `C` to enter Cheat Mode.
+
 
 ## Work Completed:
 
@@ -51,21 +64,42 @@ In the code:
 * Health and Time indicators have been added
 * Character selection implemented
 
-## Known Issues as of Beta Tag:
-Known Issues:
-* The game's finish line is unresponsive.
-* The character does not have collision logic yet.
+### As of Release Candidate (April 19):
+For GitHub:
+* Road Map has been updated with completed features. Incomplete features have been scrapped.
+* Journals are up to date
+
+In the code:
+* Levels 2 and 3 are active.
+* All separate difficulties have been added.
+* Experience added.
+* High score, about, and help pages added.
+
+### As of Final Release (April 24)
+For GitHub:
+* Road Map is finalized
+* Journals are complete
+* All issues addressed/closed
+
+In the code:
+* Comments added
+* Debugging complete
+
+## Known Issues as of Final Tag:
+* No collision with the environment available.
 
 ## Recording: 
 [Link to Alpha Recording](https://youtu.be/JftPD0mm-N8)
 
 [Link to Beta Recording](https://youtu.be/n0qHjYO-3Fk)
 
-[Link to ReleaseCandidat](https://youtu.be/C0ve-RSEgY0)
+[Link to Release Candidate](https://youtu.be/C0ve-RSEgY0)
 
-## Expenses as of Beta Tag:
+[Link to Final Recording](http://youtu.be/f1VEIjY_tsQ?hd=1)
+
+## Final Expenses:
 | Developer | Hours invested | Hours left | Link to Journal | 
 | ---------- | --------- | ---------- | ------ |
-| Case | 36.00 | 17.00 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
-| Johannes | 35.9 | 15.1 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
-| Santana | 18.5 | 31.5 | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
+| Case | 36.00 | 14.00 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
+| Johannes | 49.6 | 0.4 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
+| Santana | 30.0 | 20.0 | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
