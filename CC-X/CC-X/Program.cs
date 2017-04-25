@@ -1102,7 +1102,6 @@ namespace CC_X
                 float yCoor = (float)(Convert.ToDouble(yStr.Replace("Y: ", "").Trim()));
                 float zCoor = (float)(Convert.ToDouble(zStr.Replace("Z: ", "").Trim()));
 
-                //currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
                 currentNode.Position = new Vector3(xCoor, yCoor, zCoor);
 
             }
@@ -1190,6 +1189,7 @@ namespace CC_X
             mutant.SetScale(0.2f);
             PlayAnimation(mutant, "Mutant/Mutant_Idle1.ani");
         }
+
         //Event handler for easy difficulty button
         void EasyClick(ReleasedEventArgs args)
         {
@@ -1211,6 +1211,7 @@ namespace CC_X
 
             giveCharName.Visible = true;
         }
+
         //Event handler for medium difficulty button
         void MediumClick(ReleasedEventArgs args)
         {
@@ -1231,6 +1232,7 @@ namespace CC_X
 
             giveCharName.Visible = true;
         }
+
         //Event handler for hard difficulty button
         void HardClick(ReleasedEventArgs args)
         {
@@ -1251,6 +1253,7 @@ namespace CC_X
 
             giveCharName.Visible = true;
         }
+
         //Event handler for submitCharName button
         void SubmitCharNameClick(ReleasedEventArgs args)
         {
@@ -1260,6 +1263,7 @@ namespace CC_X
 
             SetUpCharSelection();
         }
+
         //Creates a new Urho node when using Developer mode 
         public void CreateNode()
         {
@@ -1347,6 +1351,7 @@ namespace CC_X
             TreePt2.ID = Leaves.ID;
             game.GameObjCollection[TreePt2.ID] = TreePt2;
         }
+
         //Method for creating rock nodes and adding them to the GameObjCollection
         public void CreateRock(Vector3 position)
         {            
@@ -1367,7 +1372,8 @@ namespace CC_X
             Nature gameRock = new Nature(Nature.NatureType.Rock, RockNode.Position);
             gameRock.ID = RockNode.ID;
             game.GameObjCollection[gameRock.ID] = gameRock;
-        }        
+        }
+             
         //Creates a car node and adds it to the GameObjCollection
         public void CreateVolks(Vector3 position, float yaw = -90, Enemy.CarDir direction = Enemy.CarDir.Right, float speed = 20, int strength = 100)
         {
@@ -1498,6 +1504,7 @@ namespace CC_X
 
             }
         }
+
         //Moves the cars
         public void MoveCars(float timeStep)
         {
@@ -1552,6 +1559,7 @@ namespace CC_X
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10);
         }
+
         //Create cars for level 2
         public void CreateCarsLevel2()
         {
@@ -1566,6 +1574,7 @@ namespace CC_X
             CreateVolks(new Vector3(120, -0.4327534f, 104.3f), 90, Enemy.CarDir.Left, 10, strength: 200);
             CreateVolks(new Vector3(55, -0.4327534f, 103.4266f), speed: 10, strength: 200);            
         }
+
         //Create Ground for first level
         public void CreateGroundLevel2()
         {
@@ -1634,6 +1643,7 @@ namespace CC_X
             plane.ID = node.ID;
             game.GameObjCollection[plane.ID] = plane;
         }
+
         //Creates the rock pattern for Level 2
         public void CreateRocksLevel2()
         {
@@ -1668,6 +1678,7 @@ namespace CC_X
 
             }
         }
+
         //Create ground level 3
         public void CreateGroundLevel3()
         {
@@ -1737,6 +1748,7 @@ namespace CC_X
             game.GameObjCollection[plane.ID] = plane;
 
         }
+
         //Sets up Level 1 with all the associated components
         public void SetUpLevel1(Difficulty difficulty)
         {
@@ -1750,6 +1762,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
+
         //Sets up Level 2 with all the associated components
         public void SetUpLevel2(Difficulty difficulty)
         {
@@ -1763,6 +1776,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
+
         //Sets up Level 3 with all the associated components
         public void SetUpLevel3(Difficulty difficulty)
         {
@@ -1773,6 +1787,7 @@ namespace CC_X
             //Start timer
             timer.Start();
         }
+
         //Factory method for creating level
         public void SetUpLevel(Level level, Difficulty difficulty)
         {
@@ -1795,6 +1810,7 @@ namespace CC_X
                     }
             }
         }
+
         //Creates main character option 1
         public void CreateMainChar1()
         {
@@ -1820,6 +1836,7 @@ namespace CC_X
             IdleAniFile = "Swat/Swat_Idle.ani";
             DeathAniFile = "Swat/Swat_DeathFromBack.ani";
         }
+
         //Creates main character option 2
         public void CreateMainChar2()
         {
@@ -1843,6 +1860,7 @@ namespace CC_X
             IdleAniFile = "NinjaSnowWar/Ninja_Idle1.ani";
             DeathAniFile = "NinjaSnowWar/Ninja_Death1.ani";
         }
+
         //Creates main character option 3
         public void CreateMainChar3()
         {
@@ -1868,6 +1886,7 @@ namespace CC_X
             DeathAniFile = "Mutant/Mutant_Death.ani";
 
         }
+
         //Factory method for creating main character
         public void CreateMainChar(int num)
         {
@@ -1890,6 +1909,7 @@ namespace CC_X
                     }
             }
         }
+
         //Resets level
         public void ResetLevel()
         {
@@ -1933,6 +1953,7 @@ namespace CC_X
                 PlayAnimation(MainChar, IdleAniFile);
             }
         }
+
         //If alive and within qualifying time, unlocks next level
         public void LevelAdvanceAssess()
         {
@@ -1959,6 +1980,7 @@ namespace CC_X
             ySet.Text = "Y: ";
             zSet.Text = "Z: ";
         }
+
         //Returns string name of current node type select (for developer mode)
         public string GetSelectedNodeType()
         {
@@ -1970,6 +1992,7 @@ namespace CC_X
             if (nodeSelect == 5) s = "Audi";
             return s;
         }
+
         //Return node that cursor is pointing at
         protected Node GetNodeUserIsLookingAt()
         {
@@ -2013,6 +2036,7 @@ namespace CC_X
             animation.Play("Models/" + file, 0, looped, 0.2f);            
         }
 
+        // Runs the app
         static void Main(string[] args)
         {
             var app = new Program(new ApplicationOptions("Data")
