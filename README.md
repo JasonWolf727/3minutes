@@ -9,7 +9,7 @@
 * April 24: Final Release
 * April 26: Presentation
 
-## Instructions as of Alpha Tag:
+## Instructions:
 When the menu appears:
 * Click `New Game` to start a new game.
 * Click `Exit` to close the window.
@@ -85,10 +85,10 @@ In the code:
 * Comments added
 * Debugging complete
 
-## Known Issues as of Final Tag:
+## Known Issues:
 * No collision with the environment available.
 
-## Recording: 
+## Recordings:
 [Link to Alpha Recording](https://youtu.be/JftPD0mm-N8)
 
 [Link to Beta Recording](https://youtu.be/n0qHjYO-3Fk)
@@ -100,6 +100,6 @@ In the code:
 ## Final Expenses:
 | Developer | Hours invested | Hours left | Link to Journal | 
 | ---------- | --------- | ---------- | ------ |
-| Case | 36.00 | 14.00 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
+| Case | 39.00 | 11.00 | [Case Journal](https://github.com/runnersQueue/3minutes/wiki/CaseJournal#case-journal) |
 | Johannes | 49.6 | 0.4 | [Johannes Journal](https://github.com/runnersQueue/3minutes/wiki/Johannes-Journal) |
 | Santana | 30.0 | 20.0 | [Santana Journal](https://github.com/runnersQueue/3minutes/wiki/Santana-Journal) |
