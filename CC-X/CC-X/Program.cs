@@ -2,7 +2,7 @@
  * File: Program.cs
  * Author: Michael Johannes
  * Refactored: Carlos Santana
- * Desc: The game itself
+ * Desc: The game view itself
  */
 
 using System;
