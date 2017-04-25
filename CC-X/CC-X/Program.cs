@@ -25,6 +25,7 @@ namespace CC_X
     //Main gui program
     class Program : SimpleApplication, IObserver
     {
+        // Boo
         // Various GUI components
         UIElement uiRoot;
         ResourceCache cache;
