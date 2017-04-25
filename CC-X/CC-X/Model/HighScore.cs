@@ -1,7 +1,7 @@
 ﻿/*
  * File: HighScore.cs
  * Author: Joshua Case
- * Desc: 
+ * Desc: Mechanism for saving and ranking high scores
  */
 
 using System;
